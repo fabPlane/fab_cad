@@ -1,0 +1,14 @@
+FreeCAD example files
+=====================
+
+The files in this directory are copied unmodified from the FreeCAD source tree (data/examples/,
+https://github.com/FreeCAD/FreeCAD):
+
+  PartDesignExample.FCStd, EngineBlock.FCStd
+      Shipped with FreeCAD under its licence, the GNU Lesser General Public License version 2 or
+      later (LGPL-2.0-or-later).
+
+  Schenkel.stp
+      Copyright (C) 2011, Juergen Riegel. Its header states: "This work is licensed under the
+      Creative Commons CC-BY-SA 4.0 License"
+      (https://creativecommons.org/licenses/by-sa/4.0/legalcode).

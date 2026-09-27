@@ -1,0 +1,19 @@
+{
+  "name": "@fab-cad/e2e",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Playwright tests for apps/web: a smoke suite against the in-page mock (?mock=1) and a suite against a real FreeCADApiServer (FREECAD_API_SERVER)",
+  "scripts": {
+    "test": "playwright test",
+    "test:real": "playwright test -c playwright.real.config.ts",
+    "screenshots": "SCREENSHOTS=1 playwright test -c playwright.real.config.ts",
+    "report": "playwright show-report output/report",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/bun": "1.4.1",
+    "typescript": "5.9.3"
+  }
+}

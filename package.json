@@ -6,7 +6,8 @@
   "workspaces": [
     "apps/*",
     "packages/*",
-    "tooling/*"
+    "tooling/*",
+    "e2e"
   ],
   "scripts": {
     "typecheck": "tsc -b",
@@ -18,7 +19,12 @@
     "wasm:fetch": "bun run --filter @fab-cad/freecad-wasm fetch",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "ci": "bun install --frozen-lockfile && bun run format:check && bun run typecheck && bun run test:unit"
+    "ci": "bun install --frozen-lockfile && bun run format:check && bun run typecheck && bun run test:unit",
+    "icons:sync": "bun tooling/icons/sync.ts",
+    "dev": "bun run --filter @fab-cad/web dev",
+    "build": "bun run --filter @fab-cad/web build",
+    "test:e2e": "bun run --filter @fab-cad/e2e test",
+    "test:e2e:real": "bun run --filter @fab-cad/e2e test:real"
   },
   "devDependencies": {
     "@types/bun": "1.4.1",

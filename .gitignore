@@ -8,3 +8,5 @@ dist-tsc/
 .worktrees/
 # the Emscripten build copied in by `bun run wasm:fetch`
 packages/freecad-wasm/dist/
+e2e/output/
+test-results/

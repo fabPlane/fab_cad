@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist-tsc",
+    "tsBuildInfoFile": "dist-tsc/tsconfig.tsbuildinfo",
+    "emitDeclarationOnly": true,
+    "jsx": "react-jsx",
+    "types": ["bun", "vite/client"],
+    "resolveJsonModule": true
+  },
+  "include": ["src", "src/**/*.json", "test", "vite.config.ts"],
+  "references": [
+    { "path": "../../packages/protocol" },
+    { "path": "../../packages/client" },
+    { "path": "../../packages/mock-server" },
+    { "path": "../../packages/freecad-wasm" }
+  ]
+}
