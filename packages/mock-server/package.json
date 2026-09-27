@@ -1,0 +1,27 @@
+{
+  "name": "@fab-cad/mock-server",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "In-memory fake of FreeCAD's API (PROTOCOL.md v1): documents, Part primitives with real tessellations, undo/redo, events; as a dispatcher, a WebSocket server and a CLI",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server.ts",
+    "./stdio": "./src/stdio.ts"
+  },
+  "bin": {
+    "fab-cad-mock": "./src/main.ts"
+  },
+  "scripts": {
+    "start": "bun run src/main.ts",
+    "test": "bun test",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@fab-cad/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.1",
+    "typescript": "5.9.3"
+  }
+}
