@@ -22,6 +22,17 @@
         "typescript": "5.9.3",
       },
     },
+    "packages/freecad-wasm": {
+      "name": "@fab-cad/freecad-wasm",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@fab-cad/client": "workspace:*",
+        "@fab-cad/mock-server": "workspace:*",
+        "@fab-cad/protocol": "workspace:*",
+        "@types/bun": "1.4.1",
+        "typescript": "5.9.3",
+      },
+    },
     "packages/mock-server": {
       "name": "@fab-cad/mock-server",
       "version": "0.0.1",
@@ -71,6 +82,8 @@
     "@fab-cad/ci": ["@fab-cad/ci@workspace:tooling/ci"],
 
     "@fab-cad/client": ["@fab-cad/client@workspace:packages/client"],
+
+    "@fab-cad/freecad-wasm": ["@fab-cad/freecad-wasm@workspace:packages/freecad-wasm"],
 
     "@fab-cad/mock-server": ["@fab-cad/mock-server@workspace:packages/mock-server"],
 

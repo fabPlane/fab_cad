@@ -1,0 +1,25 @@
+{
+  "name": "@fab-cad/freecad-wasm",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Loader for FreeCAD's API core compiled to WebAssembly: the fcapi_* C ABI, the event callback, MEMFS helpers and a Web Worker host, behind a FreeCadWasmInstance for @fab-cad/client's WasmTransport",
+  "exports": {
+    ".": "./src/index.ts",
+    "./fs": "./src/fs.ts",
+    "./worker-client": "./src/worker-client.ts",
+    "./worker-core": "./src/worker-core.ts"
+  },
+  "scripts": {
+    "fetch": "bun run scripts/fetch.ts",
+    "test": "bun test",
+    "typecheck": "tsc -b"
+  },
+  "devDependencies": {
+    "@fab-cad/client": "workspace:*",
+    "@fab-cad/mock-server": "workspace:*",
+    "@fab-cad/protocol": "workspace:*",
+    "@types/bun": "1.4.1",
+    "typescript": "5.9.3"
+  }
+}
