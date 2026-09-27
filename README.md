@@ -24,14 +24,19 @@ Tools and tests can also run the native server as a child process over stdio (`S
 | `@fab-cad/mock-server`  | The in-memory FreeCAD API: a wasm-shaped dispatcher, a WebSocket server, a CLI.                              |
 | `@fab-cad/freecad-wasm` | Loader for the `fcapi_*` WebAssembly module, MEMFS helpers, Web Worker host.                                 |
 | `@fab-cad/bridge`       | Bun server: `FreeCADApiServer` per session, WebSocket proxy, file API, static hosting.                       |
+| `apps/web`              | The web UI: FreeCAD's desktop frontend in the browser (see [docs/02-web-ui.md](docs/02-web-ui.md)).          |
 | `tooling/ci`            | Per-package test runner.                                                                                     |
+| `tooling/icons`         | Copies FreeCAD's icons and command texts (menu text, tooltip, shortcut, pixmap) out of the fork.             |
+| `e2e`                   | Playwright: a smoke suite against the in-page mock, a suite (and the screenshots) against a real server.     |
 
-The web app (`apps/web`) comes next.
+![Part Design in the web UI](docs/screenshots/partdesign-pad.png)
 
 ## Quick start
 
 ```sh
 bun install && bun run ci                         # format, typecheck, unit tests
+bun run dev                                       # the web UI on http://127.0.0.1:5180 (?mock=1 for the in-page mock)
+FreeCADApiServer --listen ws://127.0.0.1:8765/    # then open http://127.0.0.1:5180/?ws=ws://127.0.0.1:8765/
 bun packages/mock-server/src/main.ts              # mock FreeCAD API on ws://127.0.0.1:8765/ (demo document)
 ```
 

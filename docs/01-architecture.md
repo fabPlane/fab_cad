@@ -22,7 +22,7 @@ repository matches.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│ Browser (apps/web, next)                                                     │
+│ Browser (apps/web, docs/02-web-ui.md)                                        │
 │  FreeCAD-like shell: tree, property editor, 3D view, workbench toolbars      │
 │  @fab-cad/client: DocumentStore (live mirror + mesh cache) · FreeCADClient   │
 │  @fab-cad/protocol: types, JSON/CBOR envelope, tessellation views            │
@@ -79,12 +79,14 @@ server's origin check allows `localhost` pages by default).
 
 ```
 fab_cad/
-  apps/                  web app (next)
+  apps/web/              the web UI (docs/02-web-ui.md)
   packages/protocol/     PROTOCOL.md in TypeScript; FREECAD_COMMIT pins the fork
   packages/client/       transports, FreeCADClient, DocumentStore
   packages/mock-server/  in-memory FreeCAD API (dispatcher, ws server, CLI)
   packages/freecad-wasm/ loader for freecad_api.wasm, worker host, fetch script
   packages/bridge/       Bun: FreeCADApiServer supervision, ws proxy, files, static
   tooling/ci/            per-package test runner
+  tooling/icons/         FreeCAD icons and command texts for apps/web
+  e2e/                   Playwright suites (mock smoke, real server, screenshots)
   docs/                  this
 ```
