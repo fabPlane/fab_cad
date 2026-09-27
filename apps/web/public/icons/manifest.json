@@ -1,0 +1,1270 @@
+{
+  "source": "FreeCAD",
+  "commit": "a24983c227c85bae66c040b15f799955b949dba1",
+  "icons": {
+    "Constraint_Block": {
+      "file": "Constraint_Block.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Block.svg"
+    },
+    "Constraint_Diameter": {
+      "file": "Constraint_Diameter.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Diameter.svg"
+    },
+    "Constraint_Dimension": {
+      "file": "Constraint_Dimension.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Dimension.svg"
+    },
+    "Constraint_EqualLength": {
+      "file": "Constraint_EqualLength.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_EqualLength.svg"
+    },
+    "Constraint_HorVer": {
+      "file": "Constraint_HorVer.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_HorVer.svg"
+    },
+    "Constraint_Horizontal": {
+      "file": "Constraint_Horizontal.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Horizontal.svg"
+    },
+    "Constraint_HorizontalDistance": {
+      "file": "Constraint_HorizontalDistance.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_HorizontalDistance.svg"
+    },
+    "Constraint_InternalAngle": {
+      "file": "Constraint_InternalAngle.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_InternalAngle.svg"
+    },
+    "Constraint_Length": {
+      "file": "Constraint_Length.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Length.svg"
+    },
+    "Constraint_Lock": {
+      "file": "Constraint_Lock.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Lock.svg"
+    },
+    "Constraint_Parallel": {
+      "file": "Constraint_Parallel.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Parallel.svg"
+    },
+    "Constraint_Perpendicular": {
+      "file": "Constraint_Perpendicular.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Perpendicular.svg"
+    },
+    "Constraint_PointOnObject": {
+      "file": "Constraint_PointOnObject.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_PointOnObject.svg"
+    },
+    "Constraint_PointOnPoint": {
+      "file": "Constraint_PointOnPoint.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_PointOnPoint.svg"
+    },
+    "Constraint_Radius": {
+      "file": "Constraint_Radius.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Radius.svg"
+    },
+    "Constraint_Symmetric": {
+      "file": "Constraint_Symmetric.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Symmetric.svg"
+    },
+    "Constraint_Tangent": {
+      "file": "Constraint_Tangent.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Tangent.svg"
+    },
+    "Constraint_Vertical": {
+      "file": "Constraint_Vertical.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_Vertical.svg"
+    },
+    "Constraint_VerticalDistance": {
+      "file": "Constraint_VerticalDistance.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Constraint_VerticalDistance.svg"
+    },
+    "Document": {
+      "file": "Document.svg",
+      "source": "src/Gui/Icons/Document.svg"
+    },
+    "DrawStyleAsIs": {
+      "file": "DrawStyleAsIs.svg",
+      "source": "src/Gui/Icons/DrawStyleAsIs.svg"
+    },
+    "DrawStyleFlatLines": {
+      "file": "DrawStyleFlatLines.svg",
+      "source": "src/Gui/Icons/DrawStyleFlatLines.svg"
+    },
+    "DrawStyleHiddenLine": {
+      "file": "DrawStyleHiddenLine.svg",
+      "source": "src/Gui/Icons/DrawStyleHiddenLine.svg"
+    },
+    "DrawStyleNoShading": {
+      "file": "DrawStyleNoShading.svg",
+      "source": "src/Gui/Icons/DrawStyleNoShading.svg"
+    },
+    "DrawStylePoints": {
+      "file": "DrawStylePoints.svg",
+      "source": "src/Gui/Icons/DrawStylePoints.svg"
+    },
+    "DrawStyleShaded": {
+      "file": "DrawStyleShaded.svg",
+      "source": "src/Gui/Icons/DrawStyleShaded.svg"
+    },
+    "DrawStyleWireFrame": {
+      "file": "DrawStyleWireFrame.svg",
+      "source": "src/Gui/Icons/DrawStyleWireFrame.svg"
+    },
+    "Feature": {
+      "file": "Feature.svg",
+      "source": "src/Gui/Icons/Feature.svg"
+    },
+    "Geofeaturegroup": {
+      "file": "Geofeaturegroup.svg",
+      "source": "src/Gui/Icons/Geofeaturegroup.svg"
+    },
+    "Group": {
+      "file": "Group.svg",
+      "source": "src/Gui/Icons/Group.svg"
+    },
+    "Link": {
+      "file": "Link.svg",
+      "source": "src/Gui/Icons/Link.svg"
+    },
+    "PartDesignWorkbench": {
+      "file": "PartDesignWorkbench.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesignWorkbench.svg"
+    },
+    "PartDesign_AdditiveBox": {
+      "file": "PartDesign_AdditiveBox.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_AdditiveBox.svg"
+    },
+    "PartDesign_AdditiveCone": {
+      "file": "PartDesign_AdditiveCone.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_AdditiveCone.svg"
+    },
+    "PartDesign_AdditiveCylinder": {
+      "file": "PartDesign_AdditiveCylinder.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_AdditiveCylinder.svg"
+    },
+    "PartDesign_AdditiveHelix": {
+      "file": "PartDesign_AdditiveHelix.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_AdditiveHelix.svg"
+    },
+    "PartDesign_AdditiveLoft": {
+      "file": "PartDesign_AdditiveLoft.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_AdditiveLoft.svg"
+    },
+    "PartDesign_AdditivePipe": {
+      "file": "PartDesign_AdditivePipe.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_AdditivePipe.svg"
+    },
+    "PartDesign_AdditiveSphere": {
+      "file": "PartDesign_AdditiveSphere.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_AdditiveSphere.svg"
+    },
+    "PartDesign_BaseFeature": {
+      "file": "PartDesign_BaseFeature.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_BaseFeature.svg"
+    },
+    "PartDesign_Body": {
+      "file": "PartDesign_Body.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Body.svg"
+    },
+    "PartDesign_Boolean": {
+      "file": "PartDesign_Boolean.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Boolean.svg"
+    },
+    "PartDesign_Chamfer": {
+      "file": "PartDesign_Chamfer.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Chamfer.svg"
+    },
+    "PartDesign_Clone": {
+      "file": "PartDesign_Clone.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Clone.svg"
+    },
+    "PartDesign_CoordinateSystem": {
+      "file": "PartDesign_CoordinateSystem.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_CoordinateSystem.svg"
+    },
+    "PartDesign_Defeaturing": {
+      "file": "PartDesign_Defeaturing.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Defeaturing.svg"
+    },
+    "PartDesign_Draft": {
+      "file": "PartDesign_Draft.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Draft.svg"
+    },
+    "PartDesign_Fillet": {
+      "file": "PartDesign_Fillet.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Fillet.svg"
+    },
+    "PartDesign_Groove": {
+      "file": "PartDesign_Groove.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Groove.svg"
+    },
+    "PartDesign_Hole": {
+      "file": "PartDesign_Hole.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Hole.svg"
+    },
+    "PartDesign_Line": {
+      "file": "PartDesign_Line.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Line.svg"
+    },
+    "PartDesign_LinearPattern": {
+      "file": "PartDesign_LinearPattern.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_LinearPattern.svg"
+    },
+    "PartDesign_Mirrored": {
+      "file": "PartDesign_Mirrored.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Mirrored.svg"
+    },
+    "PartDesign_MultiTransform": {
+      "file": "PartDesign_MultiTransform.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_MultiTransform.svg"
+    },
+    "PartDesign_Pad": {
+      "file": "PartDesign_Pad.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Pad.svg"
+    },
+    "PartDesign_Plane": {
+      "file": "PartDesign_Plane.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Plane.svg"
+    },
+    "PartDesign_Pocket": {
+      "file": "PartDesign_Pocket.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Pocket.svg"
+    },
+    "PartDesign_Point": {
+      "file": "PartDesign_Point.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Point.svg"
+    },
+    "PartDesign_PolarPattern": {
+      "file": "PartDesign_PolarPattern.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_PolarPattern.svg"
+    },
+    "PartDesign_Revolution": {
+      "file": "PartDesign_Revolution.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Revolution.svg"
+    },
+    "PartDesign_ShapeBinder": {
+      "file": "PartDesign_ShapeBinder.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_ShapeBinder.svg"
+    },
+    "PartDesign_Sprocket": {
+      "file": "PartDesign_Sprocket.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Sprocket.svg"
+    },
+    "PartDesign_SubShapeBinder": {
+      "file": "PartDesign_SubShapeBinder.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubShapeBinder.svg"
+    },
+    "PartDesign_SubtractiveBox": {
+      "file": "PartDesign_SubtractiveBox.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubtractiveBox.svg"
+    },
+    "PartDesign_SubtractiveCone": {
+      "file": "PartDesign_SubtractiveCone.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubtractiveCone.svg"
+    },
+    "PartDesign_SubtractiveCylinder": {
+      "file": "PartDesign_SubtractiveCylinder.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubtractiveCylinder.svg"
+    },
+    "PartDesign_SubtractiveHelix": {
+      "file": "PartDesign_SubtractiveHelix.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubtractiveHelix.svg"
+    },
+    "PartDesign_SubtractiveLoft": {
+      "file": "PartDesign_SubtractiveLoft.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubtractiveLoft.svg"
+    },
+    "PartDesign_SubtractivePipe": {
+      "file": "PartDesign_SubtractivePipe.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubtractivePipe.svg"
+    },
+    "PartDesign_SubtractiveSphere": {
+      "file": "PartDesign_SubtractiveSphere.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubtractiveSphere.svg"
+    },
+    "PartDesign_Thickness": {
+      "file": "PartDesign_Thickness.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Thickness.svg"
+    },
+    "PartWorkbench": {
+      "file": "PartWorkbench.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/PartWorkbench.svg"
+    },
+    "Part_2D_object": {
+      "file": "Part_2D_object.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/Part_2D_object.svg"
+    },
+    "Part_3D_object": {
+      "file": "Part_3D_object.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/Part_3D_object.svg"
+    },
+    "Part_BooleanFragments": {
+      "file": "Part_BooleanFragments.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_BooleanFragments.svg"
+    },
+    "Part_Booleans": {
+      "file": "Part_Booleans.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_Booleans.svg"
+    },
+    "Part_BoxSelection": {
+      "file": "Part_BoxSelection.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/Part_BoxSelection.svg"
+    },
+    "Part_Box_Parametric": {
+      "file": "Part_Box_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Box_Parametric.svg"
+    },
+    "Part_Chamfer": {
+      "file": "Part_Chamfer.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Chamfer.svg"
+    },
+    "Part_CheckGeometry": {
+      "file": "Part_CheckGeometry.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_CheckGeometry.svg"
+    },
+    "Part_Circle_Parametric": {
+      "file": "Part_Circle_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Circle_Parametric.svg"
+    },
+    "Part_ColorFace": {
+      "file": "Part_ColorFace.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_ColorFace.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "Part_Common": {
+      "file": "Part_Common.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_Common.svg"
+    },
+    "Part_Compound": {
+      "file": "Part_Compound.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_Compound.svg"
+    },
+    "Part_CompoundFilter": {
+      "file": "Part_CompoundFilter.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_CompoundFilter.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "Part_Cone_Parametric": {
+      "file": "Part_Cone_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Cone_Parametric.svg"
+    },
+    "Part_CrossSections": {
+      "file": "Part_CrossSections.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_CrossSections.svg"
+    },
+    "Part_Cut": {
+      "file": "Part_Cut.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_Cut.svg"
+    },
+    "Part_Cylinder_Parametric": {
+      "file": "Part_Cylinder_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Cylinder_Parametric.svg"
+    },
+    "Part_Defeaturing": {
+      "file": "Part_Defeaturing.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_Defeaturing.svg"
+    },
+    "Part_Element_Copy": {
+      "file": "Part_Element_Copy.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Element_Copy.svg"
+    },
+    "Part_Ellipse_Parametric": {
+      "file": "Part_Ellipse_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Ellipse_Parametric.svg"
+    },
+    "Part_Ellipsoid_Parametric": {
+      "file": "Part_Ellipsoid_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Ellipsoid_Parametric.svg"
+    },
+    "Part_ExplodeCompound": {
+      "file": "Part_ExplodeCompound.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_ExplodeCompound.svg"
+    },
+    "Part_Extrude": {
+      "file": "Part_Extrude.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Extrude.svg"
+    },
+    "Part_Feature": {
+      "file": "Part_Feature.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/Part_Feature.svg"
+    },
+    "Part_FeatureImport": {
+      "file": "Part_FeatureImport.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/Part_FeatureImport.svg"
+    },
+    "Part_Fillet": {
+      "file": "Part_Fillet.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Fillet.svg"
+    },
+    "Part_Fuse": {
+      "file": "Part_Fuse.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_Fuse.svg"
+    },
+    "Part_Helix_Parametric": {
+      "file": "Part_Helix_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Helix_Parametric.svg"
+    },
+    "Part_JoinConnect": {
+      "file": "Part_JoinConnect.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_JoinConnect.svg"
+    },
+    "Part_JoinCutout": {
+      "file": "Part_JoinCutout.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_JoinCutout.svg"
+    },
+    "Part_JoinEmbed": {
+      "file": "Part_JoinEmbed.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_JoinEmbed.svg"
+    },
+    "Part_Line_Parametric": {
+      "file": "Part_Line_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Line_Parametric.svg"
+    },
+    "Part_Loft": {
+      "file": "Part_Loft.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Loft.svg"
+    },
+    "Part_MakeFace": {
+      "file": "Part_MakeFace.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_MakeFace.svg"
+    },
+    "Part_MakeSolid": {
+      "file": "Part_MakeSolid.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_MakeSolid.svg"
+    },
+    "Part_Mirror": {
+      "file": "Part_Mirror.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Mirror.svg"
+    },
+    "Part_Offset": {
+      "file": "Part_Offset.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Offset.svg"
+    },
+    "Part_Offset2D": {
+      "file": "Part_Offset2D.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Offset2D.svg"
+    },
+    "Part_Plane_Parametric": {
+      "file": "Part_Plane_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Plane_Parametric.svg"
+    },
+    "Part_Point_Parametric": {
+      "file": "Part_Point_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Point_Parametric.svg"
+    },
+    "Part_PointsFromMesh": {
+      "file": "Part_PointsFromMesh.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_PointsFromMesh.svg"
+    },
+    "Part_Polygon_Parametric": {
+      "file": "Part_Polygon_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Polygon_Parametric.svg"
+    },
+    "Part_Primitives": {
+      "file": "Part_Primitives.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/create/Part_Primitives.svg"
+    },
+    "Part_Prism_Parametric": {
+      "file": "Part_Prism_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Prism_Parametric.svg"
+    },
+    "Part_ProjectionOnSurface": {
+      "file": "Part_ProjectionOnSurface.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_ProjectionOnSurface.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "Part_Refine_Shape": {
+      "file": "Part_Refine_Shape.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Refine_Shape.svg"
+    },
+    "Part_Reverse_Shape": {
+      "file": "Part_Reverse_Shape.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Reverse_Shape.svg",
+      "license": "https://www.gnu.org/copyleft/lesser.html"
+    },
+    "Part_Revolve": {
+      "file": "Part_Revolve.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Revolve.svg"
+    },
+    "Part_RuledSurface": {
+      "file": "Part_RuledSurface.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_RuledSurface.svg"
+    },
+    "Part_Scale": {
+      "file": "Part_Scale.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Scale.svg"
+    },
+    "Part_Section": {
+      "file": "Part_Section.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_Section.svg"
+    },
+    "Part_SectionCut": {
+      "file": "Part_SectionCut.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/Part_SectionCut.svg"
+    },
+    "Part_Shape_from_Mesh": {
+      "file": "Part_Shape_from_Mesh.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Shape_from_Mesh.svg"
+    },
+    "Part_Shapebuilder": {
+      "file": "Part_Shapebuilder.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/create/Part_Shapebuilder.svg"
+    },
+    "Part_Slice": {
+      "file": "Part_Slice.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_Slice.svg"
+    },
+    "Part_SliceApart": {
+      "file": "Part_SliceApart.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_SliceApart.svg"
+    },
+    "Part_Sphere_Parametric": {
+      "file": "Part_Sphere_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Sphere_Parametric.svg"
+    },
+    "Part_Spiral_Parametric": {
+      "file": "Part_Spiral_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Spiral_Parametric.svg"
+    },
+    "Part_Sweep": {
+      "file": "Part_Sweep.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Sweep.svg"
+    },
+    "Part_Thickness": {
+      "file": "Part_Thickness.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Thickness.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "Part_Torus_Parametric": {
+      "file": "Part_Torus_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Torus_Parametric.svg"
+    },
+    "Part_Transformed_Copy": {
+      "file": "Part_Transformed_Copy.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Transformed_Copy.svg"
+    },
+    "Part_Tube_Parametric": {
+      "file": "Part_Tube_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Tube_Parametric.svg"
+    },
+    "Part_Wedge_Parametric": {
+      "file": "Part_Wedge_Parametric.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/parametric/Part_Wedge_Parametric.svg"
+    },
+    "Part_XOR": {
+      "file": "Part_XOR.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/booleans/Part_XOR.svg"
+    },
+    "SketcherWorkbench": {
+      "file": "SketcherWorkbench.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/SketcherWorkbench.svg"
+    },
+    "Sketcher_CancelSketch": {
+      "file": "Sketcher_CancelSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_CancelSketch.svg"
+    },
+    "Sketcher_Create3PointArc": {
+      "file": "Sketcher_Create3PointArc.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_Create3PointArc.svg"
+    },
+    "Sketcher_Create3PointCircle": {
+      "file": "Sketcher_Create3PointCircle.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_Create3PointCircle.svg"
+    },
+    "Sketcher_CreateArc": {
+      "file": "Sketcher_CreateArc.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_CreateArc.svg"
+    },
+    "Sketcher_CreateCircle": {
+      "file": "Sketcher_CreateCircle.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_CreateCircle.svg"
+    },
+    "Sketcher_CreateLine": {
+      "file": "Sketcher_CreateLine.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_CreateLine.svg"
+    },
+    "Sketcher_CreateOblong": {
+      "file": "Sketcher_CreateOblong.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_CreateOblong.svg"
+    },
+    "Sketcher_CreatePoint": {
+      "file": "Sketcher_CreatePoint.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_CreatePoint.svg"
+    },
+    "Sketcher_CreatePolyline": {
+      "file": "Sketcher_CreatePolyline.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_CreatePolyline.svg"
+    },
+    "Sketcher_CreateRectangle": {
+      "file": "Sketcher_CreateRectangle.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_CreateRectangle.svg"
+    },
+    "Sketcher_CreateRectangle_Center": {
+      "file": "Sketcher_CreateRectangle_Center.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_CreateRectangle_Center.svg"
+    },
+    "Sketcher_CreateSlot": {
+      "file": "Sketcher_CreateSlot.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_CreateSlot.svg"
+    },
+    "Sketcher_EditSketch": {
+      "file": "Sketcher_EditSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_EditSketch.svg"
+    },
+    "Sketcher_Element_Arc_Edge": {
+      "file": "Sketcher_Element_Arc_Edge.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/elements/Sketcher_Element_Arc_Edge.svg"
+    },
+    "Sketcher_Element_Circle_Edge": {
+      "file": "Sketcher_Element_Circle_Edge.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/elements/Sketcher_Element_Circle_Edge.svg"
+    },
+    "Sketcher_Element_Line_Edge": {
+      "file": "Sketcher_Element_Line_Edge.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/elements/Sketcher_Element_Line_Edge.svg"
+    },
+    "Sketcher_Element_Point_StartingPoint": {
+      "file": "Sketcher_Element_Point_StartingPoint.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/elements/Sketcher_Element_Point_StartingPoint.svg"
+    },
+    "Sketcher_LeaveSketch": {
+      "file": "Sketcher_LeaveSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_LeaveSketch.svg"
+    },
+    "Sketcher_MapSketch": {
+      "file": "Sketcher_MapSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_MapSketch.svg"
+    },
+    "Sketcher_MergeSketch": {
+      "file": "Sketcher_MergeSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_MergeSketch.svg"
+    },
+    "Sketcher_MirrorSketch": {
+      "file": "Sketcher_MirrorSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_MirrorSketch.svg"
+    },
+    "Sketcher_NewSketch": {
+      "file": "Sketcher_NewSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_NewSketch.svg"
+    },
+    "Sketcher_NotFullyConstrained": {
+      "file": "Sketcher_NotFullyConstrained.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/Sketcher_NotFullyConstrained.svg"
+    },
+    "Sketcher_ReorientSketch": {
+      "file": "Sketcher_ReorientSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_ReorientSketch.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "Sketcher_Sketch": {
+      "file": "Sketcher_Sketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/Sketcher_Sketch.svg"
+    },
+    "Sketcher_ToggleActiveConstraint": {
+      "file": "Sketcher_ToggleActiveConstraint.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Sketcher_ToggleActiveConstraint.svg"
+    },
+    "Sketcher_ToggleConstraint": {
+      "file": "Sketcher_ToggleConstraint.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/constraints/Sketcher_ToggleConstraint.svg"
+    },
+    "Sketcher_ToggleConstruction": {
+      "file": "Sketcher_ToggleConstruction.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/geometry/Sketcher_ToggleConstruction.svg"
+    },
+    "Sketcher_ValidateSketch": {
+      "file": "Sketcher_ValidateSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_ValidateSketch.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "Sketcher_ViewSection": {
+      "file": "Sketcher_ViewSection.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_ViewSection.svg"
+    },
+    "Sketcher_ViewSketch": {
+      "file": "Sketcher_ViewSketch.svg",
+      "source": "src/Mod/Sketcher/Gui/Resources/icons/general/Sketcher_ViewSketch.svg"
+    },
+    "Std_Alignment": {
+      "file": "Std_Alignment.svg",
+      "source": "src/Gui/Icons/Std_Alignment.svg"
+    },
+    "Std_Axis": {
+      "file": "Std_Axis.svg",
+      "source": "src/Gui/Icons/Std_Axis.svg"
+    },
+    "Std_AxisCross": {
+      "file": "Std_AxisCross.svg",
+      "source": "src/Gui/Icons/Std_AxisCross.svg"
+    },
+    "Std_CloseActiveWindow": {
+      "file": "Std_CloseActiveWindow.svg",
+      "source": "src/Gui/Icons/Std_CloseActiveWindow.svg"
+    },
+    "Std_CloseAllWindows": {
+      "file": "Std_CloseAllWindows.svg",
+      "source": "src/Gui/Icons/Std_CloseAllWindows.svg"
+    },
+    "Std_CoordinateSystem": {
+      "file": "Std_CoordinateSystem.svg",
+      "source": "src/Gui/Icons/Std_CoordinateSystem.svg"
+    },
+    "Std_DemoMode": {
+      "file": "Std_DemoMode.svg",
+      "source": "src/Gui/Icons/Std_DemoMode.svg"
+    },
+    "Std_DependencyGraph": {
+      "file": "Std_DependencyGraph.svg",
+      "source": "src/Gui/Icons/Std_DependencyGraph.svg"
+    },
+    "Std_DlgParameter": {
+      "file": "Std_DlgParameter.svg",
+      "source": "src/Gui/Icons/Std_DlgParameter.svg"
+    },
+    "Std_DuplicateSelection": {
+      "file": "Std_DuplicateSelection.svg",
+      "source": "src/Gui/Icons/Std_DuplicateSelection.svg"
+    },
+    "Std_Export": {
+      "file": "Std_Export.svg",
+      "source": "src/Gui/Icons/Std_Export.svg"
+    },
+    "Std_HideObjects": {
+      "file": "Std_HideObjects.svg",
+      "source": "src/Gui/Icons/Std_HideObjects.svg"
+    },
+    "Std_HideSelection": {
+      "file": "Std_HideSelection.svg",
+      "source": "src/Gui/Icons/Std_HideSelection.svg"
+    },
+    "Std_Import": {
+      "file": "Std_Import.svg",
+      "source": "src/Gui/Icons/Std_Import.svg"
+    },
+    "Std_MarkToRecompute": {
+      "file": "Std_MarkToRecompute.svg",
+      "source": "src/Gui/Icons/Std_MarkToRecompute.svg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    "Std_MergeProjects": {
+      "file": "Std_MergeProjects.svg",
+      "source": "src/Gui/Icons/Std_MergeProjects.svg"
+    },
+    "Std_Placement": {
+      "file": "Std_Placement.svg",
+      "source": "src/Gui/Icons/Std_Placement.svg"
+    },
+    "Std_Plane": {
+      "file": "Std_Plane.svg",
+      "source": "src/Gui/Icons/Std_Plane.svg"
+    },
+    "Std_Point": {
+      "file": "Std_Point.svg",
+      "source": "src/Gui/Icons/Std_Point.svg"
+    },
+    "Std_PrintPdf": {
+      "file": "Std_PrintPdf.svg",
+      "source": "src/Gui/Icons/Std_PrintPdf.svg"
+    },
+    "Std_ProjectUtil": {
+      "file": "Std_ProjectUtil.svg",
+      "source": "src/Gui/Icons/Std_ProjectUtil.svg"
+    },
+    "Std_RandomColor": {
+      "file": "Std_RandomColor.svg",
+      "source": "src/Gui/Icons/Std_RandomColor.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "Std_RecentFiles": {
+      "file": "Std_RecentFiles.svg",
+      "source": "src/Gui/Icons/Std_RecentFiles.svg"
+    },
+    "Std_RecentMacros": {
+      "file": "Std_RecentMacros.svg",
+      "source": "src/Gui/Icons/Std_RecentMacros.svg"
+    },
+    "Std_Revert": {
+      "file": "Std_Revert.svg",
+      "source": "src/Gui/Icons/Std_Revert.svg"
+    },
+    "Std_SaveAll": {
+      "file": "Std_SaveAll.svg",
+      "source": "src/Gui/Icons/Std_SaveAll.svg"
+    },
+    "Std_SaveCopy": {
+      "file": "Std_SaveCopy.svg",
+      "source": "src/Gui/Icons/Std_SaveCopy.svg"
+    },
+    "Std_SceneInspector": {
+      "file": "Std_SceneInspector.svg",
+      "source": "src/Gui/Icons/Std_SceneInspector.svg"
+    },
+    "Std_SelectVisibleObjects": {
+      "file": "Std_SelectVisibleObjects.svg",
+      "source": "src/Gui/Icons/Std_SelectVisibleObjects.svg"
+    },
+    "Std_ShowObjects": {
+      "file": "Std_ShowObjects.svg",
+      "source": "src/Gui/Icons/Std_ShowObjects.svg"
+    },
+    "Std_ShowSelection": {
+      "file": "Std_ShowSelection.svg",
+      "source": "src/Gui/Icons/Std_ShowSelection.svg"
+    },
+    "Std_TextureMapping": {
+      "file": "Std_TextureMapping.svg",
+      "source": "src/Gui/Icons/Std_TextureMapping.svg"
+    },
+    "Std_ToggleBottomPanels": {
+      "file": "Std_ToggleBottomPanels.svg",
+      "source": "src/Gui/Icons/Std_ToggleBottomPanels.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "Std_ToggleClipPlane": {
+      "file": "Std_ToggleClipPlane.svg",
+      "source": "src/Gui/Icons/Std_ToggleClipPlane.svg"
+    },
+    "Std_ToggleFreeze": {
+      "file": "Std_ToggleFreeze.svg",
+      "source": "src/Gui/Icons/Std_ToggleFreeze.svg"
+    },
+    "Std_ToggleNavigation": {
+      "file": "Std_ToggleNavigation.svg",
+      "source": "src/Gui/Icons/Std_ToggleNavigation.svg",
+      "license": "https://www.gnu.org/licenses/lgpl-3.0.en.html"
+    },
+    "Std_ToggleObjects": {
+      "file": "Std_ToggleObjects.svg",
+      "source": "src/Gui/Icons/Std_ToggleObjects.svg"
+    },
+    "Std_ToggleTransparency": {
+      "file": "Std_ToggleTransparency.svg",
+      "source": "src/Gui/Icons/Std_ToggleTransparency.svg"
+    },
+    "Std_ToggleVisibility": {
+      "file": "Std_ToggleVisibility.svg",
+      "source": "src/Gui/Icons/Std_ToggleVisibility.svg"
+    },
+    "Std_TransformManip": {
+      "file": "Std_TransformManip.svg",
+      "source": "src/Gui/Icons/Std_TransformManip.svg"
+    },
+    "Std_UserEditModeDefault": {
+      "file": "Std_UserEditModeDefault.svg",
+      "source": "src/Gui/Icons/Std_UserEditModeDefault.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "Std_ViewDimetric": {
+      "file": "Std_ViewDimetric.svg",
+      "source": "src/Gui/Icons/Std_ViewDimetric.svg"
+    },
+    "Std_ViewHome": {
+      "file": "Std_ViewHome.svg",
+      "source": "src/Gui/Icons/Std_ViewHome.svg"
+    },
+    "Std_ViewIvIssueCamPos": {
+      "file": "Std_ViewIvIssueCamPos.svg",
+      "source": "src/Gui/Icons/Std_ViewIvIssueCamPos.svg"
+    },
+    "Std_ViewScreenShot": {
+      "file": "Std_ViewScreenShot.svg",
+      "source": "src/Gui/Icons/Std_ViewScreenShot.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "Std_ViewTrimetric": {
+      "file": "Std_ViewTrimetric.svg",
+      "source": "src/Gui/Icons/Std_ViewTrimetric.svg"
+    },
+    "Std_WindowCascade": {
+      "file": "Std_WindowCascade.svg",
+      "source": "src/Gui/Icons/Std_WindowCascade.svg"
+    },
+    "Std_WindowNext": {
+      "file": "Std_WindowNext.svg",
+      "source": "src/Gui/Icons/Std_WindowNext.svg"
+    },
+    "Std_WindowPrev": {
+      "file": "Std_WindowPrev.svg",
+      "source": "src/Gui/Icons/Std_WindowPrev.svg"
+    },
+    "Std_WindowTileVer": {
+      "file": "Std_WindowTileVer.svg",
+      "source": "src/Gui/Icons/Std_WindowTileVer.svg"
+    },
+    "Std_Windows": {
+      "file": "Std_Windows.svg",
+      "source": "src/Gui/Icons/Std_Windows.svg"
+    },
+    "TextDocument": {
+      "file": "TextDocument.svg",
+      "source": "src/Gui/Icons/TextDocument.svg"
+    },
+    "TreeItemInvisible": {
+      "file": "TreeItemInvisible.svg",
+      "source": "src/Gui/Icons/TreeItemInvisible.svg"
+    },
+    "TreeItemVisible": {
+      "file": "TreeItemVisible.svg",
+      "source": "src/Gui/Icons/TreeItemVisible.svg"
+    },
+    "Tree_Annotation": {
+      "file": "Tree_Annotation.svg",
+      "source": "src/Gui/Icons/Tree_Annotation.svg"
+    },
+    "Tree_Python": {
+      "file": "Tree_Python.svg",
+      "source": "src/Gui/Icons/Tree_Python.svg"
+    },
+    "VarSet": {
+      "file": "VarSet.svg",
+      "source": "src/Gui/Icons/VarSet.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "Warning": {
+      "file": "Warning.svg",
+      "source": "src/Gui/Icons/Warning.svg"
+    },
+    "WhatsThis": {
+      "file": "WhatsThis.svg",
+      "source": "src/Gui/Icons/WhatsThis.svg"
+    },
+    "accessories-calculator": {
+      "file": "accessories-calculator.svg",
+      "source": "src/Gui/Icons/accessories-calculator.svg",
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    "accessories-text-editor": {
+      "file": "accessories-text-editor.svg",
+      "source": "src/Gui/Icons/accessories-text-editor.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "align-to-selection": {
+      "file": "align-to-selection.svg",
+      "source": "src/Gui/Icons/align-to-selection.svg"
+    },
+    "application-exit": {
+      "file": "application-exit.svg",
+      "source": "src/Gui/Icons/application-exit.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "applications-accessories": {
+      "file": "applications-accessories.svg",
+      "source": "src/Gui/Icons/applications-accessories.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "applications-python": {
+      "file": "applications-python.svg",
+      "source": "src/Gui/Icons/applications-python.svg"
+    },
+    "bound-expression": {
+      "file": "bound-expression.svg",
+      "source": "src/Gui/Icons/bound-expression.svg"
+    },
+    "bound-expression-unset": {
+      "file": "bound-expression-unset.svg",
+      "source": "src/Gui/Icons/bound-expression-unset.svg"
+    },
+    "button_down": {
+      "file": "button_down.svg",
+      "source": "src/Gui/Icons/button_down.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "button_left": {
+      "file": "button_left.svg",
+      "source": "src/Gui/Icons/button_left.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "button_right": {
+      "file": "button_right.svg",
+      "source": "src/Gui/Icons/button_right.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "button_rotate": {
+      "file": "button_rotate.svg",
+      "source": "src/Gui/Icons/button_rotate.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "button_up": {
+      "file": "button_up.svg",
+      "source": "src/Gui/Icons/button_up.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "critical-info": {
+      "file": "critical-info.svg",
+      "source": "src/Gui/Icons/critical-info.svg"
+    },
+    "cursor-pan": {
+      "file": "cursor-pan.svg",
+      "source": "src/Gui/Icons/cursor-pan.svg"
+    },
+    "cursor-rotate": {
+      "file": "cursor-rotate.svg",
+      "source": "src/Gui/Icons/cursor-rotate.svg"
+    },
+    "cursor-zoom": {
+      "file": "cursor-zoom.svg",
+      "source": "src/Gui/Icons/cursor-zoom.svg"
+    },
+    "document-new": {
+      "file": "document-new.svg",
+      "source": "src/Gui/Icons/document-new.svg"
+    },
+    "document-open": {
+      "file": "document-open.svg",
+      "source": "src/Gui/Icons/document-open.svg"
+    },
+    "document-print": {
+      "file": "document-print.svg",
+      "source": "src/Gui/Icons/document-print.svg"
+    },
+    "document-print-preview": {
+      "file": "document-print-preview.svg",
+      "source": "src/Gui/Icons/document-print-preview.svg"
+    },
+    "document-properties": {
+      "file": "document-properties.svg",
+      "source": "src/Gui/Icons/document-properties.svg"
+    },
+    "document-save": {
+      "file": "document-save.svg",
+      "source": "src/Gui/Icons/document-save.svg"
+    },
+    "document-save-as": {
+      "file": "document-save-as.svg",
+      "source": "src/Gui/Icons/document-save-as.svg"
+    },
+    "edge-selection": {
+      "file": "edge-selection.svg",
+      "source": "src/Gui/Icons/edge-selection.svg"
+    },
+    "edit-cleartext": {
+      "file": "edit-cleartext.svg",
+      "source": "src/Gui/Icons/edit-cleartext.svg"
+    },
+    "edit-copy": {
+      "file": "edit-copy.svg",
+      "source": "src/Gui/Icons/edit-copy.svg"
+    },
+    "edit-cut": {
+      "file": "edit-cut.svg",
+      "source": "src/Gui/Icons/edit-cut.svg"
+    },
+    "edit-delete": {
+      "file": "edit-delete.svg",
+      "source": "src/Gui/Icons/edit-delete.svg"
+    },
+    "edit-edit": {
+      "file": "edit-edit.svg",
+      "source": "src/Gui/Icons/edit-edit.svg"
+    },
+    "edit-element-select-box": {
+      "file": "edit-element-select-box.svg",
+      "source": "src/Gui/Icons/edit-element-select-box.svg"
+    },
+    "edit-paste": {
+      "file": "edit-paste.svg",
+      "source": "src/Gui/Icons/edit-paste.svg"
+    },
+    "edit-redo": {
+      "file": "edit-redo.svg",
+      "source": "src/Gui/Icons/edit-redo.svg"
+    },
+    "edit-select-all": {
+      "file": "edit-select-all.svg",
+      "source": "src/Gui/Icons/edit-select-all.svg"
+    },
+    "edit-select-box": {
+      "file": "edit-select-box.svg",
+      "source": "src/Gui/Icons/edit-select-box.svg"
+    },
+    "edit-undo": {
+      "file": "edit-undo.svg",
+      "source": "src/Gui/Icons/edit-undo.svg"
+    },
+    "edit_Cancel": {
+      "file": "edit_Cancel.svg",
+      "source": "src/Gui/Icons/edit_Cancel.svg"
+    },
+    "edit_OK": {
+      "file": "edit_OK.svg",
+      "source": "src/Gui/Icons/edit_OK.svg"
+    },
+    "face-selection": {
+      "file": "face-selection.svg",
+      "source": "src/Gui/Icons/face-selection.svg"
+    },
+    "folder": {
+      "file": "folder.svg",
+      "source": "src/Gui/Icons/folder.svg"
+    },
+    "freecad": {
+      "file": "freecad.svg",
+      "source": "src/Gui/Icons/freecad.svg"
+    },
+    "image-open": {
+      "file": "image-open.svg",
+      "source": "src/Gui/Icons/image-open.svg"
+    },
+    "info": {
+      "file": "info.svg",
+      "source": "src/Gui/Icons/info.svg"
+    },
+    "internet-web-browser": {
+      "file": "internet-web-browser.svg",
+      "source": "src/Gui/Icons/internet-web-browser.svg",
+      "license": "http://creativecommons.org/licenses/publicdomain/"
+    },
+    "media-playback-start": {
+      "file": "media-playback-start.svg",
+      "source": "src/Gui/Icons/media-playback-start.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "media-record": {
+      "file": "media-record.svg",
+      "source": "src/Gui/Icons/media-record.svg"
+    },
+    "overlay_error": {
+      "file": "overlay_error.svg",
+      "source": "src/Gui/Icons/overlay_error.svg"
+    },
+    "overlay_recompute": {
+      "file": "overlay_recompute.svg",
+      "source": "src/Gui/Icons/overlay_recompute.svg"
+    },
+    "preferences-part_design": {
+      "file": "preferences-part_design.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/preferences-part_design.svg",
+      "license": "https://www.gnu.org/licenses/lgpl-3.0.en.html"
+    },
+    "preferences-system": {
+      "file": "preferences-system.svg",
+      "source": "src/Gui/Icons/preferences-system.svg"
+    },
+    "process-stop": {
+      "file": "process-stop.svg",
+      "source": "src/Gui/Icons/process-stop.svg",
+      "license": "http://creativecommons.org/licenses/publicdomain/"
+    },
+    "px": {
+      "file": "px.svg",
+      "source": "src/Gui/Icons/px.svg"
+    },
+    "safe-mode-restart": {
+      "file": "safe-mode-restart.svg",
+      "source": "src/Gui/Icons/safe-mode-restart.svg"
+    },
+    "sel-bbox": {
+      "file": "sel-bbox.svg",
+      "source": "src/Gui/Icons/sel-bbox.svg"
+    },
+    "sel-instance": {
+      "file": "sel-instance.svg",
+      "source": "src/Gui/Icons/sel-instance.svg"
+    },
+    "tree-goto-sel": {
+      "file": "tree-goto-sel.svg",
+      "source": "src/Gui/Icons/tree-goto-sel.svg"
+    },
+    "tree-pre-sel": {
+      "file": "tree-pre-sel.svg",
+      "source": "src/Gui/Icons/tree-pre-sel.svg"
+    },
+    "utilities-terminal": {
+      "file": "utilities-terminal.svg",
+      "source": "src/Gui/Icons/utilities-terminal.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "vertex-selection": {
+      "file": "vertex-selection.svg",
+      "source": "src/Gui/Icons/vertex-selection.svg"
+    },
+    "view-axonometric": {
+      "file": "view-axonometric.svg",
+      "source": "src/Gui/Icons/view-axonometric.svg"
+    },
+    "view-bottom": {
+      "file": "view-bottom.svg",
+      "source": "src/Gui/Icons/view-bottom.svg"
+    },
+    "view-front": {
+      "file": "view-front.svg",
+      "source": "src/Gui/Icons/view-front.svg"
+    },
+    "view-fullscreen": {
+      "file": "view-fullscreen.svg",
+      "source": "src/Gui/Icons/view-fullscreen.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "view-isometric": {
+      "file": "view-isometric.svg",
+      "source": "src/Gui/Icons/view-isometric.svg"
+    },
+    "view-left": {
+      "file": "view-left.svg",
+      "source": "src/Gui/Icons/view-left.svg"
+    },
+    "view-perspective": {
+      "file": "view-perspective.svg",
+      "source": "src/Gui/Icons/view-perspective.svg"
+    },
+    "view-rear": {
+      "file": "view-rear.svg",
+      "source": "src/Gui/Icons/view-rear.svg"
+    },
+    "view-refresh": {
+      "file": "view-refresh.svg",
+      "source": "src/Gui/Icons/view-refresh.svg"
+    },
+    "view-right": {
+      "file": "view-right.svg",
+      "source": "src/Gui/Icons/view-right.svg"
+    },
+    "view-rotate-left": {
+      "file": "view-rotate-left.svg",
+      "source": "src/Gui/Icons/view-rotate-left.svg",
+      "license": "https://www.gnu.org/licenses/lgpl-3.0.en.html"
+    },
+    "view-rotate-right": {
+      "file": "view-rotate-right.svg",
+      "source": "src/Gui/Icons/view-rotate-right.svg",
+      "license": "https://www.gnu.org/licenses/lgpl-3.0.en.html"
+    },
+    "view-top": {
+      "file": "view-top.svg",
+      "source": "src/Gui/Icons/view-top.svg"
+    },
+    "view-unselectable": {
+      "file": "view-unselectable.svg",
+      "source": "src/Gui/Icons/view-unselectable.svg"
+    },
+    "window-new": {
+      "file": "window-new.svg",
+      "source": "src/Gui/Icons/window-new.svg"
+    },
+    "zoom-all": {
+      "file": "zoom-all.svg",
+      "source": "src/Gui/Icons/zoom-all.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "zoom-border": {
+      "file": "zoom-border.svg",
+      "source": "src/Gui/Icons/zoom-border.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "zoom-in": {
+      "file": "zoom-in.svg",
+      "source": "src/Gui/Icons/zoom-in.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "zoom-out": {
+      "file": "zoom-out.svg",
+      "source": "src/Gui/Icons/zoom-out.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    },
+    "zoom-selection": {
+      "file": "zoom-selection.svg",
+      "source": "src/Gui/Icons/zoom-selection.svg",
+      "license": "http://creativecommons.org/licenses/by-sa/2.0/"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@fab-cad/icons-tooling",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Copies the FreeCAD icons apps/web uses out of the fork, with a manifest, and extracts FreeCAD's command texts, tooltips, shortcuts and pixmaps",
+  "scripts": {
+    "sync": "bun sync.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.1"
+  }
+}

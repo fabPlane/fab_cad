@@ -1,0 +1,2387 @@
+{
+  "PartDesign_AdditiveHelix": {
+    "name": "PartDesign_AdditiveHelix",
+    "menuText": "Additive Helix",
+    "toolTip": "Sweeps the selected sketch or profile along a helix and adds it to the body",
+    "pixmap": "PartDesign_AdditiveHelix",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_AdditiveLoft": {
+    "name": "PartDesign_AdditiveLoft",
+    "menuText": "Additive Loft",
+    "toolTip": "Lofts the selected sketch or profile through one or more sections and adds it to the body",
+    "pixmap": "PartDesign_AdditiveLoft",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_AdditivePipe": {
+    "name": "PartDesign_AdditivePipe",
+    "menuText": "Additive Pipe",
+    "toolTip": "Sweeps the selected sketch or profile along a path and adds it to the body",
+    "pixmap": "PartDesign_AdditivePipe",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Body": {
+    "name": "PartDesign_Body",
+    "menuText": "New Body",
+    "toolTip": "Creates a new body and activates it",
+    "pixmap": "PartDesign_Body",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/CommandBody.cpp"
+  },
+  "PartDesign_Boolean": {
+    "name": "PartDesign_Boolean",
+    "menuText": "Boolean Operation",
+    "toolTip": "Applies boolean operations with the selected objects and the active body",
+    "pixmap": "PartDesign_Boolean",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Chamfer": {
+    "name": "PartDesign_Chamfer",
+    "menuText": "Chamfer",
+    "toolTip": "Applies a chamfer to the selected edges or faces",
+    "pixmap": "PartDesign_Chamfer",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Clone": {
+    "name": "PartDesign_Clone",
+    "menuText": "Clone",
+    "toolTip": "Copies a solid object parametrically as the base feature of a new body",
+    "pixmap": "PartDesign_Clone",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_CompPrimitiveAdditive": {
+    "name": "PartDesign_CompPrimitiveAdditive",
+    "menuText": "Additive Primitive",
+    "toolTip": "Creates an additive primitive",
+    "pixmap": "",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/CommandPrimitive.cpp"
+  },
+  "PartDesign_CompPrimitiveSubtractive": {
+    "name": "PartDesign_CompPrimitiveSubtractive",
+    "menuText": "Subtractive Primitive",
+    "toolTip": "Creates a subtractive primitive",
+    "pixmap": "",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/CommandPrimitive.cpp"
+  },
+  "PartDesign_CompSketches": {
+    "name": "PartDesign_CompSketches",
+    "menuText": "Create Datum",
+    "toolTip": "Creates a datum object or local coordinate system",
+    "pixmap": "",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_CoordinateSystem": {
+    "name": "PartDesign_CoordinateSystem",
+    "menuText": "Local Coordinate System",
+    "toolTip": "Creates a new local coordinate system",
+    "pixmap": "PartDesign_CoordinateSystem",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Defeaturing": {
+    "name": "PartDesign_Defeaturing",
+    "menuText": "Defeaturing",
+    "toolTip": "Removes selected faces from a solid",
+    "pixmap": "PartDesign_Defeaturing",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Draft": {
+    "name": "PartDesign_Draft",
+    "menuText": "Draft",
+    "toolTip": "Applies a draft to the selected faces",
+    "pixmap": "PartDesign_Draft",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_DuplicateSelection": {
+    "name": "PartDesign_DuplicateSelection",
+    "menuText": "Duplicate &Object",
+    "toolTip": "Duplicates the selected object and adds it to the active body",
+    "pixmap": "",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/CommandBody.cpp"
+  },
+  "PartDesign_Fillet": {
+    "name": "PartDesign_Fillet",
+    "menuText": "Fillet",
+    "toolTip": "Applies a fillet to the selected edges or faces",
+    "pixmap": "PartDesign_Fillet",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Groove": {
+    "name": "PartDesign_Groove",
+    "menuText": "Groove",
+    "toolTip": "Revolves the sketch or profile around a line or axis and removes it from the body",
+    "pixmap": "PartDesign_Groove",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Hole": {
+    "name": "PartDesign_Hole",
+    "menuText": "Hole",
+    "toolTip": "Creates holes in the active body at the center points of circles or arcs of the selected sketch or profile",
+    "pixmap": "PartDesign_Hole",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Line": {
+    "name": "PartDesign_Line",
+    "menuText": "Datum Line",
+    "toolTip": "Creates a new datum line",
+    "pixmap": "PartDesign_Line",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_LinearPattern": {
+    "name": "PartDesign_LinearPattern",
+    "menuText": "Linear Pattern",
+    "toolTip": "Duplicates the selected features or the active body in a linear pattern",
+    "pixmap": "PartDesign_LinearPattern",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Mirrored": {
+    "name": "PartDesign_Mirrored",
+    "menuText": "Mirror",
+    "toolTip": "Mirrors the selected features or active body",
+    "pixmap": "PartDesign_Mirrored",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_MultiTransform": {
+    "name": "PartDesign_MultiTransform",
+    "menuText": "Multi-Transform",
+    "toolTip": "Applies multiple transformations to the selected features or active body",
+    "pixmap": "PartDesign_MultiTransform",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_NewSketch": {
+    "name": "PartDesign_NewSketch",
+    "menuText": "New Sketch",
+    "toolTip": "Creates a new sketch",
+    "pixmap": "Sketcher_NewSketch",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Pad": {
+    "name": "PartDesign_Pad",
+    "menuText": "Pad",
+    "toolTip": "Extrudes the selected sketch or profile and adds it to the body",
+    "pixmap": "PartDesign_Pad",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Plane": {
+    "name": "PartDesign_Plane",
+    "menuText": "Datum Plane",
+    "toolTip": "Creates a new datum plane",
+    "pixmap": "PartDesign_Plane",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Pocket": {
+    "name": "PartDesign_Pocket",
+    "menuText": "Pocket",
+    "toolTip": "Extrudes the selected sketch or profile and removes it from the body",
+    "pixmap": "PartDesign_Pocket",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Point": {
+    "name": "PartDesign_Point",
+    "menuText": "Datum Point",
+    "toolTip": "Creates a new datum point",
+    "pixmap": "PartDesign_Point",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_PolarPattern": {
+    "name": "PartDesign_PolarPattern",
+    "menuText": "Polar Pattern",
+    "toolTip": "Duplicates the selected features or the active body in a circular pattern",
+    "pixmap": "PartDesign_PolarPattern",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Revolution": {
+    "name": "PartDesign_Revolution",
+    "menuText": "Revolve",
+    "toolTip": "Revolves the selected sketch or profile around a line or axis and adds it to the body",
+    "pixmap": "PartDesign_Revolution",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_ShapeBinder": {
+    "name": "PartDesign_ShapeBinder",
+    "menuText": "Shape Binder",
+    "toolTip": "Creates a new shape binder",
+    "pixmap": "PartDesign_ShapeBinder",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_SubShapeBinder": {
+    "name": "PartDesign_SubShapeBinder",
+    "menuText": "Sub-Shape Binder",
+    "toolTip": "Creates a reference to geometry from one or more objects, allowing it to be used inside or outside a body. It tracks relative placements, supports multiple geometry types (solids, faces, edges, vertices), and can work with objects in the same or external documents.",
+    "pixmap": "PartDesign_SubShapeBinder",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_SubtractiveHelix": {
+    "name": "PartDesign_SubtractiveHelix",
+    "menuText": "Subtractive Helix",
+    "toolTip": "Sweeps the selected sketch or profile along a helix and removes it from the body",
+    "pixmap": "PartDesign_SubtractiveHelix",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_SubtractiveLoft": {
+    "name": "PartDesign_SubtractiveLoft",
+    "menuText": "Subtractive Loft",
+    "toolTip": "Lofts the selected sketch or profile through one or more sections and removes it from the body",
+    "pixmap": "PartDesign_SubtractiveLoft",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_SubtractivePipe": {
+    "name": "PartDesign_SubtractivePipe",
+    "menuText": "Subtractive Pipe",
+    "toolTip": "Sweeps the selected sketch or profile along a path and removes it from the body",
+    "pixmap": "PartDesign_SubtractivePipe",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Thickness": {
+    "name": "PartDesign_Thickness",
+    "menuText": "Thickness",
+    "toolTip": "Applies thickness and removes the selected faces",
+    "pixmap": "PartDesign_Thickness",
+    "accel": "",
+    "group": "PartDesign",
+    "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "Part_Boolean": {
+    "name": "Part_Boolean",
+    "menuText": "Boolean Operation",
+    "toolTip": "Applies a boolean operation with the selected shapes",
+    "pixmap": "Part_Booleans",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_BooleanFragments": {
+    "name": "Part_BooleanFragments",
+    "menuText": "Boolean Fragments",
+    "toolTip": "Part_BooleanFragments",
+    "pixmap": "Part_BooleanFragments",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/BOPTools/SplitFeatures.py"
+  },
+  "Part_Box": {
+    "name": "Part_Box",
+    "menuText": "Cube",
+    "toolTip": "Creates a solid cube",
+    "pixmap": "Part_Box_Parametric",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandParametric.cpp"
+  },
+  "Part_BoxSelection": {
+    "name": "Part_BoxSelection",
+    "menuText": "Box Selection",
+    "toolTip": "Selects elements in the 3D view using a box selection",
+    "pixmap": "Part_BoxSelection",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Builder": {
+    "name": "Part_Builder",
+    "menuText": "Shape Builder",
+    "toolTip": "Advanced utility to create shapes",
+    "pixmap": "Part_Shapebuilder",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Chamfer": {
+    "name": "Part_Chamfer",
+    "menuText": "Chamfer",
+    "toolTip": "Chamfers the selected edges of a shape",
+    "pixmap": "Part_Chamfer",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_CheckGeometry": {
+    "name": "Part_CheckGeometry",
+    "menuText": "Check Geometry",
+    "toolTip": "Analyzes the selected shapes for errors",
+    "pixmap": "Part_CheckGeometry",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_ColorPerFace": {
+    "name": "Part_ColorPerFace",
+    "menuText": "Appearance per &Face",
+    "toolTip": "Sets the appearance of individual faces of the selected object",
+    "pixmap": "Part_ColorFace",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Common": {
+    "name": "Part_Common",
+    "menuText": "Intersection",
+    "toolTip": "Intersects the selected shapes",
+    "pixmap": "Part_Common",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_CompCompoundTools": {
+    "name": "Part_CompCompoundTools",
+    "menuText": "Compound Tools",
+    "toolTip": "Compound tools for working with multiple shapes",
+    "pixmap": "",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_CompJoinFeatures": {
+    "name": "Part_CompJoinFeatures",
+    "menuText": "Join Shapes",
+    "toolTip": "Joins the selected walled shapes",
+    "pixmap": "",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_CompOffset": {
+    "name": "Part_CompOffset",
+    "menuText": "Offset",
+    "toolTip": "Tools to offset shapes (construct parallel shapes)",
+    "pixmap": "",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_CompSplitFeatures": {
+    "name": "Part_CompSplitFeatures",
+    "menuText": "Split Shapes",
+    "toolTip": "Shape splitting and compsolid creation tools",
+    "pixmap": "",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Compound": {
+    "name": "Part_Compound",
+    "menuText": "Compound",
+    "toolTip": "Compounds the selected shapes",
+    "pixmap": "Part_Compound",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_CompoundFilter": {
+    "name": "Part_CompoundFilter",
+    "menuText": "Compound Filter",
+    "toolTip": "Part_CompoundFilter",
+    "pixmap": "Part_CompoundFilter",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/CompoundTools/_CommandCompoundFilter.py"
+  },
+  "Part_Cone": {
+    "name": "Part_Cone",
+    "menuText": "Cone",
+    "toolTip": "Creates a solid cone",
+    "pixmap": "Part_Cone_Parametric",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandParametric.cpp"
+  },
+  "Part_CrossSections": {
+    "name": "Part_CrossSections",
+    "menuText": "Cross-Sections",
+    "toolTip": "Creates cross-sections",
+    "pixmap": "Part_CrossSections",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Cut": {
+    "name": "Part_Cut",
+    "menuText": "Cut",
+    "toolTip": "Cuts 2 selected shapes",
+    "pixmap": "Part_Cut",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Cylinder": {
+    "name": "Part_Cylinder",
+    "menuText": "Cylinder",
+    "toolTip": "Creates a solid cylinder",
+    "pixmap": "Part_Cylinder_Parametric",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandParametric.cpp"
+  },
+  "Part_Datums": {
+    "name": "Part_Datums",
+    "menuText": "Datums",
+    "toolTip": "Creates a datum object (coordinate system, plane, line, or point) that can be attached to other objects",
+    "pixmap": "",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Defeaturing": {
+    "name": "Part_Defeaturing",
+    "menuText": "Defeaturing",
+    "toolTip": "Removes the selected features from a shape",
+    "pixmap": "Part_Defeaturing",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandSimple.cpp"
+  },
+  "Part_ElementCopy": {
+    "name": "Part_ElementCopy",
+    "menuText": "Shape Element Copy",
+    "toolTip": "Creates a non-parametric copy of the selected shape element",
+    "pixmap": "Part_Element_Copy",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandSimple.cpp"
+  },
+  "Part_ExplodeCompound": {
+    "name": "Part_ExplodeCompound",
+    "menuText": "Explode Compound",
+    "toolTip": "Part_ExplodeCompound",
+    "pixmap": "Part_ExplodeCompound",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/CompoundTools/_CommandExplodeCompound.py"
+  },
+  "Part_Extrude": {
+    "name": "Part_Extrude",
+    "menuText": "Extrude",
+    "toolTip": "Extrudes the selected sketch or profile",
+    "pixmap": "Part_Extrude",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Fillet": {
+    "name": "Part_Fillet",
+    "menuText": "Fillet",
+    "toolTip": "Fillets the selected edges of a shape",
+    "pixmap": "Part_Fillet",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Fuse": {
+    "name": "Part_Fuse",
+    "menuText": "Union",
+    "toolTip": "Unites the selected shapes",
+    "pixmap": "Part_Fuse",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_JoinConnect": {
+    "name": "Part_JoinConnect",
+    "menuText": "Connect Shapes",
+    "toolTip": "Fuses shapes, taking care to preserve voids",
+    "pixmap": "Part_JoinConnect",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/BOPTools/JoinFeatures.py"
+  },
+  "Part_JoinCutout": {
+    "name": "Part_JoinCutout",
+    "menuText": "Cutout Shape",
+    "toolTip": "Creates a cutout in the selected shape to fit another shape",
+    "pixmap": "Part_JoinCutout",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/BOPTools/JoinFeatures.py"
+  },
+  "Part_JoinEmbed": {
+    "name": "Part_JoinEmbed",
+    "menuText": "Embed Shapes",
+    "toolTip": "Fuses one shape into another, taking care to preserve voids",
+    "pixmap": "Part_JoinEmbed",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/BOPTools/JoinFeatures.py"
+  },
+  "Part_Loft": {
+    "name": "Part_Loft",
+    "menuText": "Loft",
+    "toolTip": "Lofts the selected profiles",
+    "pixmap": "Part_Loft",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_MakeFace": {
+    "name": "Part_MakeFace",
+    "menuText": "Face From Wires",
+    "toolTip": "Creates a face from the selected wires (e.g. from a sketch)",
+    "pixmap": "Part_MakeFace",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_MakeSolid": {
+    "name": "Part_MakeSolid",
+    "menuText": "Convert to Solid",
+    "toolTip": "Converts the selected shell or compound to a solid",
+    "pixmap": "Part_MakeSolid",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Mirror": {
+    "name": "Part_Mirror",
+    "menuText": "Mirror",
+    "toolTip": "Mirrors the selected shape",
+    "pixmap": "Part_Mirror",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Offset": {
+    "name": "Part_Offset",
+    "menuText": "3D Offset",
+    "toolTip": "Offsets shapes in 3D",
+    "pixmap": "Part_Offset",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Offset2D": {
+    "name": "Part_Offset2D",
+    "menuText": "2D Offset",
+    "toolTip": "Offsets planar shapes in 2D",
+    "pixmap": "Part_Offset2D",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_PointsFromMesh": {
+    "name": "Part_PointsFromMesh",
+    "menuText": "Points From Shape",
+    "toolTip": "Creates distributed points from the selected shape",
+    "pixmap": "Part_PointsFromMesh",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandSimple.cpp"
+  },
+  "Part_Primitives": {
+    "name": "Part_Primitives",
+    "menuText": "Primitive",
+    "toolTip": "Creates solid geometric primitives parametrically",
+    "pixmap": "Part_Primitives",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_ProjectionOnSurface": {
+    "name": "Part_ProjectionOnSurface",
+    "menuText": "Project on Surface",
+    "toolTip": "Projects edges, wires, or faces of one shape\nonto a face of another shape.\nThe camera view determines the direction\nof the projection.",
+    "pixmap": "Part_ProjectionOnSurface",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_RefineShape": {
+    "name": "Part_RefineShape",
+    "menuText": "Refine Shape",
+    "toolTip": "Creates a refined copy of the selected shapes",
+    "pixmap": "Part_Refine_Shape",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandSimple.cpp"
+  },
+  "Part_ReverseShape": {
+    "name": "Part_ReverseShape",
+    "menuText": "Reverse Shapes",
+    "toolTip": "Reverses the orientation of the selected shapes",
+    "pixmap": "Part_Reverse_Shape",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Revolve": {
+    "name": "Part_Revolve",
+    "menuText": "Revolve",
+    "toolTip": "Revolves the selected shape",
+    "pixmap": "Part_Revolve",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_RuledSurface": {
+    "name": "Part_RuledSurface",
+    "menuText": "Ruled Surface",
+    "toolTip": "Creates a ruled surface between 2 selected wires",
+    "pixmap": "Part_RuledSurface",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Scale": {
+    "name": "Part_Scale",
+    "menuText": "Scale",
+    "toolTip": "Scales the selected shape",
+    "pixmap": "Part_Scale",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Section": {
+    "name": "Part_Section",
+    "menuText": "Section",
+    "toolTip": "Sections 2 selected shapes",
+    "pixmap": "Part_Section",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_SectionCut": {
+    "name": "Part_SectionCut",
+    "menuText": "Persiste&nt Section Cut",
+    "toolTip": "Creates a new object as a boolean intersection of all visible shapes and the selected axis planes",
+    "pixmap": "Part_SectionCut",
+    "accel": "",
+    "group": "View",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_ShapeFromMesh": {
+    "name": "Part_ShapeFromMesh",
+    "menuText": "Shape From Mesh",
+    "toolTip": "Creates a shape from the selected mesh",
+    "pixmap": "Part_Shape_from_Mesh",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandSimple.cpp"
+  },
+  "Part_SimpleCopy": {
+    "name": "Part_SimpleCopy",
+    "menuText": "Simple Copy",
+    "toolTip": "Creates a simple non-parametric copy of the selected shapes",
+    "pixmap": "Part_3D_object",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandSimple.cpp"
+  },
+  "Part_Slice": {
+    "name": "Part_Slice",
+    "menuText": "Slice to Compound",
+    "toolTip": "Part_Slice",
+    "pixmap": "Part_Slice",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/BOPTools/SplitFeatures.py"
+  },
+  "Part_SliceApart": {
+    "name": "Part_SliceApart",
+    "menuText": "Slice Apart",
+    "toolTip": "Part_SliceApart",
+    "pixmap": "Part_SliceApart",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/BOPTools/SplitFeatures.py"
+  },
+  "Part_Sphere": {
+    "name": "Part_Sphere",
+    "menuText": "Sphere",
+    "toolTip": "Creates a solid sphere",
+    "pixmap": "Part_Sphere_Parametric",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandParametric.cpp"
+  },
+  "Part_Sweep": {
+    "name": "Part_Sweep",
+    "menuText": "Sweep",
+    "toolTip": "Sweeps profiles along a wire",
+    "pixmap": "Part_Sweep",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_Thickness": {
+    "name": "Part_Thickness",
+    "menuText": "Thickness",
+    "toolTip": "Removes the selected faces and offsets the remaining shape outward to add thickness",
+    "pixmap": "Part_Thickness",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/Command.cpp"
+  },
+  "Part_ToleranceSet": {
+    "name": "Part_ToleranceSet",
+    "menuText": "Set Tolerance",
+    "toolTip": "Part_ToleranceSet",
+    "pixmap": "preferences-part_design",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/BOPTools/ToleranceFeatures.py"
+  },
+  "Part_Torus": {
+    "name": "Part_Torus",
+    "menuText": "Torus",
+    "toolTip": "Creates a solid torus",
+    "pixmap": "Part_Torus_Parametric",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandParametric.cpp"
+  },
+  "Part_TransformedCopy": {
+    "name": "Part_TransformedCopy",
+    "menuText": "Transformed Copy",
+    "toolTip": "Creates a non-parametric copy with transformed placement of the selected shapes",
+    "pixmap": "Part_Transformed_Copy",
+    "accel": "",
+    "group": "Part",
+    "source": "src/Mod/Part/Gui/CommandSimple.cpp"
+  },
+  "Part_Tube": {
+    "name": "Part_Tube",
+    "menuText": "Tube",
+    "toolTip": "Creates a tube",
+    "pixmap": "Part_Tube_Parametric",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/BasicShapes/CommandShapes.py"
+  },
+  "Part_XOR": {
+    "name": "Part_XOR",
+    "menuText": "Boolean XOR",
+    "toolTip": "Part_XOR",
+    "pixmap": "Part_XOR",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/BOPTools/SplitFeatures.py"
+  },
+  "Sketcher_CancelSketch": {
+    "name": "Sketcher_CancelSketch",
+    "menuText": "Cancel Editing",
+    "toolTip": "Leaves 'edit' mode and reverts any changes",
+    "pixmap": "Sketcher_CancelSketch",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_CompCreateArc": {
+    "name": "Sketcher_CompCreateArc",
+    "menuText": "Arc",
+    "toolTip": "Creates an arc",
+    "pixmap": "",
+    "accel": "G, A",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CompCreateRectangles": {
+    "name": "Sketcher_CompCreateRectangles",
+    "menuText": "Rectangle",
+    "toolTip": "Creates a rectangle",
+    "pixmap": "",
+    "accel": "G, R",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CompLine": {
+    "name": "Sketcher_CompLine",
+    "menuText": "Polyline",
+    "toolTip": "Creates a continuous polyline",
+    "pixmap": "",
+    "accel": "G, M",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_ConstrainAngle": {
+    "name": "Sketcher_ConstrainAngle",
+    "menuText": "Angle Dimension",
+    "toolTip": "Constrains the angle between two straight lines or between one line and the X-axis of the sketch if only one is selected",
+    "pixmap": "Constraint_InternalAngle",
+    "accel": "K, A",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainBlock": {
+    "name": "Sketcher_ConstrainBlock",
+    "menuText": "Block Constraint",
+    "toolTip": "Constrains the selected edges as fixed",
+    "pixmap": "Constraint_Block",
+    "accel": "K, B",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainCoincident": {
+    "name": "Sketcher_ConstrainCoincident",
+    "menuText": "Coincident Constraint",
+    "toolTip": "Constrains the selected elements to be coincident",
+    "pixmap": "Constraint_PointOnPoint",
+    "accel": "UnifiedCoincidentC,CC",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainDiameter": {
+    "name": "Sketcher_ConstrainDiameter",
+    "menuText": "Diameter Dimension",
+    "toolTip": "Constrains the diameter of the selected circle or arc",
+    "pixmap": "Constraint_Diameter",
+    "accel": "K, O",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainDistance": {
+    "name": "Sketcher_ConstrainDistance",
+    "menuText": "Distance Dimension",
+    "toolTip": "Constrains the vertical distance between two points, or from a point to the origin if one is selected",
+    "pixmap": "Constraint_Length",
+    "accel": "K, D",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainDistanceX": {
+    "name": "Sketcher_ConstrainDistanceX",
+    "menuText": "Horizontal Dimension",
+    "toolTip": "Constrains the horizontal distance between two points, or from a point to the origin if only one is selected",
+    "pixmap": "Constraint_HorizontalDistance",
+    "accel": "L",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainDistanceY": {
+    "name": "Sketcher_ConstrainDistanceY",
+    "menuText": "Vertical Dimension",
+    "toolTip": "Constrains the vertical distance between two points, or from a point to the origin if only one is selected",
+    "pixmap": "Constraint_VerticalDistance",
+    "accel": "I",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainEqual": {
+    "name": "Sketcher_ConstrainEqual",
+    "menuText": "Equal Constraint",
+    "toolTip": "Constrains the selected edges or circles to be equal",
+    "pixmap": "Constraint_EqualLength",
+    "accel": "E",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainHorVer": {
+    "name": "Sketcher_ConstrainHorVer",
+    "menuText": "Horizontal/Vertical Constraint",
+    "toolTip": "Constrains the selected elements either horizontally or vertically, based on their closest alignment",
+    "pixmap": "Constraint_HorVer",
+    "accel": "A",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainHorizontal": {
+    "name": "Sketcher_ConstrainHorizontal",
+    "menuText": "Horizontal Constraint",
+    "toolTip": "Constrains the selected elements horizontally",
+    "pixmap": "Constraint_Horizontal",
+    "accel": "H",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainLock": {
+    "name": "Sketcher_ConstrainLock",
+    "menuText": "Lock Position",
+    "toolTip": "Constrains the selected vertices by adding horizontal and vertical distance constraints",
+    "pixmap": "Constraint_Lock",
+    "accel": "K, L",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainParallel": {
+    "name": "Sketcher_ConstrainParallel",
+    "menuText": "Parallel Constraint",
+    "toolTip": "Constrains the selected lines to be parallel",
+    "pixmap": "Constraint_Parallel",
+    "accel": "P",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainPerpendicular": {
+    "name": "Sketcher_ConstrainPerpendicular",
+    "menuText": "Perpendicular Constraint",
+    "toolTip": "Constrains the selected lines to be perpendicular",
+    "pixmap": "Constraint_Perpendicular",
+    "accel": "N",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainRadius": {
+    "name": "Sketcher_ConstrainRadius",
+    "menuText": "Radius Dimension",
+    "toolTip": "Constrains the radius of the selected circle or arc",
+    "pixmap": "Constraint_Radius",
+    "accel": "K, R",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainSymmetric": {
+    "name": "Sketcher_ConstrainSymmetric",
+    "menuText": "Symmetric Constraint",
+    "toolTip": "Constrains the selected elements to be symmetric",
+    "pixmap": "Constraint_Symmetric",
+    "accel": "S",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainTangent": {
+    "name": "Sketcher_ConstrainTangent",
+    "menuText": "Tangent/Collinear Constraint",
+    "toolTip": "Constrains the selected elements to be tangent or collinear",
+    "pixmap": "Constraint_Tangent",
+    "accel": "T",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ConstrainVertical": {
+    "name": "Sketcher_ConstrainVertical",
+    "menuText": "Vertical Constraint",
+    "toolTip": "Constrains the selected elements vertically",
+    "pixmap": "Constraint_Vertical",
+    "accel": "V",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_Create3PointArc": {
+    "name": "Sketcher_Create3PointArc",
+    "menuText": "Arc From 3 Points",
+    "toolTip": "Creates an arc defined by 2 end points and 1 point on the arc",
+    "pixmap": "Sketcher_Create3PointArc",
+    "accel": "G, 3, A",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_Create3PointCircle": {
+    "name": "Sketcher_Create3PointCircle",
+    "menuText": "Circle From 3 Points",
+    "toolTip": "Creates a circle from 3 perimeter points",
+    "pixmap": "Sketcher_Create3PointCircle",
+    "accel": "G, 3, C",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CreateArc": {
+    "name": "Sketcher_CreateArc",
+    "menuText": "Arc From Center",
+    "toolTip": "Creates an arc defined by a center point and an end point",
+    "pixmap": "Sketcher_CreateArc",
+    "accel": "G, A",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CreateCircle": {
+    "name": "Sketcher_CreateCircle",
+    "menuText": "Circle From Center",
+    "toolTip": "Creates a circle from a center and rim point",
+    "pixmap": "Sketcher_CreateCircle",
+    "accel": "G, C",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CreateLine": {
+    "name": "Sketcher_CreateLine",
+    "menuText": "Line",
+    "toolTip": "Creates a line",
+    "pixmap": "Sketcher_CreateLine",
+    "accel": "G, L",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CreateOblong": {
+    "name": "Sketcher_CreateOblong",
+    "menuText": "Rounded Rectangle",
+    "toolTip": "Creates a rounded rectangle from 2 corner points",
+    "pixmap": "Sketcher_CreateOblong",
+    "accel": "G, O",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CreatePoint": {
+    "name": "Sketcher_CreatePoint",
+    "menuText": "Point",
+    "toolTip": "Creates a point",
+    "pixmap": "Sketcher_CreatePoint",
+    "accel": "G, Y",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CreatePolyline": {
+    "name": "Sketcher_CreatePolyline",
+    "menuText": "Polyline",
+    "toolTip": "Creates a polyline in the sketch. M key cycles through segment modes.",
+    "pixmap": "Sketcher_CreatePolyline",
+    "accel": "G, M",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CreateRectangle": {
+    "name": "Sketcher_CreateRectangle",
+    "menuText": "Rectangle",
+    "toolTip": "Creates a rectangle from 2 corner points",
+    "pixmap": "Sketcher_CreateRectangle",
+    "accel": "G, R",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CreateRectangle_Center": {
+    "name": "Sketcher_CreateRectangle_Center",
+    "menuText": "Centered Rectangle",
+    "toolTip": "Creates a centered rectangle from a center and a corner point",
+    "pixmap": "Sketcher_CreateRectangle_Center",
+    "accel": "G, V",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_CreateSlot": {
+    "name": "Sketcher_CreateSlot",
+    "menuText": "Slot",
+    "toolTip": "Creates a slot",
+    "pixmap": "Sketcher_CreateSlot",
+    "accel": "G, S",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandCreateGeo.cpp"
+  },
+  "Sketcher_Dimension": {
+    "name": "Sketcher_Dimension",
+    "menuText": "Dimension",
+    "toolTip": "Constrains contextually based on the selection. The type can be changed with the M key.",
+    "pixmap": "Constraint_Dimension",
+    "accel": "D",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_EditSketch": {
+    "name": "Sketcher_EditSketch",
+    "menuText": "Edit Sketch",
+    "toolTip": "Opens the selected sketch for editing",
+    "pixmap": "Sketcher_EditSketch",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_LeaveSketch": {
+    "name": "Sketcher_LeaveSketch",
+    "menuText": "Leave Sketch",
+    "toolTip": "Finishes editing the active sketch. Press Escape to exit.",
+    "pixmap": "Sketcher_LeaveSketch",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_MapSketch": {
+    "name": "Sketcher_MapSketch",
+    "menuText": "Attach Sketch",
+    "toolTip": "Attaches a sketch to the selected geometry element",
+    "pixmap": "Sketcher_MapSketch",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_MergeSketches": {
+    "name": "Sketcher_MergeSketches",
+    "menuText": "Merge Sketches",
+    "toolTip": "Creates a new sketch by merging at least 2 selected sketches",
+    "pixmap": "Sketcher_MergeSketch",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_MirrorSketch": {
+    "name": "Sketcher_MirrorSketch",
+    "menuText": "Mirror Sketch",
+    "toolTip": "Creates a new mirrored sketch for each selected sketch\nby using the X or Y axes, or the origin point,\nas mirroring reference",
+    "pixmap": "Sketcher_MirrorSketch",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_NewSketch": {
+    "name": "Sketcher_NewSketch",
+    "menuText": "New Sketch",
+    "toolTip": "Creates a new sketch",
+    "pixmap": "Sketcher_NewSketch",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_ReorientSketch": {
+    "name": "Sketcher_ReorientSketch",
+    "menuText": "Reorient Sketch",
+    "toolTip": "Places the selected sketch on one of the global coordinate planes.\nThis will clear the AttachmentSupport property.",
+    "pixmap": "Sketcher_ReorientSketch",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_StopOperation": {
+    "name": "Sketcher_StopOperation",
+    "menuText": "Stop Operation",
+    "toolTip": "Stops the active operation while in edit mode",
+    "pixmap": "process-stop",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_ToggleActiveConstraint": {
+    "name": "Sketcher_ToggleActiveConstraint",
+    "menuText": "Toggle Constraints",
+    "toolTip": "Toggles the state of the selected constraints",
+    "pixmap": "Sketcher_ToggleActiveConstraint",
+    "accel": "K, Z",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ToggleConstruction": {
+    "name": "Sketcher_ToggleConstruction",
+    "menuText": "Toggle Construction Geometry",
+    "toolTip": "Toggles between defining geometry and construction geometry modes",
+    "pixmap": "Sketcher_ToggleConstruction",
+    "accel": "G, N",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandAlterGeometry.cpp"
+  },
+  "Sketcher_ToggleDrivingConstraint": {
+    "name": "Sketcher_ToggleDrivingConstraint",
+    "menuText": "Toggle Driving/Reference Constraints",
+    "toolTip": "Toggles between driving and reference mode of the selected constraints and commands",
+    "pixmap": "Sketcher_ToggleConstraint",
+    "accel": "K, X",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/CommandConstraints.cpp"
+  },
+  "Sketcher_ValidateSketch": {
+    "name": "Sketcher_ValidateSketch",
+    "menuText": "Validate Sketch",
+    "toolTip": "Validates a sketch by checking for missing coincidences,\ninvalid constraints, and degenerate geometry",
+    "pixmap": "Sketcher_ValidateSketch",
+    "accel": "",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_ViewSection": {
+    "name": "Sketcher_ViewSection",
+    "menuText": "Toggle Section View",
+    "toolTip": "Toggles between section view and full view",
+    "pixmap": "Sketcher_ViewSection",
+    "accel": "Q, S",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Sketcher_ViewSketch": {
+    "name": "Sketcher_ViewSketch",
+    "menuText": "Align View to Sketch",
+    "toolTip": "Aligns the camera orientation perpendicular to the active sketch plane",
+    "pixmap": "Sketcher_ViewSketch",
+    "accel": "Q, P",
+    "group": "Sketcher",
+    "source": "src/Mod/Sketcher/Gui/Command.cpp"
+  },
+  "Std_About": {
+    "name": "Std_About",
+    "menuText": "&About %1",
+    "toolTip": "Displays information about %1",
+    "pixmap": "",
+    "accel": "",
+    "group": "Help",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_ActivateNextWindow": {
+    "name": "Std_ActivateNextWindow",
+    "menuText": "&Next",
+    "toolTip": "Activates the next window",
+    "pixmap": "Std_WindowNext",
+    "accel": "Ctrl+Tab",
+    "group": "Window",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_ActivatePrevWindow": {
+    "name": "Std_ActivatePrevWindow",
+    "menuText": "&Previous",
+    "toolTip": "Switches to the previously active window",
+    "pixmap": "Std_WindowPrev",
+    "accel": "",
+    "group": "Window",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_AlignToSelection": {
+    "name": "Std_AlignToSelection",
+    "menuText": "&Align to Selection",
+    "toolTip": "Aligns the camera view to the selected elements in the 3D view",
+    "pixmap": "align-to-selection",
+    "accel": "",
+    "group": "View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_Alignment": {
+    "name": "Std_Alignment",
+    "menuText": "Ali&gn To…",
+    "toolTip": "Aligns the selected objects",
+    "pixmap": "Std_Alignment",
+    "accel": "",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_AnnotationLabel": {
+    "name": "Std_AnnotationLabel",
+    "menuText": "Annotation Label",
+    "toolTip": "Creates a new annotation label at the picked location in the 3D view",
+    "pixmap": "Tree_Annotation",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_AxisCross": {
+    "name": "Std_AxisCross",
+    "menuText": "Toggle A&xis Cross",
+    "toolTip": "Toggles the axis cross at the origin",
+    "pixmap": "Std_AxisCross",
+    "accel": "A,C",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_BoxElementSelection": {
+    "name": "Std_BoxElementSelection",
+    "menuText": "Bo&x Element Selection",
+    "toolTip": "Activates box element selection",
+    "pixmap": "edit-element-select-box",
+    "accel": "Shift+E",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_BoxSelection": {
+    "name": "Std_BoxSelection",
+    "menuText": "&Box Selection",
+    "toolTip": "Activates the box selection tool",
+    "pixmap": "edit-select-box",
+    "accel": "Shift+B",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_CascadeWindows": {
+    "name": "Std_CascadeWindows",
+    "menuText": "&Cascade",
+    "toolTip": "Tiles pragmatic",
+    "pixmap": "Std_WindowCascade",
+    "accel": "",
+    "group": "Window",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_ClarifySelection": {
+    "name": "Std_ClarifySelection",
+    "menuText": "Clarify Selection",
+    "toolTip": "Displays a context menu at the mouse cursor to select overlapping or obstructed geometry in the 3D view.\n",
+    "pixmap": "tree-pre-sel",
+    "accel": "G, G",
+    "group": "View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_CloseActiveWindow": {
+    "name": "Std_CloseActiveWindow",
+    "menuText": "&Close",
+    "toolTip": "Closes the active window",
+    "pixmap": "Std_CloseActiveWindow",
+    "accel": "Ctrl+W",
+    "group": "Window",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_CloseAllWindows": {
+    "name": "Std_CloseAllWindows",
+    "menuText": "Close A&ll",
+    "toolTip": "Closes all windows",
+    "pixmap": "Std_CloseAllWindows",
+    "accel": "",
+    "group": "Window",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_Copy": {
+    "name": "Std_Copy",
+    "menuText": "&Copy",
+    "toolTip": "Copies the selection to the clipboard",
+    "pixmap": "edit-copy",
+    "accel": "Ctrl+C",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Cut": {
+    "name": "Std_Cut",
+    "menuText": "Cu&t",
+    "toolTip": "Removes the selection and copies it to the clipboard",
+    "pixmap": "edit-cut",
+    "accel": "Ctrl+X",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Delete": {
+    "name": "Std_Delete",
+    "menuText": "&Delete",
+    "toolTip": "Deletes the selected objects",
+    "pixmap": "edit-delete",
+    "accel": "Del",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_DemoMode": {
+    "name": "Std_DemoMode",
+    "menuText": "View &Turntable",
+    "toolTip": "Opens a turntable view",
+    "pixmap": "Std_DemoMode",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_DependencyGraph": {
+    "name": "Std_DependencyGraph",
+    "menuText": "Dependency Gra&ph",
+    "toolTip": "Shows the dependency graph of the objects in the active document",
+    "pixmap": "Std_DependencyGraph",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_DevHandbook": {
+    "name": "Std_DevHandbook",
+    "menuText": "Developers Handbook",
+    "toolTip": "Opens the FreeCAD developers handbook",
+    "pixmap": "internet-web-browser",
+    "accel": "",
+    "group": "Help",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_DlgCustomize": {
+    "name": "Std_DlgCustomize",
+    "menuText": "Cu&stomize",
+    "toolTip": "Opens a dialog to edit toolbars, shortcuts, and macros",
+    "pixmap": "applications-accessories",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_DlgMacroExecute": {
+    "name": "Std_DlgMacroExecute",
+    "menuText": "Ma&cros",
+    "toolTip": "Opens a dialog to execute a recorded macro",
+    "pixmap": "accessories-text-editor",
+    "accel": "",
+    "group": "Macro",
+    "source": "src/Gui/CommandMacro.cpp"
+  },
+  "Std_DlgMacroExecuteDirect": {
+    "name": "Std_DlgMacroExecuteDirect",
+    "menuText": "&Execute Macro",
+    "toolTip": "Executes the macro in the editor",
+    "pixmap": "media-playback-start",
+    "accel": "Ctrl+F6",
+    "group": "Macro",
+    "source": "src/Gui/CommandMacro.cpp"
+  },
+  "Std_DlgMacroRecord": {
+    "name": "Std_DlgMacroRecord",
+    "menuText": "Record &Macro",
+    "toolTip": "Opens a dialog to record a macro",
+    "pixmap": "media-record",
+    "accel": "",
+    "group": "Macro",
+    "source": "src/Gui/CommandMacro.cpp"
+  },
+  "Std_DlgParameter": {
+    "name": "Std_DlgParameter",
+    "menuText": "E&dit Parameters",
+    "toolTip": "Opens a dialog to edit the parameters",
+    "pixmap": "Std_DlgParameter",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_DlgPreferences": {
+    "name": "Std_DlgPreferences",
+    "menuText": "Prefere&nces",
+    "toolTip": "Opens a dialog to edit the preferences",
+    "pixmap": "preferences-system",
+    "accel": "Ctrl+,",
+    "group": "Tools",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_DockViewMenu": {
+    "name": "Std_DockViewMenu",
+    "menuText": "&Panels",
+    "toolTip": "Lists available dock panels",
+    "pixmap": "",
+    "accel": "",
+    "group": "View",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_DrawStyle": {
+    "name": "Std_DrawStyle",
+    "menuText": "&Draw Style",
+    "toolTip": "Changes the draw style of the objects",
+    "pixmap": "DrawStyleAsIs",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_DuplicateSelection": {
+    "name": "Std_DuplicateSelection",
+    "menuText": "Duplicate Selecti&on",
+    "toolTip": "Duplicates the selected objects to the active document",
+    "pixmap": "Std_DuplicateSelection",
+    "accel": "",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Edit": {
+    "name": "Std_Edit",
+    "menuText": "Toggle &Edit Mode",
+    "toolTip": "Toggles the selected object's edit mode",
+    "pixmap": "edit-edit",
+    "accel": "",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Export": {
+    "name": "Std_Export",
+    "menuText": "&Export…",
+    "toolTip": "Exports an object in the active document",
+    "pixmap": "Std_Export",
+    "accel": "Ctrl+E",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_ExportDependencyGraph": {
+    "name": "Std_ExportDependencyGraph",
+    "menuText": "Export Dependency &Graph…",
+    "toolTip": "Exports the dependency graph as a Graphviz (.gv) file",
+    "pixmap": "Std_ExportDependencyGraph",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_FreeCADDonation": {
+    "name": "Std_FreeCADDonation",
+    "menuText": "Donate to FreeCA&D",
+    "toolTip": "Opens the FreeCAD donation page",
+    "pixmap": "internet-web-browser",
+    "accel": "",
+    "group": "Help",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_FreeCADForum": {
+    "name": "Std_FreeCADForum",
+    "menuText": "FreeCAD &Forum",
+    "toolTip": "Opens the FreeCAD forum to find help from other users",
+    "pixmap": "internet-web-browser",
+    "accel": "",
+    "group": "Help",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_FreeCADUserHub": {
+    "name": "Std_FreeCADUserHub",
+    "menuText": "&User Documentation",
+    "toolTip": "Opens the documentation for users",
+    "pixmap": "internet-web-browser",
+    "accel": "",
+    "group": "Help",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_FreeCADWebsite": {
+    "name": "Std_FreeCADWebsite",
+    "menuText": "FreeCAD W&ebsite",
+    "toolTip": "Navigates to the official FreeCAD website",
+    "pixmap": "internet-web-browser",
+    "accel": "",
+    "group": "Help",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_FreezeViews": {
+    "name": "Std_FreezeViews",
+    "menuText": "F&reeze Display",
+    "toolTip": "Freezes the current view position",
+    "pixmap": "",
+    "accel": "Shift+F",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_Group": {
+    "name": "Std_Group",
+    "menuText": "New Group",
+    "toolTip": "Creates a group, which is a general-purpose container to group objects in the tree view, regardless of their data type. It is a simple folder to organize the objects in a model.",
+    "pixmap": "folder",
+    "accel": "",
+    "group": "Structure",
+    "source": "src/Gui/CommandStructure.cpp"
+  },
+  "Std_HideObjects": {
+    "name": "Std_HideObjects",
+    "menuText": "Hide All &Objects",
+    "toolTip": "Hides all objects in the document",
+    "pixmap": "Std_HideObjects",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_HideSelection": {
+    "name": "Std_HideSelection",
+    "menuText": "&Hide Selection",
+    "toolTip": "Hides all selected objects",
+    "pixmap": "Std_HideSelection",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_Import": {
+    "name": "Std_Import",
+    "menuText": "&Import…",
+    "toolTip": "Imports a file into the active document",
+    "pixmap": "Std_Import",
+    "accel": "Ctrl+Shift+I",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_LinkActions": {
+    "name": "Std_LinkActions",
+    "menuText": "Link Actions",
+    "toolTip": "Commands that operate on link objects",
+    "pixmap": "",
+    "accel": "",
+    "group": "View",
+    "source": "src/Gui/CommandLink.cpp"
+  },
+  "Std_LinkSelectActions": {
+    "name": "Std_LinkSelectActions",
+    "menuText": "&Link Navigation",
+    "toolTip": "Link navigation actions",
+    "pixmap": "",
+    "accel": "",
+    "group": "View",
+    "source": "src/Gui/CommandLink.cpp"
+  },
+  "Std_MacroAttachDebugger": {
+    "name": "Std_MacroAttachDebugger",
+    "menuText": "&Attach to Remote Debugger",
+    "toolTip": "Attaches to a remotely running debugger",
+    "pixmap": "",
+    "accel": "",
+    "group": "Macro",
+    "source": "src/Gui/CommandMacro.cpp"
+  },
+  "Std_MainFullscreen": {
+    "name": "Std_MainFullscreen",
+    "menuText": "Fullscreen",
+    "toolTip": "Displays the main window in fullscreen mode",
+    "pixmap": "view-fullscreen",
+    "accel": "Alt+F11",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_MergeProjects": {
+    "name": "Std_MergeProjects",
+    "menuText": "&Merge Document",
+    "toolTip": "Merges another FreeCAD document into the active one",
+    "pixmap": "Std_MergeProjects",
+    "accel": "",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_New": {
+    "name": "Std_New",
+    "menuText": "&New Document",
+    "toolTip": "Creates a new empty document",
+    "pixmap": "document-new",
+    "accel": "Ctrl+N",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Open": {
+    "name": "Std_Open",
+    "menuText": "&Open…",
+    "toolTip": "Opens a document or imports files",
+    "pixmap": "document-open",
+    "accel": "Ctrl+O",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_OrthographicCamera": {
+    "name": "Std_OrthographicCamera",
+    "menuText": "Orthographic View",
+    "toolTip": "Switches to orthographic view mode",
+    "pixmap": "view-isometric",
+    "accel": "V, O",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_Part": {
+    "name": "Std_Part",
+    "menuText": "New Part",
+    "toolTip": "Creates a part, which is a general-purpose container to group objects so they act as a unit in the 3D view. It is intended to arrange objects that have a part TopoShape, like part primitives, Part Design bodies, and other parts.",
+    "pixmap": "Geofeaturegroup",
+    "accel": "",
+    "group": "Structure",
+    "source": "src/Gui/CommandStructure.cpp"
+  },
+  "Std_Paste": {
+    "name": "Std_Paste",
+    "menuText": "&Paste",
+    "toolTip": "Pastes the contents of the clipboard",
+    "pixmap": "edit-paste",
+    "accel": "Ctrl+V",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_PerspectiveCamera": {
+    "name": "Std_PerspectiveCamera",
+    "menuText": "Perspective View",
+    "toolTip": "Switches to perspective view mode",
+    "pixmap": "view-perspective",
+    "accel": "V, P",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_Placement": {
+    "name": "Std_Placement",
+    "menuText": "P&lacement",
+    "toolTip": "Opens the placement editor to adjust the placement of the selected object",
+    "pixmap": "Std_Placement",
+    "accel": "",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Print": {
+    "name": "Std_Print",
+    "menuText": "&Print",
+    "toolTip": "Prints the active document",
+    "pixmap": "document-print",
+    "accel": "Ctrl+P",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_PrintPdf": {
+    "name": "Std_PrintPdf",
+    "menuText": "Export P&DF",
+    "toolTip": "Exports the active document as a PDF file",
+    "pixmap": "Std_PrintPdf",
+    "accel": "",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_PrintPreview": {
+    "name": "Std_PrintPreview",
+    "menuText": "Print Previe&w",
+    "toolTip": "Previews the active document before printing",
+    "pixmap": "document-print-preview",
+    "accel": "",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_ProjectInfo": {
+    "name": "Std_ProjectInfo",
+    "menuText": "Doc&ument Information",
+    "toolTip": "Shows information about the active document",
+    "pixmap": "document-properties",
+    "accel": "",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_ProjectUtil": {
+    "name": "Std_ProjectUtil",
+    "menuText": "Do&cument Utility",
+    "toolTip": "Extracts or creates document files",
+    "pixmap": "Std_ProjectUtil",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Properties": {
+    "name": "Std_Properties",
+    "menuText": "Propert&ies",
+    "toolTip": "Shows the property view, which displays the properties of the selected object.",
+    "pixmap": "document-properties",
+    "accel": "Alt+Return",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Quit": {
+    "name": "Std_Quit",
+    "menuText": "E&xit",
+    "toolTip": "Quits the application",
+    "pixmap": "application-exit",
+    "accel": "Ctrl+Q",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_RandomColor": {
+    "name": "Std_RandomColor",
+    "menuText": "Random &Color",
+    "toolTip": "Assigns random diffuse colors for the selected objects",
+    "pixmap": "Std_RandomColor",
+    "accel": "",
+    "group": "File",
+    "source": "src/Gui/CommandFeat.cpp"
+  },
+  "Std_RecallWorkingView": {
+    "name": "Std_RecallWorkingView",
+    "menuText": "R&ecall Working View",
+    "toolTip": "Recalls a previously stored temporary working view",
+    "pixmap": "",
+    "accel": "End",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_RecentFiles": {
+    "name": "Std_RecentFiles",
+    "menuText": "Open &Recent",
+    "toolTip": "Displays the list of recently opened files",
+    "pixmap": "Std_RecentFiles",
+    "accel": "",
+    "group": "File",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_RecentMacros": {
+    "name": "Std_RecentMacros",
+    "menuText": "&Recent Macros",
+    "toolTip": "Displays the list of recently used macros",
+    "pixmap": "Std_RecentMacros",
+    "accel": "",
+    "group": "Macro",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_Redo": {
+    "name": "Std_Redo",
+    "menuText": "&Redo",
+    "toolTip": "Redoes a previously undone action",
+    "pixmap": "edit-redo",
+    "accel": "Ctrl+Y",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Refresh": {
+    "name": "Std_Refresh",
+    "menuText": "Recompute",
+    "toolTip": "Recomputes the active document",
+    "pixmap": "view-refresh",
+    "accel": "F5",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_ReportBug": {
+    "name": "Std_ReportBug",
+    "menuText": "Report an &Issue",
+    "toolTip": "Opens the bugtracker to report an issue",
+    "pixmap": "internet-web-browser",
+    "accel": "",
+    "group": "Help",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_RestartInSafeMode": {
+    "name": "Std_RestartInSafeMode",
+    "menuText": "Restart in Safe Mode",
+    "toolTip": "Starts FreeCAD without any modules or plugins loaded",
+    "pixmap": "safe-mode-restart",
+    "accel": "",
+    "group": "Help",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_Revert": {
+    "name": "Std_Revert",
+    "menuText": "Rever&t",
+    "toolTip": "Reverts to the saved version of this file",
+    "pixmap": "Std_Revert",
+    "accel": "",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_Save": {
+    "name": "Std_Save",
+    "menuText": "&Save",
+    "toolTip": "Saves the active document",
+    "pixmap": "document-save",
+    "accel": "Ctrl+S",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_SaveAll": {
+    "name": "Std_SaveAll",
+    "menuText": "Sa&ve All",
+    "toolTip": "Saves all open documents",
+    "pixmap": "Std_SaveAll",
+    "accel": "",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_SaveAs": {
+    "name": "Std_SaveAs",
+    "menuText": "Save &As…",
+    "toolTip": "Saves the active document under a new file name",
+    "pixmap": "document-save-as",
+    "accel": "Ctrl+Shift+S",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_SaveCopy": {
+    "name": "Std_SaveCopy",
+    "menuText": "Save a Cop&y…",
+    "toolTip": "Saves a copy of the active document under a new file name",
+    "pixmap": "Std_SaveCopy",
+    "accel": "Ctrl+Alt+Shift+S",
+    "group": "File",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_SceneInspector": {
+    "name": "Std_SceneInspector",
+    "menuText": "Scene I&nspector",
+    "toolTip": "Opens the scene inspector",
+    "pixmap": "Std_SceneInspector",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_SelBoundingBox": {
+    "name": "Std_SelBoundingBox",
+    "menuText": "&Bounding Box",
+    "toolTip": "Shows selection bounding box",
+    "pixmap": "sel-bbox",
+    "accel": "",
+    "group": "View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_SelectAll": {
+    "name": "Std_SelectAll",
+    "menuText": "Select &All",
+    "toolTip": "Selects all objects in the active document",
+    "pixmap": "edit-select-all",
+    "accel": "Ctrl+A",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_SelectVisibleObjects": {
+    "name": "Std_SelectVisibleObjects",
+    "menuText": "&Select Visible Objects",
+    "toolTip": "Selects all visible objects in the active document",
+    "pixmap": "Std_SelectVisibleObjects",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_SendToPythonConsole": {
+    "name": "Std_SendToPythonConsole",
+    "menuText": "&Send to Python Console",
+    "toolTip": "Sends the selected objects to the Python console",
+    "pixmap": "applications-python",
+    "accel": "Ctrl+Shift+P",
+    "group": "Edit",
+    "source": "src/Gui/CommandFeat.cpp"
+  },
+  "Std_ShowObjects": {
+    "name": "Std_ShowObjects",
+    "menuText": "Show &All Objects",
+    "toolTip": "Shows all objects in the document",
+    "pixmap": "Std_ShowObjects",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ShowSelection": {
+    "name": "Std_ShowSelection",
+    "menuText": "Sho&w Selection",
+    "toolTip": "Shows all selected objects",
+    "pixmap": "Std_ShowSelection",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_StoreWorkingView": {
+    "name": "Std_StoreWorkingView",
+    "menuText": "St&ore Working View",
+    "toolTip": "Stores a temporary working view for the current document",
+    "pixmap": "",
+    "accel": "Shift+End",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_TextDocument": {
+    "name": "Std_TextDocument",
+    "menuText": "Te&xt Document",
+    "toolTip": "Adds a text document to the active document",
+    "pixmap": "TextDocument",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_TextureMapping": {
+    "name": "Std_TextureMapping",
+    "menuText": "Text&ure Mapping",
+    "toolTip": "Maps textures to shapes",
+    "pixmap": "Std_TextureMapping",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_TileWindows": {
+    "name": "Std_TileWindows",
+    "menuText": "&Tile",
+    "toolTip": "Tiles the windows",
+    "pixmap": "Std_WindowTileVer",
+    "accel": "",
+    "group": "Window",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_ToggleBottomPanels": {
+    "name": "Std_ToggleBottomPanels",
+    "menuText": "Toggle Bottom Panels",
+    "toolTip": "Toggles the bottom dock panels",
+    "pixmap": "Std_ToggleBottomPanels",
+    "accel": "Ctrl+0",
+    "group": "View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ToggleClipPlane": {
+    "name": "Std_ToggleClipPlane",
+    "menuText": "Clippin&g View",
+    "toolTip": "Toggles clipping of the active view",
+    "pixmap": "Std_ToggleClipPlane",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ToggleFreeze": {
+    "name": "Std_ToggleFreeze",
+    "menuText": "Toggle Freeze",
+    "toolTip": "",
+    "pixmap": "Std_ToggleFreeze",
+    "accel": "",
+    "group": "File",
+    "source": "src/Gui/CommandFeat.cpp"
+  },
+  "Std_ToggleNavigation": {
+    "name": "Std_ToggleNavigation",
+    "menuText": "Toggle Navigation/&Edit Mode",
+    "toolTip": "Toggles between navigation and edit mode",
+    "pixmap": "Std_ToggleNavigation",
+    "accel": "Esc",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ToggleObjects": {
+    "name": "Std_ToggleObjects",
+    "menuText": "To&ggle All Objects",
+    "toolTip": "Toggles the visibility of all objects in the active document",
+    "pixmap": "Std_ToggleObjects",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ToggleSelectability": {
+    "name": "Std_ToggleSelectability",
+    "menuText": "Toggle Se&lectability",
+    "toolTip": "Toggles the property of the objects to get selected in the 3D view",
+    "pixmap": "view-unselectable",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ToggleTransparency": {
+    "name": "Std_ToggleTransparency",
+    "menuText": "Toggle Transparenc&y",
+    "toolTip": "",
+    "pixmap": "Std_ToggleTransparency",
+    "accel": "V,T",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ToggleVisibility": {
+    "name": "Std_ToggleVisibility",
+    "menuText": "Toggle &Visibility",
+    "toolTip": "Toggles the visibility of the selection",
+    "pixmap": "Std_ToggleVisibility",
+    "accel": "Space",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ToolBarMenu": {
+    "name": "Std_ToolBarMenu",
+    "menuText": "&Toolbars",
+    "toolTip": "Toggles this window",
+    "pixmap": "",
+    "accel": "",
+    "group": "View",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_TransformManip": {
+    "name": "Std_TransformManip",
+    "menuText": "Trans&form",
+    "toolTip": "Transforms the selected object in the 3D view",
+    "pixmap": "Std_TransformManip",
+    "accel": "",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_TreeSelectAllInstances": {
+    "name": "Std_TreeSelectAllInstances",
+    "menuText": "Select All Instances",
+    "toolTip": "Selects all instances of the currently selected object",
+    "pixmap": "sel-instance",
+    "accel": "",
+    "group": "View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_TreeSelection": {
+    "name": "Std_TreeSelection",
+    "menuText": "&Go to Selection",
+    "toolTip": "Scrolls to the first selected item",
+    "pixmap": "tree-goto-sel",
+    "accel": "T,G",
+    "group": "TreeView",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_TreeViewActions": {
+    "name": "Std_TreeViewActions",
+    "menuText": "Tree View Actions",
+    "toolTip": "Tree view behavior options and actions",
+    "pixmap": "",
+    "accel": "",
+    "group": "TreeView",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_Undo": {
+    "name": "Std_Undo",
+    "menuText": "&Undo",
+    "toolTip": "Undoes the previous action",
+    "pixmap": "edit-undo",
+    "accel": "Ctrl+Z",
+    "group": "Edit",
+    "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_UnitsCalculator": {
+    "name": "Std_UnitsCalculator",
+    "menuText": "&Units Converter",
+    "toolTip": "Starts the units converter",
+    "pixmap": "accessories-calculator",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_UserEditMode": {
+    "name": "Std_UserEditMode",
+    "menuText": "Edit &Mode",
+    "toolTip": "Defines behavior when editing an object from the tree view",
+    "pixmap": "Std_UserEditModeDefault",
+    "accel": "",
+    "group": "Edit",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_VarSet": {
+    "name": "Std_VarSet",
+    "menuText": "Variable Set",
+    "toolTip": "Creates a variable set, which is an object that maintains a set of properties to be used as variables",
+    "pixmap": "VarSet",
+    "accel": "",
+    "group": "Structure",
+    "source": "src/Gui/CommandStructure.cpp"
+  },
+  "Std_ViewBottom": {
+    "name": "Std_ViewBottom",
+    "menuText": "Bottom",
+    "toolTip": "Sets the camera to the bottom view",
+    "pixmap": "view-bottom",
+    "accel": "5",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewBoxZoom": {
+    "name": "Std_ViewBoxZoom",
+    "menuText": "&Box Zoom",
+    "toolTip": "Activates the box zoom tool",
+    "pixmap": "zoom-border",
+    "accel": "Ctrl+B",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewCreate": {
+    "name": "Std_ViewCreate",
+    "menuText": "New 3D View",
+    "toolTip": "Opens a new 3D view window for the active document",
+    "pixmap": "window-new",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewDimetric": {
+    "name": "Std_ViewDimetric",
+    "menuText": "&Dimetric",
+    "toolTip": "Sets the camera to the dimetric view",
+    "pixmap": "Std_ViewDimetric",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewDockUndockFullscreen": {
+    "name": "Std_ViewDockUndockFullscreen",
+    "menuText": "D&ocument Window",
+    "toolTip": "Displays the active view either in fullscreen, undocked, or docked mode",
+    "pixmap": "",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewFitAll": {
+    "name": "Std_ViewFitAll",
+    "menuText": "&Fit All",
+    "toolTip": "Fits all content into the 3D view",
+    "pixmap": "zoom-all",
+    "accel": "V, F",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewFitSelection": {
+    "name": "Std_ViewFitSelection",
+    "menuText": "Fit &Selection",
+    "toolTip": "Fits the selected content into the 3D view",
+    "pixmap": "zoom-selection",
+    "accel": "V, S",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewFront": {
+    "name": "Std_ViewFront",
+    "menuText": "Front",
+    "toolTip": "Sets the camera to the front view",
+    "pixmap": "view-front",
+    "accel": "1",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewGroup": {
+    "name": "Std_ViewGroup",
+    "menuText": "Standard &Views",
+    "toolTip": "Changes to a standard view",
+    "pixmap": "view-isometric",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewHome": {
+    "name": "Std_ViewHome",
+    "menuText": "&Home",
+    "toolTip": "Sets the camera to the default home view",
+    "pixmap": "Std_ViewHome",
+    "accel": "Home",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewIsometric": {
+    "name": "Std_ViewIsometric",
+    "menuText": "&Isometric",
+    "toolTip": "Sets the camera to the isometric view",
+    "pixmap": "view-axonometric",
+    "accel": "0",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewIvIssueCamPos": {
+    "name": "Std_ViewIvIssueCamPos",
+    "menuText": "Issue Camera &Position",
+    "toolTip": "Issues the camera position to the console and to a macro, to easily recall this position",
+    "pixmap": "Std_ViewIvIssueCamPos",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewLeft": {
+    "name": "Std_ViewLeft",
+    "menuText": "Left",
+    "toolTip": "Sets the camera to the left view",
+    "pixmap": "view-left",
+    "accel": "6",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewLoadImage": {
+    "name": "Std_ViewLoadImage",
+    "menuText": "&Load Image…",
+    "toolTip": "Loads an image",
+    "pixmap": "image-open",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewRear": {
+    "name": "Std_ViewRear",
+    "menuText": "Rear",
+    "toolTip": "Sets the camera to the rear view",
+    "pixmap": "view-rear",
+    "accel": "4",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewRight": {
+    "name": "Std_ViewRight",
+    "menuText": "Right",
+    "toolTip": "Sets the camera to the right view",
+    "pixmap": "view-right",
+    "accel": "3",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewRotateLeft": {
+    "name": "Std_ViewRotateLeft",
+    "menuText": "Rotate &Left",
+    "toolTip": "Rotates the view by 90\\xc2\\xb0 counter-clockwise",
+    "pixmap": "view-rotate-left",
+    "accel": "Shift+Left",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewRotateRight": {
+    "name": "Std_ViewRotateRight",
+    "menuText": "Rotates &Right",
+    "toolTip": "Rotates the view by 90\\xc2\\xb0 clockwise",
+    "pixmap": "view-rotate-right",
+    "accel": "Shift+Right",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewScreenShot": {
+    "name": "Std_ViewScreenShot",
+    "menuText": "Save &Image…",
+    "toolTip": "Creates a screenshot of the active view",
+    "pixmap": "Std_ViewScreenShot",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewStatusBar": {
+    "name": "Std_ViewStatusBar",
+    "menuText": "Status Bar",
+    "toolTip": "Toggles the status bar",
+    "pixmap": "",
+    "accel": "",
+    "group": "View",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_ViewTop": {
+    "name": "Std_ViewTop",
+    "menuText": "Top",
+    "toolTip": "Sets the camera to the top view",
+    "pixmap": "view-top",
+    "accel": "2",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewTrimetric": {
+    "name": "Std_ViewTrimetric",
+    "menuText": "&Trimetric",
+    "toolTip": "Sets the camera to the trimetric view",
+    "pixmap": "Std_ViewTrimetric",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewZoomIn": {
+    "name": "Std_ViewZoomIn",
+    "menuText": "Zoom &In",
+    "toolTip": "Increases the zoom factor by a fixed amount",
+    "pixmap": "zoom-in",
+    "accel": "Ctrl++",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_ViewZoomOut": {
+    "name": "Std_ViewZoomOut",
+    "menuText": "Zoom &Out",
+    "toolTip": "Decreases the zoom factor by a fixed amount",
+    "pixmap": "zoom-out",
+    "accel": "Ctrl+-",
+    "group": "Standard-View",
+    "source": "src/Gui/CommandView.cpp"
+  },
+  "Std_WhatsThis": {
+    "name": "Std_WhatsThis",
+    "menuText": "&What's This?",
+    "toolTip": "Opens the documentation for the selected command",
+    "pixmap": "WhatsThis",
+    "accel": "Shift+F1",
+    "group": "Help",
+    "source": "src/Gui/CommandStd.cpp"
+  },
+  "Std_Windows": {
+    "name": "Std_Windows",
+    "menuText": "Choose Open &Window",
+    "toolTip": "Displays the open windows",
+    "pixmap": "Std_Windows",
+    "accel": "",
+    "group": "Window",
+    "source": "src/Gui/CommandWindow.cpp"
+  },
+  "Std_Workbench": {
+    "name": "Std_Workbench",
+    "menuText": "&Workbench",
+    "toolTip": "Switches between workbenches",
+    "pixmap": "freecad",
+    "accel": "",
+    "group": "View",
+    "source": "src/Gui/CommandStd.cpp"
+  }
+}
