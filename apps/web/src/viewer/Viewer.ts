@@ -10,7 +10,7 @@ import * as THREE from "three";
 import { formatPoint, fixed } from "../lib/format";
 import { useApp } from "../state/app";
 import { sameItem, useSelection, type SelItem } from "../state/selection";
-import { object as objectInfo, objects, onModelChange, store, useSession } from "../state/session";
+import { object as objectInfo, objects, onModelChange, property, store, useSession } from "../state/session";
 import { useView3D, type StandardView, type ViewerHandle } from "../state/view3d";
 import { useViewProps, viewPropsOf } from "../state/viewprops";
 import { DRAG_THRESHOLD, dragAction, type DragAction } from "./navigation";
@@ -87,6 +87,9 @@ export class Viewer implements ViewerHandle {
   private readonly cornerScene = new THREE.Scene();
   private readonly cornerCamera = new THREE.OrthographicCamera(-1.6, 1.6, 1.6, -1.6, 0.1, 20);
   private readonly axisCross = new THREE.Group();
+  /** The origin's datum planes and axes (visible App::Plane / App::Line, or the plane picker). */
+  private readonly originGroup = new THREE.Group();
+  private originKey = "";
   private readonly views = new Map<string, ObjectView>();
   private readonly cameras = new Map<string, CameraState>();
   private readonly raycaster = new THREE.Raycaster();
@@ -155,6 +158,7 @@ export class Viewer implements ViewerHandle {
     this.scene.add(this.root);
     this.scene.add(this.editRoot);
     this.scene.add(this.axisCross);
+    this.scene.add(this.originGroup);
     this.buildAxisCross();
     this.buildCornerAxes();
 
@@ -187,6 +191,7 @@ export class Viewer implements ViewerHandle {
         if (s.drawStyle !== prev.drawStyle) this.restyle();
         if (s.orthographic !== prev.orthographic) this.invalidate();
         if (s.axisCross !== prev.axisCross) ((this.axisCross.visible = s.axisCross), this.invalidate());
+        if (s.originPicker !== prev.originPicker) this.updateOrigin();
       }),
     );
     this.offs.push(useApp.subscribe((s, prev) => s.editing !== prev.editing && this.restyle()));
@@ -475,6 +480,7 @@ export class Viewer implements ViewerHandle {
       }
       this.restyle();
       this.updateHighlights();
+      this.updateOrigin();
       if (!hadAny && this.views.size) this.fitAll();
     } finally {
       this.syncing = false;
@@ -518,6 +524,85 @@ export class Viewer implements ViewerHandle {
       v.setHighlights(pre, sel, vp.LineWidth);
     }
     this.invalidate();
+  }
+
+  // ------------------------------------------------------------------------------ origin
+
+  /**
+   * FreeCAD draws an origin's planes and axes when they are visible (ViewProviderPlane /
+   * ViewProviderLine); the server gives them no shape, so they are drawn here, sized from the scene.
+   */
+  private updateOrigin(): void {
+    const doc = this.doc;
+    const picker = useView3D.getState().originPicker;
+    const roles = new Set<string>();
+    if (doc) {
+      for (const o of objects(doc)) {
+        if (!o.visibility || !/^App::(Plane|Line)$/.test(o.type)) continue;
+        const role = (property(doc, o.name, "Role")?.value as string | undefined) ?? o.name.replace(/\d+$/, "");
+        roles.add(role);
+      }
+    }
+    if (picker) ["XY_Plane", "XZ_Plane", "YZ_Plane"].forEach((r) => roles.add(r));
+    const size = Math.max(this.sceneRadius() * 0.6, 10);
+    const key = `${[...roles].sort().join()}|${picker?.selected ?? ""}|${size.toFixed(3)}`;
+    if (key === this.originKey) return;
+    this.originKey = key;
+    for (const c of [...this.originGroup.children]) {
+      this.originGroup.remove(c);
+      c.traverse((x) => {
+        (x as THREE.Mesh).geometry?.dispose();
+        ((x as THREE.Mesh).material as THREE.Material | undefined)?.dispose();
+      });
+    }
+    const planes: Record<string, THREE.Quaternion> = {
+      XY_Plane: new THREE.Quaternion(),
+      XZ_Plane: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2),
+      YZ_Plane: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2),
+    };
+    for (const [role, q] of Object.entries(planes)) {
+      if (!roles.has(role)) continue;
+      const selected = picker?.selected === role;
+      const mesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(size, size),
+        new THREE.MeshBasicMaterial({
+          color: selected ? 0x1cad1c : 0xffff66,
+          transparent: true,
+          opacity: selected ? 0.45 : 0.25,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+        }),
+      );
+      mesh.quaternion.copy(q);
+      mesh.userData.originRole = role;
+      const edges = new THREE.LineSegments(
+        new THREE.EdgesGeometry(mesh.geometry),
+        new THREE.LineBasicMaterial({ color: selected ? 0x1cad1c : 0xb3b380 }),
+      );
+      edges.quaternion.copy(q);
+      this.originGroup.add(mesh, edges);
+    }
+    const axes: Record<string, [THREE.Vector3, number]> = {
+      X_Axis: [new THREE.Vector3(1, 0, 0), 0xcc3333],
+      Y_Axis: [new THREE.Vector3(0, 1, 0), 0x33cc33],
+      Z_Axis: [new THREE.Vector3(0, 0, 1), 0x3333cc],
+    };
+    for (const [role, [d, color]] of Object.entries(axes)) {
+      if (!roles.has(role)) continue;
+      const g = new THREE.BufferGeometry().setFromPoints([d.clone().multiplyScalar(-size * 0.6), d.clone().multiplyScalar(size * 0.6)]);
+      this.originGroup.add(new THREE.Line(g, new THREE.LineBasicMaterial({ color })));
+    }
+    this.invalidate();
+  }
+
+  /** The origin plane (picker mode) under a screen point. */
+  private pickOriginPlane(x: number, y: number): string | null {
+    if (!useView3D.getState().originPicker) return null;
+    this.updateCamera();
+    this.raycaster.setFromCamera(this.ndc(x, y), this.camera);
+    const meshes = this.originGroup.children.filter((c) => c.userData.originRole);
+    const hit = this.raycaster.intersectObjects(meshes, false)[0];
+    return (hit?.object.userData.originRole as string | undefined) ?? null;
   }
 
   // ------------------------------------------------------------------------------ picking
@@ -712,6 +797,11 @@ export class Viewer implements ViewerHandle {
       return;
     }
     if (e.button !== 0 || !this.doc || this.edit) return;
+    const plane = this.pickOriginPlane(x, y);
+    if (plane) {
+      useView3D.getState().originPicker?.pick(plane);
+      return;
+    }
     const hit = this.pick(x, y);
     const sel = useSelection.getState();
     if (!hit) {

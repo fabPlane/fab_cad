@@ -53,6 +53,7 @@ export class ObjectView {
   private overlayKey = "";
   private baseColors = { face: new THREE.Color(0xcccccc), line: new THREE.Color(0x000000), point: new THREE.Color(0x191919) };
   private wholeHighlight: THREE.Color | null = null;
+  private hiddenLine = false;
   bounds = new THREE.Box3();
   sphere = new THREE.Sphere();
 
@@ -127,6 +128,7 @@ export class ObjectView {
     const showEdges = mode === "Flat Lines" || mode === "Wireframe" || mode === "Hidden Line" || mode === "No Shading";
     const showPoints = mode === "Points" || (mode === "Flat Lines" && this.tess.triangleCount === 0 && this.tess.edgeCount === 0);
     const opacity = (1 - vp.Transparency / 100) * (dimmed ? 0.25 : 1);
+    this.hiddenLine = mode === "Hidden Line";
     if (this.mesh && this.faceMaterial) {
       const wantBasic = mode === "No Shading" || mode === "Hidden Line";
       if (wantBasic !== this.faceMaterial instanceof THREE.MeshBasicMaterial) {
@@ -171,7 +173,8 @@ export class ObjectView {
   /** Whole-object (pre)selection recolours the object, as Coin's highlight does; sub-elements get overlays. */
   private applyColors(): void {
     const h = this.wholeHighlight;
-    this.faceMaterial?.color.copy(h ?? this.baseColors.face);
+    // Hidden Line keeps its faces the background colour; only the lines light up.
+    this.faceMaterial?.color.copy(this.hiddenLine ? this.baseColors.face : (h ?? this.baseColors.face));
     this.edgeMaterial.color.copy(h ?? this.baseColors.line);
     this.pointMaterial.color.copy(h ?? this.baseColors.point);
   }

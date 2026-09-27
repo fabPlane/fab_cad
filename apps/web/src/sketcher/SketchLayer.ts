@@ -277,8 +277,9 @@ export class SketchLayer implements EditLayer {
       const key = `${Math.round(x / 10)}:${Math.round(y / 10)}`;
       const n = offsets.get(key) ?? 0;
       offsets.set(key, n + 1);
+      // dimensions above the element, geometric constraint icons below it
       el.style.left = `${x + n * 18}px`;
-      el.style.top = `${y - (isDimensional(c.type) ? 12 : 14)}px`;
+      el.style.top = `${y + (isDimensional(c.type) ? -14 : 14)}px`;
     }
   }
 

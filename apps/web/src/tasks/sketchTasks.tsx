@@ -14,6 +14,7 @@ import { log } from "../state/console";
 import { CheckBox, GroupBox, Icon, QuantitySpinBox, Button } from "../ui/widgets";
 import { run } from "../ui/commandUi";
 import { openSimpleTask } from "./featureTask";
+import { useView3D } from "../state/view3d";
 
 const PLANES = [
   { id: "XY_Plane", label: "XY_Plane (Base plane)", icon: "Std_Plane" },
@@ -24,8 +25,19 @@ const PLANES = [
 /** Part Design: pick the base plane for a new sketch. */
 export function openSketchPlaneTask(doc: string, onPlane: (plane: string) => Promise<void>): void {
   const state = { plane: "XY_Plane" };
+  // The base planes show in the 3D view and can be clicked there too.
+  const picker = (selected: string) =>
+    useView3D.getState().setOriginPicker({
+      selected,
+      pick: (role) => {
+        state.plane = role;
+        picker(role);
+      },
+    });
+  picker(state.plane);
   function Body() {
     const [, force] = useState(0);
+    useView3D((s) => s.originPicker);
     return (
       <GroupBox title="Select feature" icon="Sketcher_NewSketch">
         <div className="muted">Select attachment plane for the new sketch:</div>
@@ -35,7 +47,7 @@ export function openSketchPlaneTask(doc: string, onPlane: (plane: string) => Pro
               key={p.id}
               className={`listbox-item ${state.plane === p.id ? "selected" : ""}`}
               data-testid={`plane-${p.id}`}
-              onClick={() => ((state.plane = p.id), force((n) => n + 1))}
+              onClick={() => ((state.plane = p.id), picker(p.id), force((n) => n + 1))}
             >
               <Icon name={p.icon} />
               {p.label}
@@ -50,7 +62,9 @@ export function openSketchPlaneTask(doc: string, onPlane: (plane: string) => Pro
     title: "Select feature",
     icon: "Sketcher_NewSketch",
     render: () => <Body />,
+    reject: () => useView3D.getState().setOriginPicker(null),
     accept: async () => {
+      useView3D.getState().setOriginPicker(null);
       try {
         // Close the dialog before the sketch opens its own edit panel.
         setTimeout(() => void onPlane(state.plane).catch((e) => log.error(String(e))), 0);

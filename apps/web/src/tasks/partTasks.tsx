@@ -3,7 +3,7 @@
  * Fillet/Chamfer edges (`DlgFilletEdges`), Extrude, Revolve and Mirror.
  */
 import { Placement, Rotation, Vector, objectRef, type ObjectInfo, type PropertyInput } from "@fab-cad/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { command, errorText, python, settle } from "../commands/actions";
 import { fixed, pyNum, pyStr } from "../lib/format";
 import { placementPython, placementWire } from "../properties/model";
@@ -456,9 +456,21 @@ export async function openPartFilletTask(doc: string, kind: "Fillet" | "Chamfer"
   const n = await edgeCount(doc, base);
   const picked = new Set(sel.filter((s) => s.object === base && s.sub.startsWith("Edge")).map((s) => Number(s.sub.slice(4))));
   const state = { radius: 1, edges: picked.size ? picked : new Set<number>(), base };
+  // Edges picked in the 3D view while the dialog is open are checked too (FreeCAD syncs them).
+  const pickedNow = () =>
+    useSelection
+      .getState()
+      .selection.filter((s) => s.doc === doc && s.object === base && s.sub.startsWith("Edge"))
+      .map((s) => Number(s.sub.slice(4)));
   function Body() {
     const [, force] = useState(0);
     const re = () => force((x) => x + 1);
+    const selection = useSelection((s) => s.selection);
+    useEffect(() => {
+      let changed = false;
+      for (const e of pickedNow()) if (!state.edges.has(e)) (state.edges.add(e), (changed = true));
+      if (changed) re();
+    }, [selection]);
     return (
       <GroupBox title={`${kind} Edges`} icon={`Part_${kind}`}>
         <FormRow label="Shape">
@@ -520,6 +532,7 @@ export async function openPartFilletTask(doc: string, kind: "Fillet" | "Chamfer"
         await command(doc, kind, async () => {
           await python(code);
         });
+        useSelection.getState().clear(doc);
       } catch (e) {
         log.error(`${kind} failed: ${errorText(e)}`);
         return false;

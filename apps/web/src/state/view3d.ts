@@ -54,6 +54,12 @@ interface View3DState {
   naviCube: boolean;
   /** "123.45 mm x 67.89 mm", the status bar's view dimension. */
   dimensions: string;
+  /**
+   * The origin's planes shown for picking (Part Design's "Select feature" dialog shows them the way
+   * FreeCAD's TempoVis does): the highlighted role and what a click on a plane does.
+   */
+  originPicker: { selected: string; pick: (role: string) => void } | null;
+  setOriginPicker: (p: { selected: string; pick: (role: string) => void } | null) => void;
   setDrawStyle: (s: DrawStyle) => void;
   setOrthographic: (b: boolean) => void;
   setNavigationStyle: (s: NavigationStyle) => void;
@@ -80,6 +86,8 @@ export const useView3D = create<View3DState>((set, get) => ({
   axisCross: false,
   naviCube: true,
   dimensions: "",
+  originPicker: null,
+  setOriginPicker: (p) => set({ originPicker: p }),
   setDrawStyle: (s) => set({ drawStyle: s }),
   setOrthographic: (b) => set({ orthographic: b }),
   setNavigationStyle: (s) => {
