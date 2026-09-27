@@ -140,3 +140,59 @@ describe("console", () => {
     expect(needsMoreInput(["d = {'a': 1}  # a: comment"])).toBe(false);
   });
 });
+
+describe("server restarts", () => {
+  test("a new server token reloads the model and resets selection, task and edit mode", async () => {
+    await disconnect();
+    const { createMockDispatcher } = await import("@fab-cad/mock-server");
+    const { FreeCADClient, DocumentStore, WasmTransport } = await import("@fab-cad/client");
+    let current = createMockDispatcher({ token: "first" });
+    // an instance whose FreeCAD can be swapped underneath, like a restarted server
+    const listeners = new Set<(b: Uint8Array) => void>();
+    const hook = (d: typeof current) => d.onEvent((b) => listeners.forEach((l) => l(b)));
+    let off = hook(current);
+    const instance = {
+      dispatch: (req: Uint8Array) => current.dispatch(req),
+      onEvent: (cb: (b: Uint8Array) => void) => (listeners.add(cb), () => listeners.delete(cb)),
+      shutdown: () => current.shutdown(),
+    };
+    const client = await FreeCADClient.connect(new WasmTransport(instance));
+    const store = new DocumentStore(client, { debounceMs: 5 });
+    await store.load();
+    attachConnection(
+      {
+        kind: "mock",
+        description: "swappable mock",
+        client,
+        store,
+        serverInfo: null,
+        close: async () => (store.dispose(), await client.close()),
+      },
+      { kind: "mock", demo: false },
+    );
+    await newDocument();
+    await runCommand("Part_Box", makeContext());
+    expect(objects("Unnamed").length).toBe(1);
+    useSelection.getState().select({ doc: "Unnamed", object: "Box", sub: "Face1" });
+    useApp.getState().openTask({ id: "t", title: "T", render: () => null, accept: () => undefined, reject: () => undefined });
+    useApp.getState().setEditing({ doc: "Unnamed", object: "Box", kind: "sketch" });
+
+    // FreeCAD restarts: a fresh instance with another token and no documents
+    off();
+    current = createMockDispatcher({ token: "second" });
+    off = hook(current);
+    await client.ping().catch(() => undefined); // TOKEN_MISMATCH: the client pins the new token
+    await new Promise((r) => setTimeout(r, 50));
+    await store.flush();
+
+    expect(useSelection.getState().selection).toEqual([]);
+    expect(useApp.getState().task).toBeNull();
+    expect(useApp.getState().editing).toBeNull();
+    expect(store.documents()).toEqual([]);
+    expect(useConsole.getState().report.some((r) => r.kind === "warning" && r.text.includes("FreeCAD restarted"))).toBe(true);
+    // the page keeps working against the new server
+    const doc = await newDocument();
+    expect(store.document(doc)).toBeDefined();
+    off();
+  });
+});
