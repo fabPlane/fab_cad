@@ -1,0 +1,28 @@
+{
+  "name": "fab-cad",
+  "private": true,
+  "version": "0.0.1",
+  "description": "FreeCAD in the browser: a web frontend over the FreeCAD API (WebSocket, stdio or WebAssembly) - Bun + TypeScript",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tooling/*"
+  ],
+  "scripts": {
+    "typecheck": "tsc -b",
+    "test": "bun run test:unit",
+    "test:unit": "bun tooling/ci/run-tests.ts unit",
+    "test:integration": "bun tooling/ci/run-tests.ts integration",
+    "mock": "bun packages/mock-server/src/main.ts",
+    "bridge": "bun packages/bridge/src/main.ts",
+    "wasm:fetch": "bun run --filter @fab-cad/freecad-wasm fetch",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "ci": "bun install --frozen-lockfile && bun run format:check && bun run typecheck && bun run test:unit"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.1",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3"
+  }
+}

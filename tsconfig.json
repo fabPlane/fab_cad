@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/protocol" },
+    { "path": "packages/client" },
+    { "path": "packages/mock-server" },
+    { "path": "packages/freecad-wasm" },
+    { "path": "packages/bridge" },
+    { "path": "tooling/ci" }
+  ]
+}

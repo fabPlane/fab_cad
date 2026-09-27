@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-tsc/
+*.tsbuildinfo
+.DS_Store
+*.log
+/coverage/
+.worktrees/
+# the Emscripten build copied in by `bun run wasm:fetch`
+packages/freecad-wasm/dist/

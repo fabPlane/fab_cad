@@ -1,0 +1,21 @@
+{
+  "name": "@fab-cad/protocol",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "The FreeCAD API wire protocol (src/Api/PROTOCOL.md in the fork): command and event types, tagged value codecs, JSON/CBOR envelopes, tessellation views",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "cbor-x": "1.6.6"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.1",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,7 @@
+[install]
+exact = true
+
+[test]
+# `bun test` from the root must never pick up compiled output (packages emit dist/, which holds
+# *.test.d.ts copies). Prefer `bun run test:unit`: it runs each workspace in its own process.
+pathIgnorePatterns = ["**/dist/**", "**/dist-tsc/**", "**/node_modules/**"]

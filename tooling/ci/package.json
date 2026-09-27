@@ -1,0 +1,10 @@
+{
+  "name": "@fab-cad/ci",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Workspace test runner (unit / integration split) and CI helpers",
+  "devDependencies": {
+    "@types/bun": "1.4.1"
+  }
+}
