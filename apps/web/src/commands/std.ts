@@ -8,7 +8,7 @@ import { useApp, type WorkbenchId } from "../state/app";
 import { echo, log } from "../state/console";
 import { message, prompt } from "../state/dialogs";
 import { selectedObjects, useSelection } from "../state/selection";
-import { documents, object, objects } from "../state/session";
+import { conn, documents, object, objects } from "../state/session";
 import { DRAW_STYLES, useView3D, viewer, type StandardView } from "../state/view3d";
 import { useViewProps, viewPropsOf } from "../state/viewprops";
 import { aboutDialog, exportDialog, saveAsDialog } from "../ui/dialogs/fileDialogs";
@@ -206,6 +206,16 @@ export function registerStdCommands(): void {
       },
     },
     { id: "Std_Properties", isActive: hasSel, run: () => useApp.getState().setComboTab("model") },
+    {
+      id: "Std_MarkToRecompute",
+      isActive: hasDoc,
+      run: async (c) => {
+        const names = selNames(c).length ? selNames(c) : c.objects().map((o) => o.name);
+        await python(names.map((n) => `App.getDocument(${pyStr(c.doc!)}).getObject(${pyStr(n)}).touch()`).join("\n"));
+        // touch() raises no event: read the objects' state again
+        await conn()?.store.reload();
+      },
+    },
 
     // ------------------------------------------------------------------ Create
     {

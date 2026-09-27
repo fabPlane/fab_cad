@@ -1,7 +1,7 @@
 /** File > Save As, File > Export and Help > About dialogs. */
 import type { ExportFormat } from "@fab-cad/client";
 import { useState } from "react";
-import { EXPORT_FORMATS } from "../../commands/actions";
+import { EXPORT_FORMATS, serverPath } from "../../commands/actions";
 import { custom } from "../../state/dialogs";
 import { conn, docInfo, labelOf } from "../../state/session";
 import { Button, ComboBox, Icon } from "../widgets";
@@ -9,7 +9,7 @@ import { Button, ComboBox, Icon } from "../widgets";
 /** Where to save: a browser download, or a path on the server (native backends only). */
 export function saveAsDialog(doc: string): Promise<"download" | { path: string } | null> {
   const info = docInfo(doc);
-  const suggested = info?.fileName || `${info?.label ?? doc}.FCStd`;
+  const suggested = serverPath(doc) ?? `${info?.label ?? doc}.FCStd`;
   return custom<"download" | { path: string }>(
     "Save As",
     (close) => <SaveAsBody suggested={suggested} close={close} />,

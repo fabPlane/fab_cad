@@ -31,6 +31,9 @@ export function TreeView() {
   const anchor = useRef<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
+  // No mouseleave when the tree unmounts under the pointer (Tasks tab): drop its preselection.
+  useEffect(() => () => useSelection.getState().setPreselection(null), []);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const trees = useMemo(() => new Map(docs.map((d) => [d.name, buildTree(objects(d.name))])), [version]);
 

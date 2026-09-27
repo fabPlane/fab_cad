@@ -7,6 +7,7 @@
  */
 import type { ObjectInfo, UndoStack } from "@fab-cad/client";
 import catalog from "../generated/freecad-commands.json";
+import { PARTIAL } from "./partial";
 import type { EditState, WorkbenchId } from "../state/app";
 import type { SelItem } from "../state/selection";
 
@@ -44,6 +45,8 @@ export interface CommandDef {
   isActive?: (ctx: CommandContext) => boolean;
   isChecked?: (ctx: CommandContext) => boolean;
   run?: (ctx: CommandContext) => unknown;
+  /** What differs from FreeCAD's command, for the coverage table (a "partial" implementation). */
+  partial?: string;
   /**
    * A group command (`Gui::GroupCommand`): a toolbar drop-down / menu of these commands. The
    * button shows the last one used (or the first).
@@ -54,6 +57,8 @@ export interface CommandDef {
 export interface CommandInfo extends CommandMeta {
   def: CommandDef | undefined;
   implemented: boolean;
+  /** Set when the implementation is partial (see `partial.ts`). */
+  partial?: string;
 }
 
 const defs = new Map<string, CommandDef>();
@@ -94,6 +99,7 @@ export function commandInfo(id: string): CommandInfo {
     group: meta?.group ?? "",
     def,
     implemented: !!def && (!!def.run || !!def.items),
+    ...(def?.partial || PARTIAL[id] ? { partial: def?.partial ?? PARTIAL[id] } : {}),
   };
 }
 

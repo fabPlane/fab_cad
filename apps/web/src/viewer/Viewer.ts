@@ -120,6 +120,9 @@ export class Viewer implements ViewerHandle {
     onCube: boolean;
   } | null = null;
   private hoverPending: { x: number; y: number } | null = null;
+  /** Where the pointer rests, so preselection follows camera moves (`null` once it left). */
+  private lastHover: { x: number; y: number } | null = null;
+  private hoverCamKey = "";
   private readonly offs: (() => void)[] = [];
   edit: EditLayer | null = null;
   onContextMenu: (x: number, y: number) => void = () => {};
@@ -538,6 +541,7 @@ export class Viewer implements ViewerHandle {
 
   pick(x: number, y: number): PickResult | null {
     if (!this.doc) return null;
+    this.updateCamera();
     const overrides = useViewProps.getState().overrides;
     const cam = this.camera;
     this.raycaster.setFromCamera(this.ndc(x, y), cam);
@@ -672,6 +676,7 @@ export class Viewer implements ViewerHandle {
       return;
     }
     this.hoverPending = { x, y };
+    this.lastHover = { x, y };
   }
 
   private onPointerUp(e: PointerEvent): void {
@@ -720,6 +725,7 @@ export class Viewer implements ViewerHandle {
 
   private onPointerLeave(): void {
     this.hoverPending = null;
+    this.lastHover = null;
     useSelection.getState().setPreselection(null);
     if (this.navi.hover(null, false)) this.invalidate();
   }
@@ -810,7 +816,10 @@ export class Viewer implements ViewerHandle {
   private loop = (): void => {
     if (this.disposed) return;
     this.frame = requestAnimationFrame(this.loop);
+    const camKey = `${this.cam.target.toArray().join()},${this.cam.quat.toArray().join()},${this.cam.height},${this.views.size}`;
+    if (!this.hoverPending && this.lastHover && camKey !== this.hoverCamKey && !this.anim) this.hoverPending = this.lastHover;
     if (this.hoverPending) {
+      this.hoverCamKey = camKey;
       const { x, y } = this.hoverPending;
       this.hoverPending = null;
       if (!this.drag && !this.edit) {

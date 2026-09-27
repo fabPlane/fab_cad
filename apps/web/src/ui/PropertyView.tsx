@@ -348,6 +348,7 @@ function ValueEditor({
             value={q.value}
             unit={q.unit || p.unit || ""}
             onCommit={(_v, t) => onCommit(t)}
+            onExpression={onCommit}
             onDone={onCancel}
             onCancel={onCancel}
           />
@@ -364,6 +365,7 @@ function ValueEditor({
             value={typeof p.value === "number" ? p.value : 0}
             integer={kind === "int"}
             onCommit={(v) => onCommit(String(v))}
+            onExpression={onCommit}
             onDone={onCancel}
             onCancel={onCancel}
           />

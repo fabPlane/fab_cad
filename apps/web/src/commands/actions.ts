@@ -17,9 +17,34 @@ export function errorText(e: unknown): string {
   return e instanceof Error ? e.message : String(e);
 }
 
-/** Wait until the model mirror has applied the events of the last request. */
+const tick = () => new Promise<void>((r) => setTimeout(r, 0));
+
+/**
+ * Wait until the model mirror has applied the events of the last request. The server sends a
+ * request's events right after its reply, so they may still be in the socket's buffer when the
+ * reply resolves: let them in, then flush.
+ */
 export async function settle(): Promise<void> {
+  await tick();
+  await tick();
   await store()?.flush();
+}
+
+/** Wait (up to `ms`) until `pred` holds for the model mirror. */
+export async function waitForModel(pred: () => boolean, ms = 10_000): Promise<boolean> {
+  const s = store();
+  if (!s) return false;
+  await settle();
+  if (pred()) return true;
+  return new Promise((resolve) => {
+    const timer = setTimeout(() => (off(), resolve(pred())), ms);
+    const off = s.subscribe(() => {
+      if (!pred()) return;
+      clearTimeout(timer);
+      off();
+      resolve(true);
+    });
+  });
 }
 
 // ------------------------------------------------------------------------------ documents
@@ -27,7 +52,7 @@ export async function settle(): Promise<void> {
 export async function newDocument(): Promise<string> {
   echo("App.newDocument()");
   const info = await client().newDocument();
-  await settle();
+  await waitForModel(() => !!store()?.document(info.name));
   useApp.getState().setActiveDoc(info.name);
   return info.name;
 }
@@ -47,7 +72,8 @@ export async function openFile(file: File): Promise<void> {
   if (ext === "fcstd") {
     echo(`FreeCAD.openDocument(${pyStr(file.name)})`);
     const info = await client().openDocumentBytes(data, file.name);
-    await settle();
+    uploaded.add(info.name);
+    await waitForModel(() => !!store()?.document(info.name));
     useApp.getState().setActiveDoc(info.name);
     await recompute(info.name, { quiet: true, onlyIfTouched: true });
     setTimeout(() => viewer()?.fitAll(), 50);
@@ -57,7 +83,7 @@ export async function openFile(file: File): Promise<void> {
   if (IMPORT_EXTENSIONS.includes(ext)) {
     const stem = file.name.replace(/\.[^.]*$/, "").replace(/[^A-Za-z0-9_]/g, "_") || "Unnamed";
     const info = await client().newDocument({ name: stem, label: file.name.replace(/\.[^.]*$/, "") });
-    await settle();
+    await waitForModel(() => !!store()?.document(info.name));
     useApp.getState().setActiveDoc(info.name);
     await importInto(info.name, file.name, data);
     return;
@@ -83,17 +109,29 @@ export function serverHasFiles(): boolean {
   return k === "ws" || k === "bridge";
 }
 
+/** Documents that came in as bytes: their server path is a temporary upload, not the user's file. */
+const uploaded = new Set<string>();
+
+/** The document's path on the server when it is a real file the user chose (not an upload). */
+export function serverPath(doc: string): string | null {
+  const f = docInfo(doc)?.fileName ?? "";
+  if (!f || uploaded.has(doc) || /[\\/]fcapi-upload-[^\\/]*[\\/]/.test(f)) return null;
+  return serverHasFiles() ? f : null;
+}
+
 export async function saveDocument(doc: string, opts: { as?: "download" | { path: string }; copy?: boolean } = {}): Promise<void> {
   const info = docInfo(doc);
   if (!info) return;
-  const target = opts.as ?? (info.fileName && serverHasFiles() ? { path: info.fileName } : "download");
+  const path = serverPath(doc);
+  const target = opts.as ?? (path ? { path } : "download");
   if (target !== "download") {
-    if (target.path === info.fileName && !opts.as) {
+    if (target.path === path && !opts.as) {
       echo(`App.getDocument(${pyStr(doc)}).save()`);
       await client().saveDocument(doc);
     } else {
       echo(`App.getDocument(${pyStr(doc)}).saveAs(${pyStr(target.path)})`);
       await client().saveDocumentAs(doc, target.path);
+      uploaded.delete(doc);
     }
     log.message(`Saved ${target.path}`);
     await settle();
@@ -198,6 +236,7 @@ export async function createObject(doc: string, type: string, name: string, txNa
     if (opts.properties) params.properties = opts.properties;
     return client().addObject(doc, type, params);
   });
+  await waitForModel(() => !!object(doc, created.name));
   useSelection.getState().select({ doc, object: created.name, sub: "" }, { echo: false });
   if (opts.fit !== false) setTimeout(() => viewer()?.fitAll(), 30);
   return created.name;

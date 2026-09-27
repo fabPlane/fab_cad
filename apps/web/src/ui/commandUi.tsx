@@ -116,7 +116,7 @@ function SubMenu({
   const K = kit as typeof Menubar;
   return (
     <K.Sub>
-      <K.SubTrigger className="menu-item" data-testid={testId}>
+      <K.SubTrigger className="menu-item" data-testid={testId ?? `submenu-${stripMnemonic(title)}`}>
         <span className="icon-slot">{icon ? <Icon name={icon} /> : null}</span>
         <span className="text">
           <MenuText text={title} />

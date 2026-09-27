@@ -97,8 +97,11 @@ function SpinShell(props: {
   );
 }
 
-/** `Gui::QuantitySpinBox`: accepts `10`, `10 mm`, `1 in`, `2 ft 3 in`; shows `10.00 mm`. */
-export function QuantitySpinBox(props: SpinProps & { unit: string }) {
+/**
+ * `Gui::QuantitySpinBox`: accepts `10`, `10 mm`, `1 in`, `2 ft 3 in`; shows `10.00 mm`. Text
+ * starting with `=` is an expression: `onExpression` gets it (the property editor binds it).
+ */
+export function QuantitySpinBox(props: SpinProps & { unit: string; onExpression?: (text: string) => void }) {
   const shown = formatQuantity(props.value, props.unit);
   const [text, setText] = useState(shown);
   const [invalid, setInvalid] = useState(false);
@@ -112,6 +115,10 @@ export function QuantitySpinBox(props: SpinProps & { unit: string }) {
   }, [shown]);
   const commit = (t: string): boolean => {
     if (t === shown) return true;
+    if (props.onExpression && t.trim().startsWith("=")) {
+      props.onExpression(t.trim());
+      return true;
+    }
     const r = parseQuantityInput(t, props.unit);
     if (!r.ok) {
       setInvalid(true);
@@ -133,7 +140,7 @@ export function QuantitySpinBox(props: SpinProps & { unit: string }) {
       text={text}
       setText={(t) => {
         setText(t);
-        setInvalid(t.trim() !== "" && !parseQuantityInput(t, props.unit).ok);
+        setInvalid(t.trim() !== "" && !(props.onExpression && t.trim().startsWith("=")) && !parseQuantityInput(t, props.unit).ok);
       }}
       commit={commit}
       stepBy={stepBy}
@@ -149,7 +156,7 @@ export function QuantitySpinBox(props: SpinProps & { unit: string }) {
   );
 }
 
-export function FloatSpinBox(props: SpinProps & { decimals?: number; integer?: boolean }) {
+export function FloatSpinBox(props: SpinProps & { decimals?: number; integer?: boolean; onExpression?: (text: string) => void }) {
   const shown = props.integer ? String(Math.round(props.value)) : fixed(props.value, props.decimals);
   const [text, setText] = useState(shown);
   const [invalid, setInvalid] = useState(false);
@@ -164,6 +171,10 @@ export function FloatSpinBox(props: SpinProps & { decimals?: number; integer?: b
   const parse = (t: string) => (props.integer ? parseIntInput(t) : parseFloatInput(t));
   const commit = (t: string): boolean => {
     if (t === shown) return true;
+    if (props.onExpression && t.trim().startsWith("=")) {
+      props.onExpression(t.trim());
+      return true;
+    }
     const r = parse(t);
     if (!r.ok) {
       setInvalid(true);
@@ -184,7 +195,7 @@ export function FloatSpinBox(props: SpinProps & { decimals?: number; integer?: b
       text={text}
       setText={(t) => {
         setText(t);
-        setInvalid(t.trim() !== "" && !parse(t).ok);
+        setInvalid(t.trim() !== "" && !(props.onExpression && t.trim().startsWith("=")) && !parse(t).ok);
       }}
       commit={commit}
       stepBy={stepBy}
