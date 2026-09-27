@@ -98,6 +98,7 @@ test("File > Open an .FCStd and Save it back; Python console runs on the server"
   await page.getByTestId("start-open").click();
   await (await chooser).setFiles(new URL("../../apps/web/public/examples/PartDesignExample.FCStd", import.meta.url).pathname);
   await expect(page.getByTestId("tree-doc-PartDesignExample")).toBeVisible({ timeout: 30_000 });
+  await page.getByTestId("tree-doc-PartDesignExample").click();
   const download = page.waitForEvent("download");
   await page.keyboard.press("Control+s");
   expect((await download).suggestedFilename()).toMatch(/PartDesignExample\.FCStd$/);

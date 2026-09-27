@@ -84,6 +84,18 @@ test("screenshot: sketch edit mode", async ({ page }) => {
   await clickView(page, box.width / 2 + 40, box.height / 2 + 10);
   await clickView(page, box.width / 2 + 90, box.height / 2 + 10);
   await expect(page.getByTestId("sketch-elements").locator(".listbox-item")).toHaveCount(5);
+  await page.keyboard.press("Escape");
+  // a length on the top edge and a radius on the circle (the commands ask for the value)
+  const constrain = async (x: number, y: number, id: string, value: string) => {
+    await clickView(page, x, y);
+    await page.evaluate((cmd) => void (window as any).__fabcad.run(cmd), id);
+    await page.getByTestId("dialog-input").fill(value);
+    await page.getByTestId("dialog-input").press("Enter");
+    await expect(page.getByTestId("dialog")).toHaveCount(0);
+  };
+  await constrain(box.width / 2, box.height / 2 - 100, "Sketcher_ConstrainDistance", "80 mm");
+  await constrain(box.width / 2 + 90, box.height / 2 + 10, "Sketcher_ConstrainRadius", "12 mm");
+  await expect(page.getByTestId("sketch-constraints").locator(".listbox-item")).toHaveCount(10);
   await run(page, "Sketcher_CreateLine");
   await page.mouse.move(box.x + box.width / 2 - 100, box.y + box.height / 2 + 40);
   await page.mouse.move(box.x + box.width / 2 - 60, box.y + box.height / 2 - 40);

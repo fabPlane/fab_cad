@@ -537,8 +537,13 @@ export class Viewer implements ViewerHandle {
     const picker = useView3D.getState().originPicker;
     const roles = new Set<string>();
     if (doc) {
-      for (const o of objects(doc)) {
+      const all = objects(doc);
+      const visible = (n: string) => all.find((x) => x.name === n)?.visibility ?? true;
+      for (const o of all) {
         if (!o.visibility || !/^App::(Plane|Line)$/.test(o.type)) continue;
+        // an origin's features show only while the origin itself is shown (ViewProviderCoordinateSystem)
+        const origins = o.inList.filter((n) => all.find((x) => x.name === n)?.type === "App::Origin");
+        if (origins.length && !origins.some(visible)) continue;
         const role = (property(doc, o.name, "Role")?.value as string | undefined) ?? o.name.replace(/\d+$/, "");
         roles.add(role);
       }
