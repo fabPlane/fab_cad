@@ -50,8 +50,8 @@ const angle = (name: string, group: string, doc: string, value: number): Prop =>
   group,
   doc,
   status: [],
-  value: q(value, "°"),
-  unit: "°",
+  value: q(value, "deg"),
+  unit: "deg",
 });
 
 function documentObjectProps(): Prop[] {
@@ -85,7 +85,7 @@ function geoFeatureProps(): Prop[] {
       group: "Base",
       doc: "Position and orientation of the object",
       status: [],
-      value: { $type: "Placement", base: [0, 0, 0], rotation: [0, 0, 0, 1] },
+      value: { $type: "Placement", base: [0, 0, 0], rotation: [0, 0, 0, 1], axis: [0, 0, 1], angle: 0 },
     },
   ];
 }
@@ -105,6 +105,9 @@ function partFeatureProps(): Prop[] {
 }
 
 const DOCUMENT_OBJECT = "App::DocumentObject";
+/** What every document object derives from, up to `Base::BaseClass` (not included), as FreeCAD reports it. */
+export const BASE_CLASSES = ["App::TransactionalObject", "App::ExtensionContainer", "App::PropertyContainer", "Base::Persistence"];
+const H = (...names: string[]): string[] => [...names, ...BASE_CLASSES];
 const GEO_FEATURE = "App::GeoFeature";
 const PART_FEATURE = "Part::Feature";
 const PART_PRIMITIVE = "Part::Primitive";
@@ -112,7 +115,7 @@ const PART_PRIMITIVE = "Part::Primitive";
 export const TYPES: Record<string, TypeDef> = {
   [DOCUMENT_OBJECT]: {
     name: DOCUMENT_OBJECT,
-    hierarchy: [DOCUMENT_OBJECT],
+    hierarchy: H(DOCUMENT_OBJECT),
     creatable: false,
     isGeo: false,
     baseName: "Object",
@@ -120,7 +123,7 @@ export const TYPES: Record<string, TypeDef> = {
   },
   [GEO_FEATURE]: {
     name: GEO_FEATURE,
-    hierarchy: [GEO_FEATURE, DOCUMENT_OBJECT],
+    hierarchy: H(GEO_FEATURE, DOCUMENT_OBJECT),
     creatable: false,
     isGeo: true,
     baseName: "GeoFeature",
@@ -128,7 +131,7 @@ export const TYPES: Record<string, TypeDef> = {
   },
   "App::DocumentObjectGroup": {
     name: "App::DocumentObjectGroup",
-    hierarchy: ["App::DocumentObjectGroup", DOCUMENT_OBJECT],
+    hierarchy: H("App::DocumentObjectGroup", DOCUMENT_OBJECT),
     creatable: true,
     isGeo: false,
     baseName: "Group",
@@ -139,7 +142,7 @@ export const TYPES: Record<string, TypeDef> = {
   },
   [PART_FEATURE]: {
     name: PART_FEATURE,
-    hierarchy: [PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT],
+    hierarchy: H(PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT),
     creatable: false,
     isGeo: true,
     baseName: "Shape",
@@ -147,7 +150,7 @@ export const TYPES: Record<string, TypeDef> = {
   },
   [PART_PRIMITIVE]: {
     name: PART_PRIMITIVE,
-    hierarchy: [PART_PRIMITIVE, PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT],
+    hierarchy: H(PART_PRIMITIVE, PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT),
     creatable: false,
     isGeo: true,
     baseName: "Primitive",
@@ -155,7 +158,7 @@ export const TYPES: Record<string, TypeDef> = {
   },
   "Part::Box": {
     name: "Part::Box",
-    hierarchy: ["Part::Box", PART_PRIMITIVE, PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT],
+    hierarchy: H("Part::Box", PART_PRIMITIVE, PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT),
     creatable: true,
     isGeo: true,
     baseName: "Box",
@@ -169,7 +172,7 @@ export const TYPES: Record<string, TypeDef> = {
   },
   "Part::Cylinder": {
     name: "Part::Cylinder",
-    hierarchy: ["Part::Cylinder", PART_PRIMITIVE, PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT],
+    hierarchy: H("Part::Cylinder", PART_PRIMITIVE, PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT),
     creatable: true,
     isGeo: true,
     baseName: "Cylinder",
@@ -183,7 +186,7 @@ export const TYPES: Record<string, TypeDef> = {
   },
   "Part::Sphere": {
     name: "Part::Sphere",
-    hierarchy: ["Part::Sphere", PART_PRIMITIVE, PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT],
+    hierarchy: H("Part::Sphere", PART_PRIMITIVE, PART_FEATURE, GEO_FEATURE, DOCUMENT_OBJECT),
     creatable: true,
     isGeo: true,
     baseName: "Sphere",
@@ -198,10 +201,15 @@ export const TYPES: Record<string, TypeDef> = {
   },
 };
 
-/** Types derived from `base` (inclusive), for `GetTypes`. */
+/** Every type name the mock knows, abstract ones and base classes included. */
+export function knownType(name: string): boolean {
+  return Object.values(TYPES).some((t) => t.hierarchy.includes(name));
+}
+
+/** Creatable types derived from `base` (inclusive), sorted, for `GetTypes`. */
 export function typesDerivedFrom(base: string): string[] {
   return Object.values(TYPES)
-    .filter((t) => t.hierarchy.includes(base))
+    .filter((t) => t.creatable && t.hierarchy.includes(base))
     .map((t) => t.name)
     .sort();
 }
@@ -224,14 +232,14 @@ export function dynamicPropertyDefault(type: string): { value: WireValue; unit?:
     case "App::PropertyDistance":
       return { value: q(0, "mm"), unit: "mm" };
     case "App::PropertyAngle":
-      return { value: q(0, "°"), unit: "°" };
+      return { value: q(0, "deg"), unit: "deg" };
     case "App::PropertyQuantity":
       return { value: q(0, ""), unit: "" };
     case "App::PropertyVector":
     case "App::PropertyVectorDistance":
       return { value: { $type: "Vector", x: 0, y: 0, z: 0 } };
     case "App::PropertyPlacement":
-      return { value: { $type: "Placement", base: [0, 0, 0], rotation: [0, 0, 0, 1] } };
+      return { value: { $type: "Placement", base: [0, 0, 0], rotation: [0, 0, 0, 1], axis: [0, 0, 1], angle: 0 } };
     case "App::PropertyLink":
       return { value: null };
     case "App::PropertyLinkList":

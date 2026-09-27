@@ -19,6 +19,8 @@ export interface MockDispatcherOptions extends MockFreeCADOptions {
    * `after` calls them from a microtask once `dispatch` has returned.
    */
   eventTiming?: "during" | "after";
+  /** Encoding of event messages, fixed like `fcapi_init`'s `eventEncoding`. Default `cbor`. */
+  eventEncoding?: Encoding;
 }
 
 export interface MockDispatcher {
@@ -30,15 +32,15 @@ export interface MockDispatcher {
 }
 
 export function createMockDispatcher(opts: MockDispatcherOptions = {}): MockDispatcher {
-  const freecad = opts.freecad ?? new MockFreeCAD({ transport: "wasm", ...opts });
+  const freecad = opts.freecad ?? new MockFreeCAD({ transport: "inproc", ...opts });
   const timing = opts.eventTiming ?? "during";
   const listeners = new Set<(bytes: Uint8Array) => void>();
-  let encoding: Encoding = "json";
+  const eventEncoding: Encoding = opts.eventEncoding ?? "cbor";
   let closed = false;
 
   const offFreecad = freecad.onEvent((ev: EventMessage) => {
     if (closed) return;
-    const bytes = encodeMessageBytes(ev, encoding);
+    const bytes = encodeMessageBytes(ev, eventEncoding);
     for (const cb of Array.from(listeners)) cb(bytes);
   });
 
@@ -47,7 +49,7 @@ export function createMockDispatcher(opts: MockDispatcherOptions = {}): MockDisp
     dispatch(request: Uint8Array): Uint8Array {
       if (closed) throw new Error("the mock dispatcher has been shut down");
       let decoded: unknown;
-      encoding = detectEncoding(request);
+      const encoding = detectEncoding(request);
       try {
         decoded = decodeMessage(request);
       } catch (e) {

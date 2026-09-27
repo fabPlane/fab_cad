@@ -36,8 +36,14 @@ export interface WireRotation {
 export interface WirePlacement {
   $type: "Placement";
   base: [number, number, number];
-  /** Quaternion `[x, y, z, w]`. */
+  /**
+   * Quaternion `[x, y, z, w]`. When sending, a `Rotation` object (`{q}` or `{axis, angle}`) is
+   * accepted too, and `rotation` may be left out in favour of top-level `axis` + `angle`.
+   */
   rotation: [number, number, number, number];
+  /** The rotation as axis + angle (degrees); the server sends both forms. */
+  axis?: [number, number, number];
+  angle?: number;
 }
 
 /** 4x4, row major. */
@@ -247,11 +253,23 @@ export class Placement {
   }
 
   static fromWire(w: WirePlacement): Placement {
-    return new Placement(Vector.fromArray(w.base), Rotation.fromQuaternion(w.rotation));
+    const r = w.rotation as unknown;
+    let rotation: Rotation;
+    if (Array.isArray(r)) rotation = Rotation.fromQuaternion(r as number[]);
+    else if (isTaggedAs(r, "Rotation") || (typeof r === "object" && r !== null)) rotation = Rotation.fromWire(r as WireRotation);
+    else if (w.axis && w.angle !== undefined) rotation = Rotation.fromAxisAngle(w.axis, w.angle);
+    else rotation = new Rotation();
+    return new Placement(Vector.fromArray(w.base ?? [0, 0, 0]), rotation);
   }
 
   toWire(): WirePlacement {
-    return { $type: "Placement", base: this.base.toArray(), rotation: this.rotation.q };
+    return {
+      $type: "Placement",
+      base: this.base.toArray(),
+      rotation: this.rotation.q,
+      axis: this.rotation.axis,
+      angle: this.rotation.angle,
+    };
   }
 
   /** Maps a point from the local frame to the parent frame. */
@@ -342,10 +360,11 @@ export class Quantity {
   }
 }
 
+/** FreeCAD-like user string: `10 mm`, `90 °` (FreeCAD's angle unit string is `deg`). */
 export function formatQuantity(value: number, unit: string): string {
   const v = Number.isInteger(value) ? String(value) : String(Number(value.toPrecision(12)));
   if (!unit) return v;
-  return unit === "°" ? `${v} °` : `${v} ${unit}`;
+  return unit === "deg" || unit === "°" ? `${v} °` : `${v} ${unit}`;
 }
 
 export class ObjectRef {

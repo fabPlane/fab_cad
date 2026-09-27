@@ -38,7 +38,9 @@ describe("MockFreeCAD", () => {
     expect(h.call("GetVersion").api).toBe(1);
     expect(h.call("GetServerInfo").token).toBe(h.fc.token);
     expect(h.call("GetCommands").map((c) => c.name)).toContain("Tessellate");
-    expect(h.call("GetTypes", { base: "Part::Primitive" })).toEqual(["Part::Box", "Part::Cylinder", "Part::Primitive", "Part::Sphere"]);
+    expect(h.call("GetTypes", { base: "Part::Primitive" })).toEqual(["Part::Box", "Part::Cylinder", "Part::Sphere"]);
+    expect(h.call("GetTypes", {})).toEqual(["App::DocumentObjectGroup", "Part::Box", "Part::Cylinder", "Part::Sphere"]);
+    expect(h.status("GetTypes", { base: "Nope::Nothing" })).toBe("NOT_FOUND");
     expect(h.call("LoadModule", { name: "Part" })).toBeNull();
     expect(h.status("LoadModule", { name: "Nope" })).toBe("FAILED");
     expect(h.status("RunPython", { code: "1" })).toBe("FORBIDDEN");
@@ -82,8 +84,10 @@ describe("MockFreeCAD", () => {
     expect([g.name, box.name, box2.name]).toEqual(["Group", "Box", "Box001"]);
     expect(box2.label).toBe("Box001");
     expect(box.typeHierarchy[0]).toBe("Part::Box");
-    expect(box.typeHierarchy.at(-1)).toBe("App::DocumentObject");
+    expect(box.typeHierarchy).toContain("App::DocumentObject");
+    expect(box.typeHierarchy.at(-1)).toBe("Base::Persistence");
     expect(box.isTouched).toBe(true);
+    expect(box.status).toBe("Touched");
     const props = h.call("GetProperties", { doc, object: "Box" });
     expect(qv(props.find((p) => p.name === "Length"))).toBeCloseTo(25.4);
     expect(qv(props.find((p) => p.name === "Width"))).toBe(5);
@@ -109,10 +113,14 @@ describe("MockFreeCAD", () => {
         Length: "1 in",
         Height: { $type: "Quantity", value: 2, unit: "cm" },
         Placement: { $type: "Placement", base: [1, 2, 3], rotation: { $type: "Rotation", axis: [0, 0, 1], angle: 90 } } as never,
+        Width: { $type: "Quantity", text: "2 cm" } as never,
         Label: "My box",
       },
     });
-    expect(changed.map((p) => p.name)).toEqual(["Length", "Height", "Placement", "Label"]);
+    expect(changed.map((p) => p.name)).toEqual(["Length", "Height", "Placement", "Width", "Label"]);
+    expect(qv(changed[3])).toBeCloseTo(20);
+    expect(changed[2]!.value).toMatchObject({ axis: [0, 0, 1] });
+    expect((changed[2]!.value as { angle: number }).angle).toBeCloseTo(90);
     expect(qv(changed[0])).toBeCloseTo(25.4);
     expect(qv(changed[1])).toBeCloseTo(20);
     const rot = (changed[2]!.value as { rotation: number[] }).rotation;
@@ -124,7 +132,10 @@ describe("MockFreeCAD", () => {
     expect(h.status("SetProperties", { doc, object: "Box", values: { Shape: 1 } })).toBe("FAILED");
     // failed requests change nothing (atomic)
     expect(h.status("SetProperties", { doc, object: "Box", values: { Width: 3, Length: -1 } })).toBe("FAILED");
-    expect(qv(h.call("GetProperties", { doc, object: "Box", names: ["Width"] })[0])).toBe(10);
+    expect(qv(h.call("GetProperties", { doc, object: "Box", names: ["Width"] })[0])).toBe(20);
+    const cyl = h.call("AddObject", { doc, type: "Part::Cylinder" }).name;
+    const angle = h.call("GetProperties", { doc, object: cyl, names: ["Angle"] })[0]!;
+    expect(angle).toMatchObject({ unit: "deg", value: { unit: "deg", text: "360 °" } });
   });
 
   test("ObjectChanged is coalesced per request and carries the client", () => {
@@ -147,25 +158,25 @@ describe("MockFreeCAD", () => {
     expect(h.call("Tessellate", { doc })).toEqual([]); // no shapes before the first recompute
     const r = h.call("Recompute", { doc });
     expect(r).toEqual({ recomputed: 3, errors: [] });
-    const tess = h.call("Tessellate", { doc }).map(decodeTessellation);
+    const tess = h.call("Tessellate", { doc }).map((t) => decodeTessellation(t));
     const box = tess.find((t) => t.object === "Box")!;
-    expect(box.faces.length).toBe(6);
-    expect(box.edges.length).toBe(12);
+    expect(box.faceCount).toBe(6);
+    expect(box.edgeCount).toBe(12);
+    expect(box.deflection).toBeGreaterThan(0);
+    expect(box.placement!.base.x).toBe(0);
     expect(box.vertices.length).toBe(24);
     expect(box.triangleCount).toBe(12);
-    expect(box.normals!.length).toBe(box.positions.length);
     expect(Math.max(...box.positions.filter((_, i) => i % 3 === 0))).toBe(20);
     const cyl = tess.find((t) => t.object === "Cylinder")!;
-    expect(cyl.faces.length).toBe(3);
-    expect(cyl.edges.length).toBe(3);
+    expect(cyl.faceCount).toBe(3);
+    expect(cyl.edgeCount).toBe(3);
     const sph = tess.find((t) => t.object === "Sphere")!;
-    expect(sph.faces.length).toBe(1);
+    expect(sph.faceCount).toBe(1);
     for (let i = 0; i < sph.positions.length; i += 3) {
       expect(Math.hypot(sph.positions[i]!, sph.positions[i + 1]!, sph.positions[i + 2]!)).toBeCloseTo(5, 4);
     }
     for (const t of tess) {
-      const [first, count] = t.faces.at(-1)!;
-      expect(first + count).toBe(t.triangleCount);
+      expect(t.faces[t.faces.length - 2]! + t.faces[t.faces.length - 1]!).toBe(t.triangleCount);
       for (const ix of t.indices) expect(ix).toBeLessThan(t.vertexCount);
     }
 
@@ -189,7 +200,13 @@ describe("MockFreeCAD", () => {
     const moved = decodeTessellation(h.call("Tessellate", { doc, objects: ["Box"] })[0]!);
     expect(moved.revision).not.toBe(box2.revision);
     expect(Math.min(...moved.positions.filter((_, i) => i % 3 === 0))).toBe(100);
-    expect(h.call("Tessellate", { doc, objects: ["Box"], edges: false })[0]!.edges).toEqual([]);
+    const noEdges = decodeTessellation(h.call("Tessellate", { doc, objects: ["Box"], edges: false })[0]!);
+    expect([noEdges.edgeCount, noEdges.edgePositions.length, noEdges.vertices.length]).toEqual([0, 0, 0]);
+    // a finer deflection gives more triangles on curved faces
+    const coarse = decodeTessellation(h.call("Tessellate", { doc, objects: ["Sphere"], deflection: 0.5 })[0]!);
+    const fine = decodeTessellation(h.call("Tessellate", { doc, objects: ["Sphere"], deflection: 0.001 })[0]!);
+    expect(fine.triangleCount).toBeGreaterThan(coarse.triangleCount);
+    expect(coarse.deflection).toBe(0.5);
   });
 
   test("recompute errors", () => {
@@ -200,6 +217,7 @@ describe("MockFreeCAD", () => {
     const info = h.call("GetObject", { doc, object: "Box" });
     expect(info.isError).toBe(true);
     expect(info.isValid).toBe(false);
+    expect(info.status).toBe("Length of box too small");
   });
 
   test("expressions drive values on recompute", () => {

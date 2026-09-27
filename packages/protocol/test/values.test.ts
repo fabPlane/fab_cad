@@ -1,7 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import { COMMAND_NAMES, EVENT_NAMES, isCommandName, isEventName } from "../src/commands";
 import {
+  computeVertexNormals,
   decodeTessellation,
+  edgePointRange,
   faceIndexRange,
   faceOfTriangle,
   float32Bytes,
@@ -18,7 +20,7 @@ describe("value classes", () => {
   test("fromWire / toWire round trip, recursively", () => {
     const wire: WireValue = {
       v: { $type: "Vector", x: 1, y: 2, z: 3 },
-      p: { $type: "Placement", base: [1, 2, 3], rotation: [0, 0, 0, 1] },
+      p: { $type: "Placement", base: [1, 2, 3], rotation: [0, 0, 0, 1], axis: [0, 0, 1], angle: 0 },
       q: { $type: "Quantity", value: 10, unit: "mm", text: "10 mm" },
       o: [{ $type: "Object", doc: "D", name: "Box" }, ["Face1"]],
       r: { $type: "Repr", type: "Part.Shape", repr: "<Shape>" },
@@ -33,6 +35,17 @@ describe("value classes", () => {
     expect(v.r).toBeInstanceOf(Repr);
     expect(v.m).toBeInstanceOf(Matrix);
     expect(toWire(v as never)).toEqual(wire);
+  });
+
+  test("placement accepts every rotation form", () => {
+    const want = Rotation.fromAxisAngle([0, 0, 1], 90);
+    const forms = [
+      Placement.fromWire({ $type: "Placement", base: [0, 0, 0], rotation: want.q }),
+      Placement.fromWire({ $type: "Placement", base: [0, 0, 0], rotation: { $type: "Rotation", axis: [0, 0, 1], angle: 90 } as never }),
+      Placement.fromWire({ $type: "Placement", base: [0, 0, 0], rotation: { q: want.q } as never }),
+      Placement.fromWire({ $type: "Placement", base: [0, 0, 0], axis: [0, 0, 1], angle: 90 } as never),
+    ];
+    for (const p of forms) for (let i = 0; i < 4; i++) close(p.rotation.q[i]!, want.q[i]!);
   });
 
   test("rotation from axis/angle and back", () => {
@@ -81,27 +94,58 @@ describe("tessellation views", () => {
     expect(() => float32View(new Uint8Array(3))).toThrow();
   });
 
-  test("decodeTessellation and face lookup", () => {
-    const t = decodeTessellation({
+  test("decodeTessellation: binary pairs (as the server sends) and array pairs", () => {
+    const base = {
       object: "Box",
       placement: { $type: "Placement", base: [0, 0, 0], rotation: [0, 0, 0, 1] },
       revision: 3,
+      deflection: 0.01,
       positions: float32Bytes([0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0]),
       indices: uint32Bytes([0, 1, 2, 1, 3, 2]),
+      edgePositions: float32Bytes([0, 0, 0, 1, 0, 0]),
+      vertices: float32Bytes([0, 0, 0]),
+    } as const;
+    const fromBytes = decodeTessellation(
+      {
+        ...base,
+        placement: { ...base.placement, base: [0, 0, 0], rotation: [0, 0, 0, 1] },
+        faces: uint32Bytes([0, 1, 1, 1]),
+        edges: uint32Bytes([0, 2]),
+      },
+      { normals: true },
+    );
+    const fromArrays = decodeTessellation({
+      ...base,
+      placement: null,
       faces: [
         [0, 1],
         [1, 1],
       ],
       edges: [[0, 2]],
-      edgePositions: float32Bytes([0, 0, 0, 1, 0, 0]),
-      vertices: float32Bytes([0, 0, 0]),
     });
-    expect(t.vertexCount).toBe(4);
-    expect(t.triangleCount).toBe(2);
-    expect(t.normals).toBeUndefined();
-    expect(faceOfTriangle(t, 1)).toBe(1);
-    expect(faceOfTriangle(t, 5)).toBe(-1);
-    expect(faceIndexRange(t, 1)).toEqual([3, 6]);
+    for (const t of [fromBytes, fromArrays]) {
+      expect(t.vertexCount).toBe(4);
+      expect(t.triangleCount).toBe(2);
+      expect(t.faceCount).toBe(2);
+      expect(t.edgeCount).toBe(1);
+      expect(faceOfTriangle(t, 1)).toBe(1);
+      expect(faceOfTriangle(t, 5)).toBe(-1);
+      expect(faceIndexRange(t, 1)).toEqual([3, 6]);
+      expect(faceIndexRange(t, 2)).toBeUndefined();
+      expect(edgePointRange(t, 0)).toEqual([0, 6]);
+    }
+    expect(fromBytes.placement).toBeInstanceOf(Placement);
+    expect(fromArrays.placement).toBeNull();
+    expect(Array.from(fromBytes.normals!.subarray(0, 3))).toEqual([0, 0, 1]);
+    expect(fromArrays.normals).toBeUndefined();
+  });
+
+  test("computeVertexNormals keeps creases between faces with their own vertices", () => {
+    // two faces of a cube corner, each with its own copy of the shared edge
+    const pos = new Float32Array([0, 0, 0, 1, 0, 0, 1, 1, 0, /* face 2 */ 0, 0, 0, 0, 0, 1, 1, 0, 1]);
+    const n = computeVertexNormals(pos, new Uint32Array([0, 2, 1, 3, 4, 5]));
+    expect(Array.from(n.subarray(0, 3))).toEqual([0, 0, -1]);
+    expect(Array.from(n.subarray(9, 12), (x) => Math.round(x) + 0)).toEqual([0, 1, 0]);
   });
 });
 
@@ -110,7 +154,7 @@ describe("units", () => {
     expect(parseQuantity("25.4 mm")).toEqual({ value: 25.4, dimension: "length", unit: "mm" });
     expect(parseQuantity("1 in").value).toBeCloseTo(25.4);
     expect(parseQuantity("1ft 1in").value).toBeCloseTo(330.2);
-    expect(parseQuantity("90°")).toEqual({ value: 90, dimension: "angle", unit: "°" });
+    expect(parseQuantity("90°")).toEqual({ value: 90, dimension: "angle", unit: "deg" });
     expect(parseQuantity("3.5").dimension).toBe("none");
     expect(parseQuantity("2,5 cm").value).toBeCloseTo(25);
     expect(() => parseQuantity("1 mm 2 deg")).toThrow();

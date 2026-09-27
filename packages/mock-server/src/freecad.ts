@@ -59,7 +59,7 @@ import {
   type BBox,
   type Mesh,
 } from "./geometry";
-import { TYPES, dynamicPropertyDefault, q, typesDerivedFrom, type Prop, type TypeDef } from "./types";
+import { TYPES, dynamicPropertyDefault, knownType, q, typesDerivedFrom, type Prop, type TypeDef } from "./types";
 
 export interface MockFileSystem {
   readFile(path: string): Uint8Array;
@@ -71,7 +71,7 @@ export interface MockFreeCADOptions {
   token?: string;
   /** Start with the demo document (`Demo`: a group with a box, a cylinder and a sphere). Default false. */
   demo?: boolean;
-  /** Reported by `GetServerInfo`. */
+  /** Reported by `GetServerInfo`: `ws`, `stdio` or `inproc`. Default `inproc`. */
   transport?: string;
   url?: string;
   /** Backs `OpenDocument` / `SaveDocument` / `SaveDocumentAs`; they fail without one. */
@@ -288,7 +288,7 @@ export class MockFreeCAD {
   private seq = 0;
   private revision = 0;
   private readonly listeners = new Set<(ev: EventMessage) => void>();
-  private readonly meshCache = new Map<string, { mesh: Mesh; bbox: BBox | undefined }>();
+  private readonly meshCache = new Map<string, { mesh: Mesh; bbox: BBox | undefined; deflection: number }>();
   private readonly handlers: Record<CommandName, Handler>;
   readonly startedAt = Date.now();
 
@@ -356,17 +356,22 @@ export class MockFreeCAD {
       GetVersion: () => ({ major: 1, minor: 1, patch: 0, revision: "mock", full: "1.1.0 (fab-cad mock)", api: PROTOCOL_VERSION }),
       GetServerInfo: () => ({
         token: this.token,
-        transport: this.options.transport ?? "websocket",
-        url: this.options.url ?? "",
+        transport: this.options.transport ?? "inproc",
+        url: this.options.url ?? "inproc://freecad",
         python: false,
         events: true,
         pid: typeof process !== "undefined" ? process.pid : 0,
         platform: "mock",
         homePath: "/mock/freecad",
         userDataPath: "/mock/user",
+        gui: false,
       }),
       GetCommands: () => COMMAND_NAMES.map((name) => ({ name, description: DESCRIPTIONS[name] })),
-      GetTypes: (p) => typesDerivedFrom(optString(p, "base") ?? "App::DocumentObject"),
+      GetTypes: (p) => {
+        const base = optString(p, "base") ?? "App::DocumentObject";
+        if (!knownType(base)) throw notFound(`No type '${base}'`);
+        return typesDerivedFrom(base);
+      },
       LoadModule: (p) => {
         const name = str(p, "name");
         if (!MODULES.has(name)) throw failed(`No module named '${name}'`);
@@ -593,23 +598,23 @@ export class MockFreeCAD {
         const names = optStringArray(p, "objects");
         const objs = names ? names.map((n) => d.object(n)) : [...d.objects.values()];
         const deflection = optNumber(p, "deflection");
-        const angular = optNumber(p, "angularDeflection") ?? 28.5;
         const edges = optBool(p, "edges") ?? true;
         const out: WireTessellation[] = [];
         for (const o of objs) {
           if (!o.shape) continue;
-          const { mesh } = this.mesh(o.shape, deflection, angular);
+          const { mesh, deflection: used } = this.mesh(o.shape, deflection);
           out.push({
             object: o.name,
-            placement: o.shape.placement,
+            placement: placementOut(o.shape.placement),
             revision: o.shape.revision,
+            deflection: used,
             positions: float32Bytes(mesh.positions),
-            normals: float32Bytes(mesh.normals),
             indices: uint32Bytes(mesh.indices),
-            faces: mesh.faces,
-            edges: edges ? mesh.edges : [],
+            // uint32 pairs as bytes, like the real server
+            faces: uint32Bytes(mesh.faces.flat()),
+            edges: edges ? uint32Bytes(mesh.edges.flat()) : new Uint8Array(0),
             edgePositions: edges ? float32Bytes(mesh.edgePositions) : new Uint8Array(0),
-            vertices: float32Bytes(mesh.vertices),
+            vertices: edges ? float32Bytes(mesh.vertices) : new Uint8Array(0),
           });
         }
         return out;
@@ -857,9 +862,8 @@ export class MockFreeCAD {
       }
       if (links) inList.push(other.name);
     }
-    const status: string[] = [];
-    if (o.touched) status.push("Touched");
-    if (o.error) status.push("Error");
+    // FreeCAD's getStatusString()
+    const status = o.error ? o.error : o.touched ? "Touched" : "Valid";
     const info: ObjectInfo = {
       name: o.name,
       label: o.label,
@@ -1030,21 +1034,22 @@ export class MockFreeCAD {
     return null;
   }
 
-  private mesh(shape: Shape, deflection?: number, angular = 28.5): { mesh: Mesh; bbox: BBox | undefined } {
-    const key = `${shape.revision}:${deflection ?? "auto"}:${angular}`;
+  private mesh(shape: Shape, deflection?: number): { mesh: Mesh; bbox: BBox | undefined; deflection: number } {
+    const angular = 28.5; // FreeCAD's default angular deflection, degrees
+    const key = `${shape.revision}:${deflection ?? "auto"}`;
     const hit = this.meshCache.get(key);
     if (hit) return hit;
     const [a = 0, b = 0, c = 0] = shape.dims;
     const localDiag =
       shape.kind === "box" ? Math.hypot(a, b, c) : shape.kind === "cylinder" ? Math.hypot(2 * a, 2 * a, b) : 2 * a * Math.sqrt(3);
-    const defl = deflection && deflection > 0 ? deflection : localDiag * 0.001;
+    const defl = deflection && deflection > 0 ? deflection : Math.max(localDiag * 0.001, 1e-4);
     let local: Mesh;
     if (shape.kind === "box") local = boxMesh(a, b, c);
     else if (shape.kind === "cylinder") local = cylinderMesh(a, b, circleSegments(a, defl, angular));
     else local = sphereMesh(a, circleSegments(a, defl, angular));
     const p = new Placement(Vector.fromArray(shape.placement.base), Rotation.fromQuaternion(shape.placement.rotation));
     const mesh = transformMesh(local, p);
-    const entry = { mesh, bbox: boundsOf(mesh.positions) };
+    const entry = { mesh, bbox: boundsOf(mesh.positions), deflection: defl };
     if (this.meshCache.size > 256) this.meshCache.delete(this.meshCache.keys().next().value!);
     this.meshCache.set(key, entry);
     return entry;
@@ -1205,6 +1210,12 @@ function propertyInfo(p: Prop): PropertyInfo {
   return out;
 }
 
+/** A placement as the server writes it: quaternion plus axis and angle. */
+function placementOut(p: WirePlacement): WirePlacement {
+  const r = Rotation.fromQuaternion(p.rotation);
+  return { $type: "Placement", base: [...p.base], rotation: r.q, axis: r.axis, angle: r.angle };
+}
+
 function shapeRepr(s: Shape): WireValue {
   return { $type: "Repr", type: "Part.Shape", repr: `<Solid object (${s.kind}, revision ${s.revision})>` };
 }
@@ -1244,7 +1255,7 @@ function coerce(prop: Prop, v: WireValue, d: MockDocument): WireValue {
     let unit = prop.unit ?? "";
     if (typeof v === "number") value = v;
     else if (typeof v === "string" || isTaggedAs(v, "Quantity")) {
-      const text = typeof v === "string" ? v : `${v.value} ${v.unit}`;
+      const text = typeof v === "string" ? v : v.value === undefined && typeof v.text === "string" ? v.text : `${v.value} ${v.unit ?? ""}`;
       let parsed;
       try {
         parsed = parseQuantity(text);
@@ -1289,15 +1300,25 @@ function coerce(prop: Prop, v: WireValue, d: MockDocument): WireValue {
       throw fail("a Vector");
     case "App::PropertyPlacement": {
       if (!isTaggedAs(v, "Placement")) throw fail("a Placement");
-      const raw = v as unknown as { base?: unknown; rotation?: unknown };
-      const base = Array.isArray(raw.base) ? raw.base : isTaggedAs(raw.base, "Vector") ? [raw.base.x, raw.base.y, raw.base.z] : undefined;
+      const raw = v as unknown as { base?: unknown; rotation?: unknown; axis?: unknown; angle?: unknown };
+      const base =
+        raw.base === undefined
+          ? [0, 0, 0]
+          : Array.isArray(raw.base)
+            ? raw.base
+            : isTaggedAs(raw.base, "Vector")
+              ? [raw.base.x, raw.base.y, raw.base.z]
+              : undefined;
       if (!base || base.length !== 3 || base.some((x) => typeof x !== "number")) throw fail("a Placement with a base [x, y, z]");
       let rot: Rotation;
-      if (Array.isArray(raw.rotation) && raw.rotation.length === 4) rot = Rotation.fromQuaternion(raw.rotation as number[]);
-      else if (isTaggedAs(raw.rotation, "Rotation")) rot = Rotation.fromWire(raw.rotation);
-      else if (raw.rotation === undefined) rot = Rotation.identity();
-      else throw fail("a Placement with a rotation [x, y, z, w]");
-      return { $type: "Placement", base: base as [number, number, number], rotation: rot.q };
+      const r = raw.rotation;
+      if (Array.isArray(r) && r.length === 4 && r.every((x) => typeof x === "number")) rot = Rotation.fromQuaternion(r as number[]);
+      else if (typeof r === "object" && r !== null && ("q" in r || "axis" in r)) rot = Rotation.fromWire(r as never);
+      else if (r === undefined && Array.isArray(raw.axis))
+        rot = Rotation.fromAxisAngle(raw.axis as number[], typeof raw.angle === "number" ? raw.angle : 0);
+      else if (r === undefined) rot = Rotation.identity();
+      else throw fail("a Placement with a rotation [x, y, z, w], {q} or {axis, angle}");
+      return placementOut({ $type: "Placement", base: base as [number, number, number], rotation: rot.q });
     }
     case "App::PropertyLink":
       if (v === null) return null;

@@ -17,21 +17,31 @@ No I/O: it runs the same in a page, a worker and Bun.
 
 `FREECAD_COMMIT` pins the fork commit this package matches (`unpinned` until the server lands).
 
-## Where PROTOCOL.md was open, and what this package assumes
+## Where PROTOCOL.md was open
 
-| Topic                           | Assumption                                                                                                   |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `AddProperty` params            | The spec lists `doc` twice. `doc` is the document; the property's tooltip is `documentation`.                |
-| `GetObject.properties`          | A boolean; `true` adds `properties: PropertyInfo[]` to the `ObjectInfo`.                                     |
-| `ObjectInfo` lists              | `inList`, `outList`, `children`, `parents` are arrays of internal object names; `status` is flag names.      |
-| `typeHierarchy`                 | Most derived type first, ending at `App::DocumentObject`.                                                    |
-| `Tessellation.revision`         | A number (typed `number \| string`; the client only uses it as a cache key).                                 |
-| `Tessellation.placement`        | A `Placement` tagged value (informational; positions are already global).                                    |
-| `Tessellate` params             | `edges` defaults to `true`; `deflection` is an absolute length in mm; `angularDeflection` in degrees.        |
-| `GetBoundingBox` result         | `{min: [x,y,z], max: [x,y,z]}`, or `null` when nothing selected has geometry.                                |
-| `Import` result                 | Internal names of the created objects.                                                                       |
-| `Recompute.recomputed`          | The number of objects recomputed.                                                                            |
-| Event encoding on WebSocket     | Events use the encoding of the last request on that connection (JSON before the first); clients accept both. |
-| Event fan-out                   | Every connection receives every event (so a tab sees changes other clients made).                            |
-| JSON `$bytes`                   | Only an object whose single key is `$bytes` is bytes.                                                        |
-| Reply to an unparseable request | `id: null`, `status: "BAD_REQUEST"`.                                                                         |
+Settled by reading the fork's server (`src/Api/*.cpp`, uncommitted at the time), where its prose
+and its code differ this package follows the code:
+
+| Topic                      | What the server does, and what this package does                                                                      |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `Tessellation.faces/edges` | Sent as **bytes** (uint32 pairs), not JSON arrays. Both forms decode; `decodeTessellation` gives `Uint32Array`s.      |
+| `ObjectInfo.status`        | A string (`getStatusString()`: `Valid`, `Touched`, `Freezed` or the error text), not a list.                          |
+| `typeHierarchy`            | Most derived first, up to (not including) `Base::BaseClass`.                                                          |
+| `Placement` values         | Sent with `axis` and `angle` next to the quaternion; `rotation` is accepted as `[x,y,z,w]`, `{q}` or `{axis, angle}`. |
+| Angle unit                 | `deg` (`Unit::getString()`); the user string is `90 °`.                                                               |
+| `GetTypes`                 | Only types that can be instantiated; `NOT_FOUND` for an unknown base.                                                 |
+| `GetServerInfo`            | `transport` is `ws`, `stdio` or `inproc`; there is also `gui`.                                                        |
+| `PropertyInfo`             | May carry `expressionPath` when an expression binds a sub-path.                                                       |
+| Events on WebSocket/stdio  | In the encoding of the connection's last request (JSON before the first); every connection gets every event.          |
+| Events from the C ABI      | In `fcapi_init`'s `eventEncoding` (default CBOR), delivered before `fcapi_dispatch` returns.                          |
+| `GetBoundingBox`           | `null` when nothing selected has geometry.                                                                            |
+| `Import` result            | Internal names of the created objects.                                                                                |
+| `Recompute.recomputed`     | A count.                                                                                                              |
+| Unparseable request        | Reply with `id: null`, `status: "BAD_REQUEST"`.                                                                       |
+
+Still open (the client sends what is described; the server may need a change):
+
+| Topic                  | Issue                                                                                                                                  |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `AddProperty` tooltip  | PROTOCOL.md lists `doc` twice and the server reads the tooltip from `doc`, i.e. the document name. This package sends `documentation`. |
+| `GetObject.properties` | Read as a boolean (`params.value("properties", false)`); the spec does not say.                                                        |

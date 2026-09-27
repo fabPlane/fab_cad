@@ -13,6 +13,8 @@ export interface MockServerOptions extends MockFreeCADOptions {
   port?: number;
   hostname?: string;
   freecad?: MockFreeCAD;
+  /** Require `?key=KEY` on the connection URL, like `FreeCADApiServer --key`. */
+  key?: string;
   log?: (line: string) => void;
 }
 
@@ -40,7 +42,11 @@ export function startMockServer(opts: MockServerOptions = {}): MockServer {
     port: opts.port ?? 8765,
     hostname,
     fetch(req, srv) {
-      if (srv.upgrade(req, { data: { encoding: "json" } })) return undefined;
+      if (req.headers.get("upgrade")?.toLowerCase() === "websocket") {
+        if (opts.key && new URL(req.url).searchParams.get("key") !== opts.key) return new Response("Wrong or missing key", { status: 403 });
+        if (srv.upgrade(req, { data: { encoding: "json" } })) return undefined;
+        return new Response("WebSocket upgrade failed", { status: 400 });
+      }
       return Response.json({ name: "fab-cad mock FreeCAD API", protocol: 1, ws: url, token: freecad?.token });
     },
     websocket: {
@@ -71,8 +77,8 @@ export function startMockServer(opts: MockServerOptions = {}): MockServer {
     },
   });
 
-  const url = `ws://${hostname}:${server.port}`;
-  freecad ??= new MockFreeCAD({ transport: "websocket", url, ...opts });
+  const url = `ws://${hostname}:${server.port}/`;
+  freecad ??= new MockFreeCAD({ transport: "ws", url, ...opts });
   const fc = freecad;
   const off = fc.onEvent((ev: EventMessage) => {
     const cache: Partial<Record<Encoding, string | Uint8Array>> = {};

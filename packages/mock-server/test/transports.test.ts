@@ -5,7 +5,7 @@ import { startMockServer, type MockServer } from "../src/server";
 
 describe("createMockDispatcher", () => {
   test("bytes in, bytes out, in the request's encoding; events during dispatch", () => {
-    const d = createMockDispatcher();
+    const d = createMockDispatcher({ eventEncoding: "json" });
     const log: string[] = [];
     d.onEvent((b) => log.push(`event:${decodeMessage<EventMessage>(b).event}`));
     for (const enc of ["json", "cbor"] as const) {
@@ -123,8 +123,39 @@ describe("startMockServer", () => {
     }
     const len = new DataView(buf.buffer).getUint32(0, false);
     const reply = decodeMessage<Response<"GetServerInfo">>(buf.subarray(4, 4 + len));
-    expect(reply).toMatchObject({ id: 5, status: "OK", token: "t1", result: { transport: "stdio" } });
+    expect(reply).toMatchObject({ id: 5, status: "OK", token: "t1", result: { transport: "stdio", gui: false } });
     proc.stdin.end();
     expect(await proc.exited).toBe(0);
+  });
+
+  test("CLI --listen prints FCAPI_READY with the port it got and enforces --key", async () => {
+    const proc = Bun.spawn(["bun", `${import.meta.dir}/../src/main.ts`, "--listen", "ws://127.0.0.1:0/", "--key", "k1", "--quiet"], {
+      stdio: ["ignore", "pipe", "inherit"],
+    });
+    try {
+      const reader = proc.stdout.getReader();
+      let text = "";
+      while (!text.includes("\n")) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        text += new TextDecoder().decode(value);
+      }
+      const m = /^FCAPI_READY (ws:\/\/127\.0\.0\.1:(\d+)\/)$/m.exec(text);
+      expect(m).not.toBeNull();
+      const url = m![1]!;
+      const refused = await fetch(url.replace("ws:", "http:"), { headers: { upgrade: "websocket", connection: "upgrade" } });
+      expect(refused.status).toBe(403);
+      const ws = new WebSocket(`${url}?key=k1`);
+      const reply = await new Promise<Record<string, unknown>>((resolve, reject) => {
+        ws.onopen = () => ws.send(JSON.stringify({ id: 1, cmd: "GetServerInfo" }));
+        ws.onmessage = (ev) => resolve(JSON.parse(String(ev.data)));
+        ws.onerror = () => reject(new Error("ws error"));
+      });
+      expect(reply).toMatchObject({ id: 1, status: "OK", result: { transport: "ws", url } });
+      ws.close();
+    } finally {
+      proc.kill();
+      await proc.exited;
+    }
   });
 });

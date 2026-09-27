@@ -26,7 +26,7 @@ export interface VersionInfo {
 
 export interface ServerInfo {
   token: string;
-  /** `websocket`, `stdio` or `wasm`. */
+  /** `ws`, `stdio` or `inproc` (the C ABI / wasm). */
   transport: string;
   /** Listen URL for the WebSocket transport, else `""`. */
   url: string;
@@ -38,6 +38,8 @@ export interface ServerInfo {
   platform: string;
   homePath: string;
   userDataPath: string;
+  /** True when the server runs inside the desktop FreeCAD (`FreeCADApi.startServer`). */
+  gui?: boolean;
 }
 
 export interface CommandDescription {
@@ -80,21 +82,21 @@ export interface ObjectInfo {
   name: string;
   label: string;
   type: string;
-  /** **Assumed**: most derived first, ending at `App::DocumentObject`. */
+  /** Most derived first, up to (not including) `Base::BaseClass`. */
   typeHierarchy: string[];
   isGeo: boolean;
   isValid: boolean;
   isTouched: boolean;
   isError: boolean;
-  /** **Assumed**: status flag names (`Touched`, `Error`, `Recompute`, ...). */
-  status: string[];
-  /** **Assumed**: internal names of the objects linking to this one. */
+  /** FreeCAD's `getStatusString()`: `Valid`, `Touched`, `Freezed`, or the error text. */
+  status: string;
+  /** Internal names of the objects linking to this one. */
   inList: string[];
-  /** **Assumed**: internal names of the objects this one links to. */
+  /** Internal names of the objects this one links to. */
   outList: string[];
   /** Claimed children (internal names), what the tree view nests under the object. */
   children: string[];
-  /** **Assumed**: internal names of the objects claiming this one as a child. */
+  /** Internal names of the objects claiming this one as a child. */
   parents: string[];
   visibility: boolean;
   bbox?: BoundBox;
@@ -112,6 +114,8 @@ export interface PropertyInfo {
   status: PropertyStatus[];
   value: WireValue;
   expression?: string;
+  /** Set when the expression binds a sub-path (`Placement.Base.x`) rather than the whole property. */
+  expressionPath?: string;
   enum?: string[];
   unit?: string;
 }
@@ -122,23 +126,29 @@ export interface ObjectWithProperties extends ObjectInfo {
 
 /**
  * One object's mesh as it travels. The byte fields are little-endian arrays; turn them into typed
- * views with `decodeTessellation()` from `./tessellation`.
+ * views with `decodeTessellation()` from `./tessellation`. No normals are sent: every face has its
+ * own vertices, so averaging triangle normals per vertex gives correct shading
+ * (`computeVertexNormals`).
  */
 export interface WireTessellation {
   object: string;
-  placement: WirePlacement;
-  /** Changes whenever the shape changes. **Assumed**: a number (a string would work the same as a cache key). */
-  revision: number | string;
+  /** The object's `Placement` (informational: positions are already global); `null` for non-GeoFeatures. */
+  placement: WirePlacement | null;
+  /** Changes whenever the shape changes. */
+  revision: number;
+  /** The linear deflection the mesh was made with (mm). */
+  deflection: number;
   /** float32 x,y,z triples, global frame. */
   positions: Uint8Array;
-  /** float32 per-vertex normals. */
-  normals?: Uint8Array;
   /** uint32 triangle indices. */
   indices: Uint8Array;
-  /** Per face `[firstTriangle, triangleCount]`; face `i` is `Face{i+1}`. */
-  faces: [number, number][];
-  /** Per edge `[firstPoint, pointCount]` into `edgePositions`; edge `i` is `Edge{i+1}`. */
-  edges: [number, number][];
+  /**
+   * Per face `[firstTriangle, triangleCount]`; face `i` is `Face{i+1}`. The server sends uint32
+   * pairs as bytes; a plain array of pairs is accepted too (PROTOCOL.md's prose reads that way).
+   */
+  faces: Uint8Array | [number, number][];
+  /** Per edge `[firstPoint, pointCount]` into `edgePositions`; edge `i` is `Edge{i+1}`. Bytes or pairs, as `faces`. */
+  edges: Uint8Array | [number, number][];
   /** float32 polyline points. */
   edgePositions: Uint8Array;
   /** float32 points; vertex `i` is `Vertex{i+1}`. */
@@ -153,7 +163,12 @@ export interface FileBytes {
 export interface PythonResult {
   stdout: string;
   stderr: string;
+  /** An expression's value (`eval`, or `auto` when the code was an expression). */
   result?: WireValue;
+  /** `repr()` of that value. */
+  repr?: string;
+  /** A Python exception (the reply is still `OK`: the request was served). */
+  exception?: string;
 }
 
 export type ExportFormat = "step" | "iges" | "brep" | "stl" | "obj";
@@ -178,6 +193,7 @@ export interface Commands {
   GetVersion: { params: Empty; result: VersionInfo };
   GetServerInfo: { params: Empty; result: ServerInfo };
   GetCommands: { params: Empty; result: CommandDescription[] };
+  /** Types derived from `base` that can be instantiated, sorted. */
   GetTypes: { params: { base?: string }; result: string[] };
   LoadModule: { params: { name: string }; result: null };
 
@@ -213,26 +229,28 @@ export interface Commands {
   };
   RemoveObject: { params: ObjectParams & { recursive?: boolean }; result: null };
   /**
-   * PROTOCOL.md lists `{doc, object, type, name, group?, doc?}`: `doc` twice. **Assumed**: the first is
-   * the document and the property's tooltip travels as `documentation`.
+   * PROTOCOL.md lists `{doc, object, type, name, group?, doc?}`: `doc` twice, and the server reads the
+   * tooltip from the same `doc` key as the document name. **Assumed** (pending a server fix): the
+   * tooltip travels as `documentation`.
    */
   AddProperty: { params: ObjectParams & { type: string; name: string; group?: string; documentation?: string }; result: PropertyInfo };
   RemoveProperty: { params: ObjectParams & { name: string }; result: null };
 
   // Geometry
-  /** **Assumed**: `edges` defaults to true; `deflection` is absolute (mm), `angularDeflection` in degrees. */
+  /** `deflection` is absolute (mm; default 0.1 % of the diagonal). `edges: false` leaves edges and vertices out. */
   Tessellate: {
-    params: DocParams & { objects?: string[]; deflection?: number; angularDeflection?: number; edges?: boolean };
+    params: DocParams & { objects?: string[]; deflection?: number; edges?: boolean };
     result: WireTessellation[];
   };
-  /** **Assumed**: `null` when nothing in the selection has geometry. */
+  /** `null` when nothing in the selection has geometry. */
   GetBoundingBox: { params: DocParams & { objects?: string[] }; result: BoundBox | null };
 
   // Import / export / scripting
-  /** **Assumed**: the result lists the internal names of the objects created. */
+  /** The internal names of the objects created. */
   Import: { params: DocParams & { path?: string; data?: Uint8Array; fileName: string }; result: string[] };
   Export: { params: DocParams & { objects: string[]; format: ExportFormat }; result: FileBytes };
-  RunPython: { params: { code: string; mode?: "exec" | "eval" }; result: PythonResult };
+  /** `auto` evaluates an expression and falls back to executing statements, like the Python console. */
+  RunPython: { params: { code: string; mode?: "exec" | "eval" | "auto" }; result: PythonResult };
 }
 
 export type CommandName = keyof Commands;

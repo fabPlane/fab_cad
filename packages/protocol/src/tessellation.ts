@@ -11,21 +11,25 @@ import { Placement } from "./values";
 
 export interface Tessellation {
   object: string;
-  placement: Placement;
-  revision: number | string;
+  placement: Placement | null;
+  revision: number;
+  deflection: number;
   /** x,y,z per vertex, global frame. */
   positions: Float32Array;
+  /** Per-vertex normals, when asked for (`decodeTessellation(t, {normals: true})`). */
   normals?: Float32Array;
   /** Three per triangle. */
   indices: Uint32Array;
-  /** Per face `[firstTriangle, triangleCount]`; face `i` is `Face{i+1}`. */
-  faces: [number, number][];
-  /** Per edge `[firstPoint, pointCount]` into `edgePositions`; edge `i` is `Edge{i+1}`. */
-  edges: [number, number][];
+  /** Flat `[firstTriangle, triangleCount]` pairs; face `i` (`Face{i+1}`) is at `2i`. */
+  faces: Uint32Array;
+  /** Flat `[firstPoint, pointCount]` pairs into `edgePositions`; edge `i` (`Edge{i+1}`) is at `2i`. */
+  edges: Uint32Array;
   edgePositions: Float32Array;
   vertices: Float32Array;
   readonly vertexCount: number;
   readonly triangleCount: number;
+  readonly faceCount: number;
+  readonly edgeCount: number;
 }
 
 const LITTLE_ENDIAN = new Uint8Array(new Uint32Array([1]).buffer)[0] === 1;
@@ -54,25 +58,78 @@ export function uint32View(bytes: Uint8Array | undefined, what = "uint32 data"):
   return view(bytes, Uint32Array, what);
 }
 
+function pairs(v: Uint8Array | [number, number][] | undefined, what: string): Uint32Array {
+  if (!v) return new Uint32Array(0);
+  const out = v instanceof Uint8Array ? uint32View(v, what) : Uint32Array.from(v.flat());
+  if (out.length % 2 !== 0) throw new Error(`${what}: odd number of values in a list of pairs`);
+  return out;
+}
+
+export interface DecodeTessellationOptions {
+  /** Compute per-vertex normals (see `computeVertexNormals`). Default false. */
+  normals?: boolean;
+}
+
 /** Wire tessellation -> typed arrays (zero-copy when aligned). */
-export function decodeTessellation(t: WireTessellation): Tessellation {
+export function decodeTessellation(t: WireTessellation, opts: DecodeTessellationOptions = {}): Tessellation {
   const positions = float32View(t.positions, "positions");
   const indices = uint32View(t.indices, "indices");
+  const faces = pairs(t.faces, "faces");
+  const edges = pairs(t.edges, "edges");
   const out: Tessellation = {
     object: t.object,
-    placement: Placement.fromWire(t.placement),
+    placement: t.placement ? Placement.fromWire(t.placement) : null,
     revision: t.revision,
+    deflection: t.deflection ?? 0,
     positions,
     indices,
-    faces: t.faces ?? [],
-    edges: t.edges ?? [],
+    faces,
+    edges,
     edgePositions: float32View(t.edgePositions, "edgePositions"),
     vertices: float32View(t.vertices, "vertices"),
     vertexCount: positions.length / 3,
     triangleCount: indices.length / 3,
+    faceCount: faces.length / 2,
+    edgeCount: edges.length / 2,
   };
-  if (t.normals && t.normals.byteLength > 0) out.normals = float32View(t.normals, "normals");
+  if (opts.normals) out.normals = computeVertexNormals(positions, indices);
   return out;
+}
+
+/**
+ * Area-weighted vertex normals. The server gives every face its own vertices, so averaging over
+ * the triangles sharing a vertex smooths within a face and keeps the creases between faces.
+ */
+export function computeVertexNormals(positions: Float32Array, indices: Uint32Array): Float32Array {
+  const n = new Float32Array(positions.length);
+  for (let t = 0; t + 2 < indices.length; t += 3) {
+    const a = indices[t]! * 3;
+    const b = indices[t + 1]! * 3;
+    const c = indices[t + 2]! * 3;
+    const ux = positions[b]! - positions[a]!;
+    const uy = positions[b + 1]! - positions[a + 1]!;
+    const uz = positions[b + 2]! - positions[a + 2]!;
+    const vx = positions[c]! - positions[a]!;
+    const vy = positions[c + 1]! - positions[a + 1]!;
+    const vz = positions[c + 2]! - positions[a + 2]!;
+    const nx = uy * vz - uz * vy;
+    const ny = uz * vx - ux * vz;
+    const nz = ux * vy - uy * vx;
+    for (const i of [a, b, c]) {
+      n[i] = n[i]! + nx;
+      n[i + 1] = n[i + 1]! + ny;
+      n[i + 2] = n[i + 2]! + nz;
+    }
+  }
+  for (let i = 0; i < n.length; i += 3) {
+    const l = Math.hypot(n[i]!, n[i + 1]!, n[i + 2]!);
+    if (l > 0) {
+      n[i] = n[i]! / l;
+      n[i + 1] = n[i + 1]! / l;
+      n[i + 2] = n[i + 2]! / l;
+    }
+  }
+  return n;
 }
 
 /** The inverse, for servers and tests: typed arrays -> little-endian bytes. */
@@ -94,23 +151,33 @@ export function uint32Bytes(a: ArrayLike<number>): Uint8Array {
   return out;
 }
 
-/** Triangle index range of face `Face{i+1}` (for picking / highlighting), as `[start, end)` into `indices`. */
+/** Triangle range of face `Face{faceIndex+1}` as `[start, end)` into `indices`. */
 export function faceIndexRange(t: Pick<Tessellation, "faces">, faceIndex: number): [number, number] | undefined {
-  const f = t.faces[faceIndex];
-  if (!f) return undefined;
-  return [f[0] * 3, (f[0] + f[1]) * 3];
+  if (faceIndex < 0 || 2 * faceIndex + 1 >= t.faces.length) return undefined;
+  const first = t.faces[2 * faceIndex]!;
+  const count = t.faces[2 * faceIndex + 1]!;
+  return [first * 3, (first + count) * 3];
 }
 
-/** Which face (`0`-based) a triangle belongs to, by binary search over `faces`. */
+/** Which face (`0`-based) a triangle belongs to, by binary search over `faces`; `-1` if none. */
 export function faceOfTriangle(t: Pick<Tessellation, "faces">, triangle: number): number {
   let lo = 0;
-  let hi = t.faces.length - 1;
+  let hi = t.faces.length / 2 - 1;
   while (lo <= hi) {
     const mid = (lo + hi) >> 1;
-    const [first, count] = t.faces[mid]!;
+    const first = t.faces[2 * mid]!;
+    const count = t.faces[2 * mid + 1]!;
     if (triangle < first) hi = mid - 1;
     else if (triangle >= first + count) lo = mid + 1;
     else return mid;
   }
   return -1;
+}
+
+/** Point range of edge `Edge{edgeIndex+1}` as `[start, end)` into `edgePositions` (floats). */
+export function edgePointRange(t: Pick<Tessellation, "edges">, edgeIndex: number): [number, number] | undefined {
+  if (edgeIndex < 0 || 2 * edgeIndex + 1 >= t.edges.length) return undefined;
+  const first = t.edges[2 * edgeIndex]!;
+  const count = t.edges[2 * edgeIndex + 1]!;
+  return [first * 3, (first + count) * 3];
 }

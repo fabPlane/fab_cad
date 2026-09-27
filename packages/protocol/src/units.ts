@@ -8,7 +8,7 @@ export type Dimension = "length" | "angle" | "none";
 
 interface UnitDef {
   dimension: Dimension;
-  /** Factor to the base unit (mm, degree). */
+  /** Factor to the base unit (mm, deg). */
   factor: number;
 }
 
@@ -35,7 +35,7 @@ const UNITS: Record<string, UnitDef> = {
 };
 
 /** The base unit of each dimension, as FreeCAD writes it. */
-export const BASE_UNIT: Record<Dimension, string> = { length: "mm", angle: "°", none: "" };
+export const BASE_UNIT: Record<Dimension, string> = { length: "mm", angle: "deg", none: "" };
 
 export function unitDimension(unit: string): Dimension {
   return UNITS[unit]?.dimension ?? "none";
@@ -45,7 +45,7 @@ export interface ParsedQuantity {
   /** Value in the base unit of its dimension (mm, degrees). */
   value: number;
   dimension: Dimension;
-  /** Base unit (`mm`, `°`) or `""` for a plain number. */
+  /** Base unit as FreeCAD names it (`mm`, `deg`) or `""` for a plain number. */
   unit: string;
 }
 
