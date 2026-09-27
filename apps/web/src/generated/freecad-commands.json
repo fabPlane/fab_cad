@@ -1,4 +1,22 @@
 {
+  "Materials_InspectAppearance": {
+    "name": "Materials_InspectAppearance",
+    "menuText": "Inspect Appearance",
+    "toolTip": "Inspects the appearance properties of the selected object",
+    "pixmap": "Material_Edit",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Mod/Material/Gui/Command.cpp"
+  },
+  "Materials_InspectMaterial": {
+    "name": "Materials_InspectMaterial",
+    "menuText": "Inspect Material",
+    "toolTip": "Inspects the material properties of the selected object",
+    "pixmap": "Material_Edit",
+    "accel": "",
+    "group": "Standard-View",
+    "source": "src/Mod/Material/Gui/Command.cpp"
+  },
   "PartDesign_AdditiveHelix": {
     "name": "PartDesign_AdditiveHelix",
     "menuText": "Additive Helix",
@@ -152,6 +170,15 @@
     "group": "PartDesign",
     "source": "src/Mod/PartDesign/Gui/Command.cpp"
   },
+  "PartDesign_InvoluteGear": {
+    "name": "PartDesign_InvoluteGear",
+    "menuText": "Involute Gear",
+    "toolTip": "Creates or edits the involute gear definition",
+    "pixmap": "PartDesign_InternalExternalGear",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/PartDesign/InvoluteGearFeature.py"
+  },
   "PartDesign_Line": {
     "name": "PartDesign_Line",
     "menuText": "Datum Line",
@@ -259,6 +286,15 @@
     "accel": "",
     "group": "PartDesign",
     "source": "src/Mod/PartDesign/Gui/Command.cpp"
+  },
+  "PartDesign_Sprocket": {
+    "name": "PartDesign_Sprocket",
+    "menuText": "Sprocket",
+    "toolTip": "Creates or edits the sprocket definition.",
+    "pixmap": "PartDesign_Sprocket",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/PartDesign/SprocketFeature.py"
   },
   "PartDesign_SubShapeBinder": {
     "name": "PartDesign_SubShapeBinder",
@@ -493,6 +529,15 @@
     "accel": "",
     "group": "Part",
     "source": "src/Mod/Part/Gui/CommandSimple.cpp"
+  },
+  "Part_EditAttachment": {
+    "name": "Part_EditAttachment",
+    "menuText": "Attachment",
+    "toolTip": "Part_EditAttachment",
+    "pixmap": "Part_Attachment",
+    "accel": "",
+    "group": "",
+    "source": "src/Mod/Part/AttachmentEditor/Commands.py"
   },
   "Part_ElementCopy": {
     "name": "Part_ElementCopy",
@@ -1637,6 +1682,24 @@
     "group": "Standard-View",
     "source": "src/Gui/CommandView.cpp"
   },
+  "Std_MassProperties": {
+    "name": "Std_MassProperties",
+    "menuText": "Mass Properties",
+    "toolTip": "Calculates mass properties of selected objects",
+    "pixmap": "MassPropertiesIcon",
+    "accel": "",
+    "group": "MassProperties",
+    "source": "src/Mod/Measure/Gui/Command.cpp"
+  },
+  "Std_Measure": {
+    "name": "Std_Measure",
+    "menuText": "&Measure",
+    "toolTip": "Measures a feature",
+    "pixmap": "umf-measurement",
+    "accel": "",
+    "group": "Measure",
+    "source": "src/Mod/Measure/Gui/Command.cpp"
+  },
   "Std_MergeProjects": {
     "name": "Std_MergeProjects",
     "menuText": "&Merge Document",
@@ -1762,6 +1825,15 @@
     "accel": "Alt+Return",
     "group": "Edit",
     "source": "src/Gui/CommandDoc.cpp"
+  },
+  "Std_PythonHelp": {
+    "name": "Std_PythonHelp",
+    "menuText": "Python &Modules Documentation",
+    "toolTip": "Opens the Python Modules documentation",
+    "pixmap": "applications-python",
+    "accel": "",
+    "group": "Tools",
+    "source": "src/Gui/OnlineDocumentation.cpp"
   },
   "Std_Quit": {
     "name": "Std_Quit",

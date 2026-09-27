@@ -202,6 +202,10 @@
       "file": "PartDesign_Hole.svg",
       "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Hole.svg"
     },
+    "PartDesign_InternalExternalGear": {
+      "file": "PartDesign_InternalExternalGear.svg",
+      "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_InternalExternalGear.svg"
+    },
     "PartDesign_Line": {
       "file": "PartDesign_Line.svg",
       "source": "src/Mod/PartDesign/Gui/Resources/icons/PartDesign_Line.svg"
@@ -297,6 +301,10 @@
     "Part_3D_object": {
       "file": "Part_3D_object.svg",
       "source": "src/Mod/Part/Gui/Resources/icons/Part_3D_object.svg"
+    },
+    "Part_Attachment": {
+      "file": "Part_Attachment.svg",
+      "source": "src/Mod/Part/Gui/Resources/icons/tools/Part_Attachment.svg"
     },
     "Part_BooleanFragments": {
       "file": "Part_BooleanFragments.svg",
@@ -1168,6 +1176,10 @@
     "tree-pre-sel": {
       "file": "tree-pre-sel.svg",
       "source": "src/Gui/Icons/tree-pre-sel.svg"
+    },
+    "umf-measurement": {
+      "file": "umf-measurement.svg",
+      "source": "src/Gui/Icons/umf-measurement.svg"
     },
     "utilities-terminal": {
       "file": "utilities-terminal.svg",

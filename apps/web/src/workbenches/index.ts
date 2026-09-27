@@ -175,8 +175,6 @@ function stdMenus(): Menu[] {
     {
       title: "&Tools",
       items: [
-        "Std_AddonMgr",
-        "Separator",
         "Std_Measure",
         "Std_MassProperties",
         "Std_UnitsCalculator",

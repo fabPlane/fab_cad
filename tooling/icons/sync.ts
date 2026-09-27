@@ -191,7 +191,9 @@ function cppField(body: string, name: string): string | undefined {
 
 export function parseCppCommands(text: string, source: string): CommandMeta[] {
   const out: CommandMeta[] = [];
-  const re = /:\s*(?:[\w:]+)\(\s*"((?:Std|Part|PartDesign|Sketcher|Materials)_\w+)"\s*(?:,[^)]*)?\)\s*\{([\s\S]*?)\n\}/g;
+  // `: Command("Name")`, optionally followed by more member initialisers (`, server(nullptr)`).
+  const re =
+    /:\s*(?:[\w:]+)\(\s*"((?:Std|Part|PartDesign|Sketcher|Materials)_\w+)"\s*(?:,[^)]*)?\)\s*(?:,\s*\w+\([^)]*\)\s*)*\{([\s\S]*?)\n\}/g;
   for (const m of text.matchAll(re)) {
     const name = m[1]!;
     const body = m[2]!;
@@ -219,25 +221,45 @@ function pyField(block: string, key: string): string | undefined {
   return strs.join("");
 }
 
-export function parsePythonCommands(text: string, source: string): CommandMeta[] {
-  const classes = new Map<string, string>();
+interface PyClass {
+  resources: string;
+  source: string;
+}
+
+/** Classes with a `GetResources()` returning a dict, and `name = Class()` instances, of one file. */
+export function pythonClasses(text: string, source: string): { classes: Map<string, PyClass>; instances: Map<string, string> } {
+  const classes = new Map<string, PyClass>();
   const classRe = /^class\s+(\w+)[^\n]*:\n([\s\S]*?)(?=^class\s|^def\s|^\S)/gm;
-  for (const m of text.matchAll(classRe)) classes.set(m[1]!, m[2]!);
+  for (const m of text.matchAll(classRe)) {
+    const res = /def GetResources\([\s\S]*?return\s*(\{[\s\S]*?\n\s*\})/.exec(m[2]!);
+    if (res) classes.set(m[1]!, { resources: res[1]!, source });
+  }
+  const instances = new Map<string, string>();
+  for (const m of text.matchAll(/^\s*(\w+)\s*=\s*(\w+)\(\)\s*$/gm)) instances.set(m[1]!, m[2]!);
+  return { classes, instances };
+}
+
+/** `addCommand("Name", Class())` or `addCommand("Name", instance)` resolved against classes from any file. */
+export function parsePythonCommands(
+  text: string,
+  source: string,
+  classes: Map<string, PyClass> = pythonClasses(text, source).classes,
+): CommandMeta[] {
+  const { instances } = pythonClasses(text, source);
   const out: CommandMeta[] = [];
-  for (const m of text.matchAll(/addCommand\(\s*["']((?:Std|Part|PartDesign|Sketcher)_\w+)["']\s*,\s*(\w+)\(/g)) {
-    const block = classes.get(m[2]!);
-    if (!block) continue;
-    const res = /def GetResources\([\s\S]*?return\s*(\{[\s\S]*?\n\s*\})/.exec(block);
-    if (!res) continue;
-    const r = res[1]!;
+  for (const m of text.matchAll(/addCommand\(\s*["']((?:Std|Part|PartDesign|Sketcher|Materials)_\w+)["']\s*,\s*(\w+)(\()?/g)) {
+    const cls = m[3] ? m[2]! : (instances.get(m[2]!) ?? m[2]!);
+    const c = classes.get(cls);
+    if (!c) continue;
+    const r = c.resources;
     out.push({
       name: m[1]!,
       menuText: pyField(r, "MenuText") ?? m[1]!,
       toolTip: pyField(r, "ToolTip") ?? "",
-      pixmap: (pyField(r, "Pixmap") ?? "").replace(/\.svg$/, ""),
+      pixmap: (pyField(r, "Pixmap") ?? "").replace(/\.svg$/, "").replace(/^.*[\\/]/, ""),
       accel: pyField(r, "Accel") ?? "",
       group: "",
-      source,
+      source: c.source,
     });
   }
   return out;
@@ -255,7 +277,9 @@ function walk(dir: string, filter: (f: string) => boolean, out: string[] = []): 
 
 function allCommands(): Map<string, CommandMeta> {
   const src = join(FREECAD, "src");
-  const cppDirs = ["Gui", "Mod/Part/Gui", "Mod/PartDesign/Gui", "Mod/Sketcher/Gui"].map((d) => join(src, d));
+  const cppDirs = ["Gui", "Mod/Part/Gui", "Mod/PartDesign/Gui", "Mod/Sketcher/Gui", "Mod/Material/Gui", "Mod/Measure/Gui"].map((d) =>
+    join(src, d),
+  );
   const pyDirs = ["Mod/Part", "Mod/PartDesign", "Mod/Sketcher"].map((d) => join(src, d));
   const map = new Map<string, CommandMeta>();
   for (const d of cppDirs) {
@@ -263,10 +287,12 @@ function allCommands(): Map<string, CommandMeta> {
       for (const c of parseCppCommands(readFileSync(f, "utf8"), relative(FREECAD, f))) if (!map.has(c.name)) map.set(c.name, c);
     }
   }
-  for (const d of pyDirs) {
-    for (const f of walk(d, (n) => n.endsWith(".py"))) {
-      for (const c of parsePythonCommands(readFileSync(f, "utf8"), relative(FREECAD, f))) if (!map.has(c.name)) map.set(c.name, c);
-    }
+  const pyFiles = pyDirs.flatMap((d) => walk(d, (n) => n.endsWith(".py")));
+  const classes = new Map<string, PyClass>();
+  for (const f of pyFiles)
+    for (const [k, v] of pythonClasses(readFileSync(f, "utf8"), relative(FREECAD, f)).classes) if (!classes.has(k)) classes.set(k, v);
+  for (const f of pyFiles) {
+    for (const c of parsePythonCommands(readFileSync(f, "utf8"), relative(FREECAD, f), classes)) if (!map.has(c.name)) map.set(c.name, c);
   }
   return map;
 }
