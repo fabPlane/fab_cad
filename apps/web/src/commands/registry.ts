@@ -167,6 +167,10 @@ export function eventToKey(e: Pick<KeyboardEvent, "key" | "ctrlKey" | "metaKey" 
   if (k === " " || k === "Spacebar") k = "Space";
   else if (k === "Delete") k = "Del";
   else if (k === "Escape") k = "Esc";
+  else if (k.startsWith("Arrow"))
+    k = k.slice(5); // Qt: Left, Right, Up, Down
+  else if (k === "PageUp") k = "PgUp";
+  else if (k === "PageDown") k = "PgDown";
   else if (k.length === 1) k = k.toUpperCase();
   // Shift is part of the key for symbols ("+", ")") but a modifier for letters and named keys.
   if (e.shiftKey && (k.length > 1 || /[A-Z0-9]/.test(k))) mods.push("Shift");

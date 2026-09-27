@@ -140,13 +140,20 @@ export function registerStdCommands(): void {
     // ------------------------------------------------------------------ Edit
     {
       id: "Std_Undo",
-      isActive: (c) => hasDoc(c) && notEditing(c) && (c.undo?.undo.length ?? 0) > 0,
-      run: (c) => undo(c.doc!),
+      // allowed in sketch edit mode (the sketch is read again), not while a task holds a transaction
+      isActive: (c) => hasDoc(c) && !c.taskOpen && (c.undo?.undo.length ?? 0) > 0,
+      run: async (c) => {
+        await undo(c.doc!);
+        if (c.editing) await (await import("../sketcher/session")).refreshSketch();
+      },
     },
     {
       id: "Std_Redo",
-      isActive: (c) => hasDoc(c) && notEditing(c) && (c.undo?.redo.length ?? 0) > 0,
-      run: (c) => redo(c.doc!),
+      isActive: (c) => hasDoc(c) && !c.taskOpen && (c.undo?.redo.length ?? 0) > 0,
+      run: async (c) => {
+        await redo(c.doc!);
+        if (c.editing) await (await import("../sketcher/session")).refreshSketch();
+      },
     },
     {
       id: "Std_Delete",

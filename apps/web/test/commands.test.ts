@@ -138,6 +138,7 @@ describe("shortcuts", () => {
     expect(k("Delete")).toBe("Del");
     expect(k("S", { ctrlKey: true, shiftKey: true })).toBe("Ctrl+Shift+S");
     expect(k("0")).toBe("0");
+    expect(k("ArrowLeft", { shiftKey: true })).toBe("Shift+Left");
   });
 
   test("the accelerator map has FreeCAD's bindings, chords included", () => {
@@ -161,6 +162,8 @@ describe("shortcuts", () => {
     expect(map.get("Space")).toContain("Std_ToggleVisibility");
     expect(map.get("Del")).toContain("Std_Delete");
     expect(map.get("V 3")).toContain("Std_DrawStyleWireframe");
+    expect(map.get("Shift+Left")).toContain("Std_ViewRotateLeft");
+    expect(map.get("Home")).toContain("Std_ViewHome");
   });
 });
 
