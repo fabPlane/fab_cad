@@ -107,3 +107,18 @@ test("File > Open an .FCStd and Save it back; Python console runs on the server"
   await page.getByTestId("python-input").press("Enter");
   await expect(page.locator(".console .line.result").last()).toHaveText("True");
 });
+
+test("dropping a STEP file on the window imports it into a new document", async ({ page }) => {
+  await openApp(page);
+  await page.evaluate(async () => {
+    const bytes = await (await fetch("/examples/Schenkel.stp")).arrayBuffer();
+    const dt = new DataTransfer();
+    dt.items.add(new File([bytes], "Schenkel.stp"));
+    const target = document.querySelector(".main-window")!;
+    target.dispatchEvent(new DragEvent("dragenter", { dataTransfer: dt, bubbles: true }));
+    target.dispatchEvent(new DragEvent("drop", { dataTransfer: dt, bubbles: true, cancelable: true }));
+  });
+  await expect(page.getByTestId("tree-doc-Schenkel")).toBeVisible({ timeout: 60_000 });
+  await expect(page.locator("[data-testid^='tree-label-']").first()).toHaveText("Schenkel", { timeout: 60_000 });
+  await expect(page.getByTestId("report-view").or(page.getByTestId("python-console"))).toBeVisible();
+});
