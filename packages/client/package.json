@@ -1,0 +1,27 @@
+{
+  "name": "@fab-cad/client",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "FreeCAD API client: transports (WebSocket, stdio, wasm), FreeCADClient with typed commands and events, DocumentStore with a tessellation cache",
+  "exports": {
+    ".": "./src/index.ts",
+    "./transport": "./src/transport/index.ts",
+    "./transport/stdio": "./src/transport/stdio.ts",
+    "./client": "./src/client.ts",
+    "./store": "./src/store/index.ts",
+    "./errors": "./src/errors.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@fab-cad/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@fab-cad/mock-server": "workspace:*",
+    "@types/bun": "1.4.1",
+    "typescript": "5.9.3"
+  }
+}
