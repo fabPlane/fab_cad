@@ -98,9 +98,10 @@ export function startMockServer(opts: MockServerOptions = {}): MockServer {
     },
     async stop() {
       off();
-      // `stop(true)` closes every connection itself; closing them first leaves Bun's stop promise
-      // pending on the half-closed sockets.
-      await server.stop(true);
+      // `stop(true)` closes every connection itself. Its promise never settles once a WebSocket has
+      // been closed from the server side (Bun 1.3), so closing them first would hang here, and the
+      // wait is bounded for the same reason.
+      await Promise.race([server.stop(true), Bun.sleep(500)]);
     },
   };
 }

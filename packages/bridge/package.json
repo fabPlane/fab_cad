@@ -1,0 +1,25 @@
+{
+  "name": "@fab-cad/bridge",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Bun bridge: supervises FreeCADApiServer processes (one per session), proxies WebSockets to them, serves the SPA and a workspace file API",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "bun run src/main.ts",
+    "dev": "bun --watch run src/main.ts",
+    "test": "bun test",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@fab-cad/client": "workspace:*"
+  },
+  "devDependencies": {
+    "@fab-cad/mock-server": "workspace:*",
+    "@fab-cad/protocol": "workspace:*",
+    "@types/bun": "1.4.1",
+    "typescript": "5.9.3"
+  }
+}
