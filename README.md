@@ -56,5 +56,9 @@ FREECAD_API_SERVER="bun packages/mock-server/src/main.ts" bun packages/bridge/sr
 curl -X POST localhost:4030/sessions                # -> {session, wsUrl: "/ws?session=…"}
 ```
 
+The bridge refuses requests from other web pages and DNS-rebound names, and takes a bearer token
+(`FAB_CAD_BRIDGE_TOKEN`) for non-browser callers: see
+[Bridge security](packages/bridge/README.md#bridge-security).
+
 See [docs/01-architecture.md](docs/01-architecture.md) for how it fits together and
 [AGENTS.md](AGENTS.md) for working rules.
