@@ -29,7 +29,15 @@ export interface WebSocketTransportOptions {
   /** Time allowed for the socket to open. Default 10 000 ms. */
   connectTimeoutMs?: number;
   /** Factory for the underlying socket; defaults to the global `WebSocket`. */
-  createWebSocket?: (url: string) => WebSocketLike;
+  createWebSocket?: (url: string, init?: { headers?: Record<string, string> }) => WebSocketLike;
+  /**
+   * A `@fab-cad/bridge` token (`FAB_CAD_BRIDGE_TOKEN`). Sent as `Authorization: Bearer <token>` where
+   * the runtime's `WebSocket` takes headers (Bun), else as an `access_token` query parameter. It is
+   * never part of `url` or of error messages.
+   */
+  token?: string;
+  /** Force how `token` is sent. Default `"header"` in Bun, `"query"` elsewhere (browsers cannot set headers). */
+  tokenIn?: "header" | "query";
   log?: (message: string) => void;
 }
 
@@ -65,8 +73,22 @@ export class WebSocketTransport implements Transport {
     this.log = opts.log ?? (() => {});
     this.stateListeners = new Listeners(this.log);
     this.eventListeners = new Listeners(this.log);
-    const create = opts.createWebSocket ?? ((u: string) => new WebSocket(u) as unknown as WebSocketLike);
-    this.ws = create(this.url);
+    const create =
+      opts.createWebSocket ??
+      ((u: string, init?: { headers?: Record<string, string> }) =>
+        (init ? new WebSocket(u, init as unknown as string[]) : new WebSocket(u)) as unknown as WebSocketLike);
+    if (opts.token) {
+      const tokenIn = opts.tokenIn ?? (typeof Bun !== "undefined" ? "header" : "query");
+      if (tokenIn === "header") {
+        this.ws = create(this.url, { headers: { authorization: `Bearer ${opts.token}` } });
+      } else {
+        const u = new URL(this.url);
+        u.searchParams.set("access_token", opts.token);
+        this.ws = create(u.toString());
+      }
+    } else {
+      this.ws = create(this.url);
+    }
     this.ws.binaryType = "arraybuffer";
 
     const connectTimeoutMs = opts.connectTimeoutMs ?? 10_000;

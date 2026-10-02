@@ -16,6 +16,11 @@ A `Transport` moves whole encoded messages: `send(message) → reply`, `onEvent`
 `WasmTransport` never runs the module inside the caller's stack frame and delivers the events a
 request raised after its reply has resolved, the order the socket transports get from the server.
 
+`WebSocketTransport.connect(url, { token })` authenticates to a `@fab-cad/bridge` that has
+`FAB_CAD_BRIDGE_TOKEN` set: as `Authorization: Bearer <token>` in Bun (whose `WebSocket` takes
+headers), as `?access_token=<token>` elsewhere; `tokenIn: "header" | "query"` forces one. The token
+is not part of `transport.url` or of error messages. See "Bridge security" in the bridge's README.
+
 ## 2. `FreeCADClient`
 
 ```ts

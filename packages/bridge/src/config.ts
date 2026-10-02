@@ -3,6 +3,7 @@
  */
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
+import { normaliseOrigin, splitList } from "./security";
 
 export interface BridgeConfig {
   /** HTTP + WebSocket port. `0` picks a free one. Env `PORT`, default 4030. */
@@ -29,6 +30,18 @@ export interface BridgeConfig {
   killGraceMs: number;
   /** Largest WebSocket message accepted from a browser. Default 256 MiB. */
   maxPayloadBytes: number;
+  /**
+   * Shared secret for callers that are not the bridge's own page (a supervisor, a CLI): they send
+   * `Authorization: Bearer <token>` (or `?access_token=<token>` on `/ws`). Env `FAB_CAD_BRIDGE_TOKEN`.
+   * Unset: such callers are let through (a warning is logged). See `./security`.
+   */
+  token?: string | null;
+  /** Extra origins whose pages may call the API (exact `scheme://host:port`). Env `FAB_CAD_BRIDGE_ALLOWED_ORIGINS`, comma separated. */
+  allowedOrigins?: string[];
+  /** Extra `Host` header values (`name` for the bridge's port, or `name:port`). Env `FAB_CAD_BRIDGE_ALLOWED_HOSTS`, comma separated. */
+  allowedHosts?: string[];
+  /** CSP `frame-ancestors` sources for the SPA (e.g. `'self' http://localhost:5173`). Env `FAB_CAD_BRIDGE_FRAME_ANCESTORS`; unset sends none. */
+  frameAncestors?: string | null;
   log: (message: string) => void;
 }
 
@@ -86,6 +99,10 @@ export function configFromEnv(env: Record<string, string | undefined> = process.
     startTimeoutMs: int(env.FREECAD_START_TIMEOUT_MS, 60_000),
     killGraceMs: 3000,
     maxPayloadBytes: 256 * 1024 * 1024,
+    token: env.FAB_CAD_BRIDGE_TOKEN?.trim() || null,
+    allowedOrigins: splitList(env.FAB_CAD_BRIDGE_ALLOWED_ORIGINS).map(normaliseOrigin),
+    allowedHosts: splitList(env.FAB_CAD_BRIDGE_ALLOWED_HOSTS),
+    frameAncestors: env.FAB_CAD_BRIDGE_FRAME_ANCESTORS?.trim() || null,
     log: (m) => console.error(`[bridge] ${m}`),
   };
 }
