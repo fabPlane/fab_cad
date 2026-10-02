@@ -9,11 +9,15 @@
  *   GET    /ws?session=<id>        WebSocket, proxied frame for frame to the session's server
  *   /files…                        the workspace file API (./files)
  *   GET    anything else           the built SPA from STATIC_DIR (index.html for client routes)
+ *
+ * Every request must name the bridge in its `Host` header; the API routes (everything but the SPA)
+ * also pass the origin and token checks of `./security`.
  */
 import { stat } from "node:fs/promises";
 import { extname, resolve } from "node:path";
 import type { BridgeConfig } from "./config";
 import { FilesError, handleFiles } from "./files";
+import { BridgeSecurity, isLoopbackHostname, redactUrl, type Verdict } from "./security";
 import { SessionManager, type WsData } from "./session";
 
 export interface BridgeServer {
@@ -25,21 +29,37 @@ export interface BridgeServer {
   stop(): Promise<void>;
 }
 
-const CORS: Record<string, string> = {
-  "access-control-allow-origin": "*",
-  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "access-control-allow-headers": "content-type",
-  "access-control-expose-headers": "x-file-path",
-};
+function jsonResponse(data: unknown, status = 200, headers: Record<string, string> = {}): Response {
+  return Response.json(data, { status, headers });
+}
 
-function json(data: unknown, status = 200): Response {
-  return Response.json(data, { status, headers: CORS });
+function isApiPath(path: string): boolean {
+  return (
+    path === "/ws" ||
+    path === "/health" ||
+    path === "/sessions" ||
+    path.startsWith("/sessions/") ||
+    path === "/files" ||
+    path.startsWith("/files/")
+  );
 }
 
 export async function startBridge(cfg: BridgeConfig): Promise<BridgeServer> {
   const sessions = new SessionManager(cfg);
   const startedAt = Date.now();
   if (!cfg.serverCommand) cfg.log("warning: no FreeCAD API server (set FREECAD_API_SERVER or put FreeCADApiServer on PATH)");
+  if (!isLoopbackHostname(cfg.hostname) && !cfg.allowedHosts?.length) {
+    cfg.log(
+      `warning: HOST=${cfg.hostname} is not loopback; only loopback Host headers are accepted (list other names in FAB_CAD_BRIDGE_ALLOWED_HOSTS)`,
+    );
+  }
+  if (!cfg.token) {
+    cfg.log("warning: FAB_CAD_BRIDGE_TOKEN is not set; non-browser callers can use the API without a token (set it outside dev)");
+  }
+  let security: BridgeSecurity | null = null;
+  const frameHeaders: Record<string, string> = cfg.frameAncestors
+    ? { "content-security-policy": `frame-ancestors ${cfg.frameAncestors}` }
+    : {};
 
   const server = Bun.serve<WsData>({
     port: cfg.port,
@@ -48,7 +68,48 @@ export async function startBridge(cfg: BridgeConfig): Promise<BridgeServer> {
     async fetch(req, srv) {
       const url = new URL(req.url);
       const path = url.pathname;
-      if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
+      security ??= new BridgeSecurity({
+        port: srv.port!,
+        hostname: cfg.hostname,
+        token: cfg.token ?? null,
+        allowedOrigins: cfg.allowedOrigins ?? [],
+        allowedHosts: cfg.allowedHosts ?? [],
+      });
+      const reject = (v: Extract<Verdict, { ok: false }>): Response => {
+        cfg.log(`rejected ${req.method} ${redactUrl(url)} (${v.status}): ${v.reason}`);
+        return jsonResponse(
+          { error: v.status === 401 ? "unauthorized" : "forbidden" },
+          v.status,
+          v.status === 401 ? { "www-authenticate": "Bearer" } : {},
+        );
+      };
+
+      if (!isApiPath(path)) {
+        const bad = security.checkHost(req);
+        if (bad && !bad.ok) return reject(bad);
+        if (req.method === "OPTIONS") return new Response(null, { status: 204 });
+        if (cfg.staticDir && req.method === "GET") {
+          const res = await serveStatic(cfg.staticDir, path, frameHeaders);
+          if (res) return res;
+        }
+        return jsonResponse({ error: "not found" }, 404);
+      }
+
+      if (req.method === "OPTIONS") {
+        // A preflight carries no credentials; answer it for allowed origins only.
+        const origin = req.headers.get("origin");
+        const bad = security.checkHost(req);
+        if (bad && !bad.ok) return reject(bad);
+        if (origin === null) return new Response(null, { status: 204 });
+        if (security.ownOrigins.has(origin.toLowerCase())) return new Response(null, { status: 204 });
+        if (security.allowedOrigins.has(origin)) return new Response(null, { status: 204, headers: BridgeSecurity.corsHeaders(origin) });
+        return reject({ ok: false, status: 403, reason: `origin "${origin}" is not allowed` });
+      }
+
+      const verdict = security.checkApi(req, url, { allowQueryToken: path === "/ws" });
+      if (!verdict.ok) return reject(verdict);
+      const CORS = BridgeSecurity.corsHeaders(verdict.corsOrigin);
+      const json = (data: unknown, status = 200) => Response.json(data, { status, headers: CORS });
 
       if (path === "/ws") {
         const id = url.searchParams.get("session") ?? "";
@@ -60,6 +121,8 @@ export async function startBridge(cfg: BridgeConfig): Promise<BridgeServer> {
       }
 
       if (path === "/health") {
+        // Liveness for anyone who got this far; the details only for trusted callers.
+        if (!verdict.trusted) return json({ ok: true, name: "@fab-cad/bridge", uptimeSec: Math.round((Date.now() - startedAt) / 1000) });
         return json({
           ok: true,
           name: "@fab-cad/bridge",
@@ -110,10 +173,6 @@ export async function startBridge(cfg: BridgeConfig): Promise<BridgeServer> {
 
       if (path === "/files" || path.startsWith("/files/")) return handleFiles(req, url, cfg.workspaceRoot, CORS);
 
-      if (cfg.staticDir && req.method === "GET") {
-        const res = await serveStatic(cfg.staticDir, path);
-        if (res) return res;
-      }
       return json({ error: "not found" }, 404);
     },
     websocket: {
@@ -164,7 +223,7 @@ const TYPES: Record<string, string> = {
 };
 
 /** A file under `dir`, or `index.html` for extension-less paths (client-side routes). */
-async function serveStatic(dir: string, pathname: string): Promise<Response | null> {
+async function serveStatic(dir: string, pathname: string, extra: Record<string, string>): Promise<Response | null> {
   const root = resolve(dir);
   let rel: string;
   try {
@@ -180,7 +239,9 @@ async function serveStatic(dir: string, pathname: string): Promise<Response | nu
     const s = await stat(c).catch(() => null);
     if (s?.isFile()) {
       const type = TYPES[extname(c)];
-      return new Response(Bun.file(c), { headers: type ? { ...CORS, "content-type": type } : CORS });
+      const headers: Record<string, string> = { "x-content-type-options": "nosniff", ...extra };
+      if (type) headers["content-type"] = type;
+      return new Response(Bun.file(c), { headers });
     }
   }
   return null;

@@ -11,6 +11,34 @@ import { defineConfig, type Plugin } from "vite";
 const bridgePort = process.env.BRIDGE_PORT ?? "4030";
 const bridge = process.env.BRIDGE_URL ?? `http://127.0.0.1:${bridgePort}`;
 const bridgeWs = bridge.replace(/^http/, "ws");
+const bridgeOrigin = new URL(bridge).origin;
+
+/**
+ * The bridge only answers requests whose Host and Origin name the bridge itself (see "Bridge
+ * security" in packages/bridge/README.md). Behind this proxy the page's origin is Vite's, so a
+ * request whose Origin is this dev server's own origin is passed on as the bridge's own; any other
+ * Origin is forwarded unchanged and the bridge refuses it.
+ */
+type ProxyReq = { getHeader(name: string): unknown; setHeader(name: string, value: string): void };
+type IncomingReq = { headers: Record<string, string | string[] | undefined> };
+function sameOriginAsBridge(proxyReq: ProxyReq, req: IncomingReq): void {
+  const origin = req.headers.origin;
+  const host = req.headers.host;
+  if (typeof origin !== "string" || typeof host !== "string") return;
+  try {
+    if (new URL(origin).host === host) proxyReq.setHeader("origin", bridgeOrigin);
+  } catch {
+    // not a URL: leave it for the bridge to refuse
+  }
+}
+const toBridge = {
+  target: bridge,
+  changeOrigin: true,
+  configure(proxy: { on(event: string, cb: (proxyReq: ProxyReq, req: IncomingReq) => void): void }) {
+    proxy.on("proxyReq", sameOriginAsBridge);
+    proxy.on("proxyReqWs", sameOriginAsBridge);
+  },
+};
 
 const here = fileURLToPath(new URL(".", import.meta.url));
 /** Where `bun run wasm:fetch` puts `freecad_api.js` / `.wasm` / `.data`. */
@@ -61,10 +89,10 @@ export default defineConfig({
   server: {
     port: 5180,
     proxy: {
-      "/sessions": bridge,
-      "/files": bridge,
-      "/health": bridge,
-      "/ws": { target: bridgeWs, ws: true },
+      "/sessions": toBridge,
+      "/files": toBridge,
+      "/health": toBridge,
+      "/ws": { ...toBridge, target: bridgeWs, ws: true },
     },
   },
   build: {
