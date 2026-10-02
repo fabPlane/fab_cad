@@ -1,7 +1,7 @@
 /** File > Save As, File > Export and Help > About dialogs. */
 import type { ExportFormat } from "@fab-cad/client";
 import { useState } from "react";
-import { EXPORT_FORMATS, serverPath } from "../../commands/actions";
+import { exportFormats, serverPath } from "../../commands/actions";
 import { custom } from "../../state/dialogs";
 import { conn, docInfo, labelOf } from "../../state/session";
 import { Button, ComboBox, Icon } from "../widgets";
@@ -52,9 +52,10 @@ export function exportDialog(doc: string, names: string[]): Promise<{ format: Ex
 }
 
 function ExportBody({ base, close }: { base: string; close: (r: { format: ExportFormat; fileName: string } | null) => void }) {
-  const [format, setFormat] = useState<ExportFormat>("step");
-  const [name, setName] = useState(`${base}.step`);
-  const ext = EXPORT_FORMATS.find((f) => f.format === format)!.ext;
+  const formats = exportFormats();
+  const [format, setFormat] = useState<ExportFormat>(formats[0]!.format);
+  const [name, setName] = useState(`${base}.${formats[0]!.ext}`);
+  const ext = formats.find((f) => f.format === format)!.ext;
   return (
     <>
       <div className="dialog-body">
@@ -66,13 +67,14 @@ function ExportBody({ base, close }: { base: string; close: (r: { format: Export
           <ComboBox
             testId="export-format"
             value={format}
-            options={EXPORT_FORMATS.map((f) => ({ value: f.format, label: f.label }))}
+            options={formats.map((f) => ({ value: f.format, label: f.label }))}
             onChange={(v) => {
-              const f = EXPORT_FORMATS.find((x) => x.format === v)!;
+              const f = formats.find((x) => x.format === v)!;
               setFormat(f.format);
               setName(`${name.replace(/\.[^.]*$/, "")}.${f.ext}`);
             }}
           />
+          {!formats.some((f) => f.format === "step") && <p>Mock backend: STL and OBJ only. STEP, IGES and BREP require real FreeCAD.</p>}
         </div>
       </div>
       <div className="dialog-buttons">

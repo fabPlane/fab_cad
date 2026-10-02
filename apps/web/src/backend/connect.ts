@@ -11,6 +11,7 @@
  * start page offers the choices (and remembers a WebSocket URL the user typed).
  */
 import { DocumentStore, FreeCADClient, WasmTransport, WebSocketTransport, type ServerInfo, type Transport } from "@fab-cad/client";
+import { isMockBackend } from "./capabilities";
 
 export type BackendKind = "ws" | "bridge" | "wasm" | "mock";
 
@@ -66,13 +67,14 @@ async function finish(kind: BackendKind, description: string, transport: Transpo
     serverInfo = null;
   }
   // Load the workbench modules FreeCAD's GUI would import; the mock has none.
-  if (kind !== "mock") {
+  const mock = isMockBackend({ kind, serverInfo });
+  if (!mock) {
     for (const m of ["Part", "Sketcher", "PartDesign"]) await client.loadModule(m).catch(() => undefined);
   }
   await store.load();
   return {
     kind,
-    description,
+    description: mock && kind !== "mock" ? description.replace("FreeCAD", "Mock FreeCAD") : description,
     client,
     store,
     serverInfo,
