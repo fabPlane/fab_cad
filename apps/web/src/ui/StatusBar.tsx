@@ -3,6 +3,7 @@
  * `getPreselectionInfo`), the view's dimensions, the navigation style selector and the unit schema.
  */
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { backendLabel } from "../backend/capabilities";
 import { useSelection } from "../state/selection";
 import { useSession } from "../state/session";
 import { NAVIGATION_STYLES, useView3D } from "../state/view3d";
@@ -16,7 +17,7 @@ export function StatusBar() {
   const dims = useView3D((s) => s.dimensions);
   const status = useSession((s) => s.status);
   const busy = useSession((s) => s.busy);
-  const kind = useSession((s) => s.conn?.kind);
+  const connection = useSession((s) => s.conn);
   const message = pre ? Viewer.preselectionText(pre) : busy ? "Working…" : "";
   return (
     <div className="statusbar" data-testid="statusbar">
@@ -24,7 +25,7 @@ export function StatusBar() {
         {message}
       </span>
       <span className="muted" title="Backend" data-testid="status-backend">
-        {status === "connected" ? (kind === "mock" ? "Mock FreeCAD" : kind === "wasm" ? "FreeCAD (wasm)" : "FreeCAD") : status}
+        {status === "connected" ? backendLabel(connection) : status}
       </span>
       <span className="status-sep" />
       <span data-testid="status-dimensions">{dims ? `Dimension: ${dims}` : ""}</span>

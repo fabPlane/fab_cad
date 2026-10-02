@@ -3,6 +3,7 @@
  * transaction) plus the Python line FreeCAD's GUI would echo for it.
  */
 import { FreeCADApiError, type ExportFormat, type PropertyInput } from "@fab-cad/client";
+import { isMockBackend } from "../backend/capabilities";
 import { download, extensionOf, fileBytes, IMPORT_EXTENSIONS } from "../lib/files";
 import { pyStr } from "../lib/format";
 import { useApp } from "../state/app";
@@ -163,7 +164,14 @@ export const EXPORT_FORMATS: { format: ExportFormat; ext: string; label: string 
   { format: "obj", ext: "obj", label: "Alias Mesh (*.obj)" },
 ];
 
+export function exportFormats(): typeof EXPORT_FORMATS {
+  return isMockBackend(conn()) ? EXPORT_FORMATS.filter((f) => f.format === "stl" || f.format === "obj") : EXPORT_FORMATS;
+}
+
 export async function exportObjects(doc: string, names: string[], format: ExportFormat, fileName?: string): Promise<void> {
+  if (!exportFormats().some((f) => f.format === format)) {
+    throw new Error(`${format.toUpperCase()} export requires real FreeCAD; the mock supports STL and OBJ.`);
+  }
   const ext = EXPORT_FORMATS.find((f) => f.format === format)?.ext ?? format;
   const name = fileName ?? `${labelOf(doc, names[0] ?? doc)}.${ext}`;
   const objs = names.map((n) => `FreeCAD.getDocument(${pyStr(doc)}).getObject(${pyStr(n)})`);

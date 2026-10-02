@@ -3,6 +3,7 @@
  * the connection to FreeCAD (a FreeCADApiServer URL, the in-page mock, the WebAssembly build).
  */
 import { useState } from "react";
+import { isMockBackend } from "../backend/capabilities";
 import { connectTo, rememberedWsUrl } from "../backend/controller";
 import { DEFAULT_WASM_URL } from "../backend/connect";
 import { errorText, newDocument, openFile } from "../commands/actions";
@@ -47,7 +48,14 @@ function Card({
   testId?: string;
 }) {
   return (
-    <div className={`start-card ${disabled ? "disabled" : ""}`} onClick={onClick} data-testid={testId}>
+    <div
+      className={`start-card ${disabled ? "disabled" : ""}`}
+      onClick={() => {
+        if (!disabled) onClick();
+      }}
+      aria-disabled={disabled || undefined}
+      data-testid={testId}
+    >
       <Icon name={icon} size={48} />
       <div className="title">{title}</div>
       <div className="desc">{desc}</div>
@@ -59,7 +67,7 @@ export function StartPage() {
   const status = useSession((s) => s.status);
   const error = useSession((s) => s.error);
   const description = useSession((s) => s.conn?.description);
-  const kind = useSession((s) => s.conn?.kind);
+  const mock = useSession((s) => isMockBackend(s.conn));
   const [url, setUrl] = useState(rememberedWsUrl());
   const connected = status === "connected";
   return (
@@ -86,7 +94,7 @@ export function StartPage() {
                 activateWorkbench("PartDesignWorkbench");
                 await newDocument();
                 useApp.getState().closeStart();
-                if (kind !== "mock") run("PartDesign_Body");
+                if (!mock) run("PartDesign_Body");
               }}
             />
             <Card
@@ -132,15 +140,15 @@ export function StartPage() {
                 icon={e.icon}
                 title={e.title}
                 desc={e.file}
-                disabled={!connected || kind === "mock"}
+                disabled={!connected || mock}
                 testId={`example-${e.file}`}
                 onClick={() => void openExample(e.file)}
               />
             ))}
           </div>
-          {kind === "mock" && (
+          {mock && (
             <div className="muted" style={{ marginTop: 6 }}>
-              The in-page mock cannot read real FreeCAD files; connect to a FreeCAD API server for the examples.
+              The mock cannot read real FreeCAD files; connect to a FreeCAD API server for the examples.
             </div>
           )}
         </div>
